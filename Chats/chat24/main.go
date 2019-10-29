@@ -22,6 +22,10 @@ func main() {
 		fmt.Println("c")
 	}
 
-	fmt.Println(math.MaxInt32 / 1000/1000/1000)
+	fmt.Println(math.MaxUint16 / 8 / 1000)
+
+	fmt.Println("id => ", 2131%100/10)
+
+	fmt.Println("point =>", 0/10)
 
 }

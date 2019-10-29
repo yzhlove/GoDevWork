@@ -1,0 +1,42 @@
+# For a quick start check out our HTTP Requests collection (Tools|HTTP Client|Open HTTP Requests Collection) or
+# paste cURL into the file and request will be converted to HTTP Request format.
+#
+# Following HTTP Request Live Templates are available:
+# * 'gtrp' and 'gtr' create a GET request with or without query parameters;
+# * 'ptr' and 'ptrp' create a POST request with a simple or parameter-like body;
+# * 'mptr' and 'fptr' create a POST request to submit a form with a text or file field (multipart/form-data);
+
+# elasticsearch test
+
+PUT http://localhost:9200/home/employee/1
+Content-Type: application/json
+
+{
+  "name": "yzh",
+  "age": 16,
+  "about": "like music",
+  "interests": [
+    "movie",
+    "music"
+  ]
+}
+
+###
+PUT http://localhost:9200/home/employee/2
+Content-Type: application/json;charset=UTF-8
+
+{
+  "name": "lcm",
+  "age": 16,
+  "about": "like happy",
+  "interests": [
+    "food",
+    "run"
+  ]
+}
+
+### 查询
+GET http://localhost:9200/_search
+
+###
+
