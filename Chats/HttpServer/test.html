@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+
+<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.js"></script>
+<script>
+
+    $.ajax({
+        url: "http://127.0.0.1:1314/love",
+        success: function (data, status) {
+            var obj = JSON.parse(data)
+            alert(obj)
+            alert(obj.name)
+            alert(obj.age)
+            alert(obj.birthday)
+        }
+    })
+
+</script>
+
+</html>
