@@ -15,7 +15,7 @@ func HttpStart(port int) {
 }
 
 func helloFunc(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("打印Header参数列表：")
+	fmt.Println("打印Header参数列表：", len(r.Header))
 	if len(r.Header) > 0 {
 		for k, v := range r.Header {
 			fmt.Printf("%s=%s\n", k, v[0])

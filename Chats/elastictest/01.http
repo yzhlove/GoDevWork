@@ -1,0 +1,146 @@
+# For a quick start check out our HTTP Requests collection (Tools|HTTP Client|Open HTTP Requests Collection) or
+# paste cURL into the file and request will be converted to HTTP Request format.
+#
+# Following HTTP Request Live Templates are available:
+# * 'gtrp' and 'gtr' create a GET request with or without query parameters;
+# * 'ptr' and 'ptrp' create a POST request with a simple or parameter-like body;
+# * 'mptr' and 'fptr' create a POST request to submit a form with a text or file field (multipart/form-data);
+
+### 创建索引
+PUT http://localhost:9200/demo
+
+### 查看制定索引
+GET http://localhost:9200/demo
+
+### 创建索引时，制定主分片与副本分片的数量
+PUT http://localhost:9200/demo
+Content-Type: application/json
+
+{
+  "setting": {
+    "number_of_shards": 1,
+    "number_of_replicas": 1
+  }
+}
+
+### 查询ES中索引情况 （单机的es的健康状态一般为yellow）
+GET http://localhost:9200/_cat/indices?v
+
+### 删除索引
+DELETE http://localhost:9200/demo
+
+### 创建类型
+PUT http://localhost:9200/demo/_mapping/example_type
+Content-Type: application/json
+
+{
+  "properties": {
+    "created": {
+      "type": "data"
+    },
+    "message": {
+      "type": "keyword"
+    }
+  }
+}
+
+### 创建类型
+PUT http://localhost:9200/demo
+Content-Type: application/json
+
+{
+  "mappings": {
+    "example_type": {
+      "properties": {
+        "created": {
+          "type": "date"
+        },
+        "message": {
+          "type": "keyword"
+        }
+      }
+    }
+  }
+}
+
+### 插入文档(系统定义_id)
+
+POST http://localhost:9200/demo/example_type
+Content-Type: application/json
+
+{
+  "created": 1572939195,
+  "message": "test1"
+}
+
+### 搜索
+POST http://localhost:9200/demo/example_type/_search?pretty
+
+### 根据ID修改
+POST http://localhost:9200/demo/example_type/lF17Om4BtTLmIU0H0Dl8/_update
+Content-Type: application/json
+
+{
+  "doc": {
+    "message": "application/json"
+  }
+}
+
+### 根据ID删除
+DELETE http://localhost:9200/demo/example_type/lF17Om4BtTLmIU0H0Dl8
+
+### 分词
+POST http://localhost:9200/_analyze
+Content-Type: application/json
+
+{
+  "analyzer": "standard",
+  "text": "hello world"
+}
+
+### 中文分词
+POST http://localhost:9200/_analyze
+Content-Type: application/json
+
+{
+  "analyzer": "ik_smart",
+  "text": "北京大学"
+}
+
+### 查看插件列表
+GET http://localhost:9200/_cat/plugins
+
+### 中文分词（ik-smart）
+POST http://localhost:9200/_analyze
+Content-Type: application/json
+
+{
+  "analyzer": "ik_smart",
+  "text": "我和我的祖国，一刻也不能分割"
+}
+
+### example("小米手机")
+POST http://localhost:9200/_analyze
+Content-Type: application/json
+
+{
+  "analyzer": "ik_smart",
+  "text": "小米手机"
+}
+
+###
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
