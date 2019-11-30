@@ -6,7 +6,6 @@ import (
 	"strconv"
 	"strings"
 	"time"
-	"yo-star.com/nekopara/manager/config"
 )
 
 type LogMessage struct {
@@ -31,8 +30,9 @@ type FileLoggerWriter struct {
 }
 
 func getNewLogFile() string {
-	tm := time.Now()
-	return fmt.Sprintf("%suser_logger_%d_%d_%d.log", config.UserLoggerPath, tm.Year(), tm.Month(), tm.Day())
+	_ = time.Now()
+	return ""
+	//return fmt.Sprintf("%suser_logger_%d_%d_%d.log", config.UserLoggerPath, tm.Year(), tm.Month(), tm.Day())
 }
 
 func getNewLoggerWrite() (fw *FileLoggerWriter, err error) {

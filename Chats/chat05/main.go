@@ -1,9 +1,9 @@
 package main
 
 import (
+	"WorkSpace/GoDevWork/Chats/chat05/obj"
 	"fmt"
 	"io/ioutil"
-	"yuzihan/Chats/chat05/obj"
 )
 
 func main() {

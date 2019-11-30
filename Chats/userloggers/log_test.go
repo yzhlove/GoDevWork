@@ -8,7 +8,6 @@ import (
 	"strconv"
 	"testing"
 	"time"
-	"yo-star.com/nekopara/manager/config"
 )
 
 func Test_AppendFile(t *testing.T) {
@@ -25,7 +24,6 @@ func Test_AppendFile(t *testing.T) {
 
 func Test_WriteLog(t *testing.T) {
 
-	config.UserLoggerPath = ""
 	Init()
 
 	for i := 0; i < 10; i++ {
@@ -42,7 +40,7 @@ func Test_WriteLog(t *testing.T) {
 }
 
 func BenchmarkInit(b *testing.B) {
-	config.UserLoggerPath = ""
+
 	Init()
 	b.ResetTimer()
 	b.StartTimer()
@@ -75,14 +73,12 @@ func Test_GetFileExt(t *testing.T) {
 }
 
 func Test_ShowFileList(t *testing.T) {
-	config.UserLoggerPath = ""
+
 	names := showFileList()
 	t.Log(names)
 }
 
 func Test_ReadFile(t *testing.T) {
-
-	config.UserLoggerPath = ""
 
 	files := showFileList()
 	msgList, err := readLogFile(files[0])
@@ -103,7 +99,6 @@ func Test_ReadFile(t *testing.T) {
 
 func Test_CrossTime(t *testing.T) {
 
-	config.UserLoggerPath = ""
 	if err := Init(); err != nil {
 		t.Error(err)
 		return
