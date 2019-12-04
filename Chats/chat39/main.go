@@ -1,24 +1,136 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"github.com/HouzuoGuo/tiedot/db"
 	"math/rand"
 )
 
-const DataBase = "TestTieDB_01"
+const DataBase = "TestTieDB_02"
 const Table = "yzh"
 
 func main() {
 
-	//for i := 0; i < 100; i++ {
-	//	create()
+	//for i := 1; i <= 10; i++ {
+	//	create2(i)
 	//}
 
 	//counter()
-	//foreach()
+	foreach()
 
 	//page()
+
+	fmt.Println("===================================================")
+	//search()
+	search2()
+
+}
+
+func search2() {
+	td, err := db.OpenDB(DataBase)
+	if err != nil {
+		panic(err)
+	}
+
+	col := td.Use(Table)
+
+	ids := make(map[int]struct{})
+
+	//s1 := map[string]interface{}{
+	//	"int-from": 1,
+	//	"int-to":   2,
+	//	"in":       []interface{}{"number"},
+	//	"limit":    20,
+	//}
+
+	s1 := map[string]interface{}{
+		"int-from": 1,
+		"int-to":   2,
+		"in":       []interface{}{"number"},
+	}
+
+	s2 := map[string]interface{}{
+		"eq": "lcmlove",
+		"in": []interface{}{"name"},
+	}
+
+	s3 := map[string]interface{}{
+		"n": []interface{}{s1, s2},
+	}
+
+	//var s2 []interface{}
+	//s2 = append(s2, map[string]interface{}{
+	//	"eq": "lcmlove",
+	//	"in": []interface{}{"name"},
+	//})
+	//
+	//s2 = append(s2, map[string]interface{}{
+	//	"int-from": 1,
+	//	"int-to":   2,
+	//	"in":       []interface{}{"number"},
+	//	"limit":    20,
+	//})
+
+	data, _ := json.Marshal(s3)
+	fmt.Println("json => ", string(data))
+
+	if err := db.EvalQuery(s3, col, &ids); err != nil {
+		panic(err)
+	}
+
+	fmt.Println(len(ids))
+
+	for id := range ids {
+		if doc, err := col.Read(id); err != nil {
+			panic(err)
+		} else {
+			fmt.Println("id => ", id, " doc => ", doc)
+		}
+	}
+
+}
+
+func search() {
+	td, err := db.OpenDB(DataBase)
+	if err != nil {
+		panic(err)
+	}
+
+	col := td.Use(Table)
+
+	ids := make(map[int]struct{})
+
+	var c interface{}
+	if err := json.Unmarshal([]byte(`{"n":[{"in":["number"],"int-from":1,"int-to":2},{"eq":"lcmlove","in":["name"]}]}`), &c); err != nil {
+		panic(err)
+	}
+
+	fmt.Printf("%T %v \n", c, c)
+
+	d := map[string]interface{}{
+		"int-from": 2,
+		"int-to":   1,
+		"in":       []interface{}{"number"},
+		"limit":    20,
+	}
+
+	r, _ := json.Marshal(d)
+	fmt.Println("marshal => ", string(r))
+
+	if err := db.EvalQuery(c, col, &ids); err != nil {
+		panic(err)
+	}
+
+	fmt.Println(len(ids))
+
+	for id := range ids {
+		if doc, err := col.Read(id); err != nil {
+			panic(err)
+		} else {
+			fmt.Println("id => ", id, " doc => ", doc)
+		}
+	}
 
 }
 
@@ -73,6 +185,23 @@ func create() {
 	doc := map[string]interface{}{
 		"name":   "yzhlove",
 		"number": rand.Intn(10000) + 100,
+	}
+	if _, err = col.Insert(doc); err != nil {
+		panic(err)
+	}
+
+}
+
+func create2(i int) {
+	td, err := db.OpenDB(DataBase)
+	if err != nil {
+		panic(err)
+	}
+
+	col := td.ForceUse(Table)
+	doc := map[string]interface{}{
+		"name":   "lcmlove",
+		"number": i,
 	}
 	if _, err = col.Insert(doc); err != nil {
 		panic(err)
