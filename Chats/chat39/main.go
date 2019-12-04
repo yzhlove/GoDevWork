@@ -17,14 +17,26 @@ func main() {
 	//}
 
 	//counter()
-	foreach()
+	//foreach()
 
 	//page()
 
 	fmt.Println("===================================================")
 	//search()
-	search2()
+	//search2()
 
+	indexs()
+
+}
+
+func indexs() {
+	td, err := db.OpenDB(DataBase)
+	if err != nil {
+		panic(err)
+	}
+
+	col := td.Use(Table)
+	fmt.Println(col.AllIndexes())
 }
 
 func search2() {
@@ -44,19 +56,21 @@ func search2() {
 	//	"limit":    20,
 	//}
 
-	s1 := map[string]interface{}{
-		"int-from": 1,
-		"int-to":   2,
-		"in":       []interface{}{"number"},
-	}
+	var s []interface{}
 
-	s2 := map[string]interface{}{
+	s = append(s, map[string]interface{}{
+		"int-from": 1,
+		"int-to":   1,
+		"in":       []interface{}{"number"},
+	})
+
+	s = append(s, map[string]interface{}{
 		"eq": "lcmlove",
 		"in": []interface{}{"name"},
-	}
+	})
 
 	s3 := map[string]interface{}{
-		"n": []interface{}{s1, s2},
+		"n": s,
 	}
 
 	//var s2 []interface{}
@@ -71,6 +85,8 @@ func search2() {
 	//	"in":       []interface{}{"number"},
 	//	"limit":    20,
 	//})
+
+	col.Index([]string{"number", "name"})
 
 	data, _ := json.Marshal(s3)
 	fmt.Println("json => ", string(data))
