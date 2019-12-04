@@ -5,9 +5,10 @@ import (
 	"fmt"
 	"github.com/HouzuoGuo/tiedot/db"
 	"math/rand"
+	"time"
 )
 
-const DataBase = "TestTieDB_02"
+const DataBase = "TestTieDB_03"
 const Table = "yzh"
 
 func main() {
@@ -25,7 +26,68 @@ func main() {
 	//search()
 	//search2()
 
-	indexs()
+	//indexs()
+
+	//create3()
+	showall()
+	search3()
+}
+
+func create3() {
+
+	td, err := db.OpenDB(DataBase)
+	if err != nil {
+		panic(err)
+	}
+
+	col := td.ForceUse(Table)
+	col.Index([]string{"ts"})
+
+	for i := 0; i < 20; i++ {
+		doc := map[string]interface{}{
+			"name": "lcm",
+			"ts":   time.Now().Unix(),
+		}
+		_, _ = col.Insert(doc)
+		time.Sleep(time.Second)
+	}
+
+}
+
+func showall() {
+
+	td, err := db.OpenDB(DataBase)
+	if err != nil {
+		panic(err)
+	}
+
+	col := td.Use(Table)
+
+	col.ForEachDoc(func(id int, doc []byte) (moveOn bool) {
+		fmt.Println("id => ", id, " doc => ", string(doc))
+		return true
+	})
+
+}
+
+func search3() {
+
+	td, err := db.OpenDB(DataBase)
+	if err != nil {
+		panic(err)
+	}
+	col := td.Use(Table)
+
+	s := map[string]interface{}{
+		"int-form": int(1575438563),
+		"int-to":   int(time.Now().Unix()),
+		"in":       []interface{}{"ts"},
+	}
+
+	ids := make(map[int]struct{})
+	_ = db.EvalQuery(s, col, &ids)
+
+	fmt.Println(len(ids))
 
 }
 
