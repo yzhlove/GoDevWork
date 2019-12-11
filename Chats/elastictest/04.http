@@ -1,0 +1,41 @@
+PUT http://localhost:9200/get-event/new-events/1
+Content-Type: application/json
+
+{
+  "mame": "Late Night with Elasticsearch",
+  "data": "2019-11-25T19:00"
+}
+
+###
+PUT http://localhost:9200/get-event/new-events/2
+Content-Type: application/json
+
+{
+  "mame": "Late Night with Elasticsearch",
+  "data": "2019-11-12T19:00"
+}
+
+###
+GET http://localhost:9200/get-event/_mapping
+
+###
+GET http://localhost:9200/get-event/_search?size=5
+
+### 定义新映射
+PUT http://localhost:9200/get-event/_mapping/new-events
+Content-Type: application/json
+
+{
+  "new-events": {
+    "properties": {
+      "host": {
+        "type": "keyword"
+      }
+    }
+  }
+}
+
+###
+DELETE http://localhost:9200/get-event
+
+###

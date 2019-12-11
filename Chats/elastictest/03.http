@@ -69,9 +69,75 @@ Content-Type: application/json
   }
 }
 
-### 过滤器
+### 过滤器 (已经弃用)
+GET http://localhost:9200/get-together/_search?size=2
+Content-Type: application/json
 
+{
+  "query": {
+    "filtered": {
+      "filter": {
+        "term": {
+          "name": "elasticsearch"
+        }
+      }
+    }
+  }
+}
 
+###
+GET http://localhost:9200/get-together/_search
+Content-Type: application/json
 
+{
+  "size": 2,
+  "query": {
+    "bool": {
+      "must": {
+        "term": {
+          "term": {
+            "name": "elasticsearch"
+          }
+        }
+      }
+    }
+  }
+}
+
+###
+GET http://localhost:9200/get-together/_search
+Content-Type: application/json
+
+{
+  "size": 2,
+  "query": {
+    "query_string": {
+      "query": "elasticsearch"
+    }
+  }
+}
+
+### 聚合
+GET http://localhost:9200/get-together/_search
+Content-Type: application/json
+
+{
+  "aggregations": {
+    "organizers": {
+      "terms": {
+        "field": "organizer.keyword",
+        "size": 24
+      }
+    }
+  }
+}
+
+###
+GET http://localhost:9200/get-together/_doc/1
+
+###
+GET http://localhost:9200/get-together/_mapping
+
+###
 
 

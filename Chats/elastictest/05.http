@@ -1,0 +1,130 @@
+PUT http://localhost:9200/get-event/_doc/1
+Content-Type: application/json
+
+{
+  "name": "yzh"
+}
+
+###
+PUT http://localhost:9200/get-event/_mapping/
+Content-Type: application/json
+
+{
+  "properties": {
+    "host": {
+      "type": "keyword"
+    }
+  }
+}
+
+###
+GET http://localhost:9200/get-event/_mapping
+
+### 已有类型设置新类型会报错
+PUT http://localhost:9200/get-event/_mapping/
+Content-Type: application/json
+
+{
+  "properties": {
+    "host": {
+      "type": "long"
+    }
+  }
+}
+
+###
+PUT http://localhost:9200/get-event/_doc/2
+Content-Type: application/json
+
+{
+  "name": "yzh",
+  "host:": "192.168.0.1"
+}
+
+###
+PUT http://localhost:9200/get-event/_doc/3
+Content-Type: application/json
+
+{
+  "name": "yzh",
+  "host:": "192.168.10.15"
+}
+
+###
+GET http://localhost:9200/get-event/_search
+Content-Type: application/json
+
+{
+  "query": {
+    "query_string": {
+      "query": "192"
+    }
+  }
+}
+
+###
+GET http://localhost:9200/get-event/_search
+
+### 设置时间类型
+GET http://localhost:9200/get-event/_mapping
+
+###
+PUT http://localhost:9200/get-event/_mapping
+Content-Type: application/json
+
+{
+  "properties": {
+    "time": {
+      "type": "date"
+    }
+  }
+}
+
+###
+PUT http://localhost:9200/get-event/_mapping
+Content-Type: application/json
+
+{
+  "properties": {
+    "ts": {
+      "type": "date",
+      "format": "yyyy-MM-dd HH:mm:ss||yyyy-MM-dd||epoch_millis"
+    }
+  }
+}
+
+###
+GET http://localhost:9200/get-event/_search?size=1
+
+###
+PUT http://localhost:9200/get-event/_doc/4
+Content-Type: application/json
+
+{
+  "name": "lcm",
+  "time": 1576050803,
+  "ts": "2019-12-11 15:53:40"
+}
+
+###
+PUT http://localhost:9200/get-event/_doc/5
+Content-Type: application/json
+
+{
+  "name": "lcm",
+  "time": 1576050813,
+  "ts": "2019-12-11 15:53:55"
+}
+
+###
+GET http://localhost:9200/get-event/_search
+Content-Type: application/json
+
+{
+  "size": 2,
+  "sort": {
+    "ts": "desc"
+  }
+}
+
+###
