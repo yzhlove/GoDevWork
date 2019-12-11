@@ -276,5 +276,25 @@ Content-Type: application/json
   }
 }
 
+### 关闭与打开索引(并不删除)
+POST  http://localhost:9200/get-event/_close
+
+### 打开索引
+POST http://localhost:9200/get-event/_open
+
+###
+POST http://localhost:9200/get-event/_doc/7/_update
+Content-Type: application/json
+
+{
+  "doc": {
+    "name": "love xjj"
+  }
+}
+
+###
+GET http://localhost:9200/get-event/_doc/7
+
+
 ###
 
