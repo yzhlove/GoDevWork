@@ -128,3 +128,81 @@ Content-Type: application/json
 }
 
 ###
+GET http://localhost:9200/get-event/_mapping
+
+###
+PUT http://localhost:9200/get-event/_mapping
+Content-Type: application/json
+
+{
+  "properties": {
+    "tags": {
+      "type": "text",
+      "fields": {
+        "verbatim": {
+          "type": "keyword",
+          "index": "not_analyzed"
+        }
+      }
+    }
+  }
+}
+
+### 多字段
+PUT http://localhost:9200/get-event/_mapping
+Content-Type: application/json
+
+{
+  "properties": {
+    "nick": {
+      "type": "text",
+      "fields": {
+        "verbatim": {
+          "type": "keyword"
+        }
+      }
+    }
+  }
+}
+
+###
+GET http://localhost:9200/get-event/_search
+Content-Type:application/json
+
+{
+  "size": 1
+}
+
+###
+PUT http://localhost:9200/get-event/_doc/6
+Content-Type: application/json
+
+{
+  "nick": "hello world"
+}
+
+###
+# 实验:将nick是这多字段
+# nick -> "type":"text"
+# nick.verbatim -> "type":"keyword"
+# 查询 "query":"hello"
+# 结果 nick->1  nick.verbatim->0
+GET http://localhost:9200/get-event/_search
+Content-Type: application/json
+
+{
+  "size": 0,
+  "query": {
+    "query_string": {
+      "query": "hello",
+      "default_field": "nick"
+    }
+  }
+}
+
+###
+GET http://localhost:9200/get-event
+
+###
+
+
