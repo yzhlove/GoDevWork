@@ -200,9 +200,81 @@ Content-Type: application/json
   }
 }
 
-###
-GET http://localhost:9200/get-event
+### 使用"_source"过滤器
+GET http://localhost:9200/get-event/_search
+Content-Type: application/json
+
+{
+  "size": 2,
+  "_source": [
+    "name"
+  ]
+}
 
 ###
+GET http://localhost:9200/get-event/_doc/1
 
+### 更新文档
+GET http://localhost:9200/get-event/_search
+
+### 更新文档（如果文档之前不存在则更新失败）
+POST http://localhost:9200/get-event/_doc/2/_update
+Content-Type: application/json
+
+{
+  "doc": {
+    "name": "YZH"
+  }
+}
+
+###
+GET http://localhost:9200/get-event/_doc/2
+
+### 使用upsert来更新不存在的文档
+POST http://localhost:9200/get-event/_doc/7/_update
+Content-Type: application/json
+
+{
+  "doc": {
+    "name": "love xjj"
+  },
+  "upsert": {
+    "host": "127.0.0.1",
+    "name": "love xjj",
+    "ts": "2019-12-11 17:50:55"
+  }
+}
+
+###
+GET http://localhost:9200/get-event/_doc/7
+
+###
+GET http://localhost:9200/get-event/_search
+
+### 错误的索引
+DELETE http://localhost:9200/get-event/_doc/7_update
+
+### 控制版本 （外部版本控制）
+### 使用外部版本控制时，传入的version必须大于文档的version，否则更新失败
+PUT http://localhost:9200/get-event/_doc/7?version=3&version_type=external
+Content-Type: application/json
+
+{
+  "doc": {
+    "name": "love lcm"
+  }
+}
+
+### 内部版本控制
+### 使用内部版本控制的时候，传入的值必须等于文档的version,否则更新失败
+POST http://localhost:9200/get-event/_doc/7/_update?version=3
+Content-Type: application/json
+
+{
+  "doc": {
+    "name": "love xyj"
+  }
+}
+
+###
 
