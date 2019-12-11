@@ -1,0 +1,15 @@
+GET http://localhost:9200
+
+###
+GET http://localhost:9200/_cat/indices
+
+###
+GET http://localhost:9200/kibana_sample_data_logs
+
+###
+GET http://localhost:9200/kibana_sample_data_logs/_mapping/
+
+###
+GET http://localhost:9200/kibana_sample_data_logs/_search?pretty
+
+###

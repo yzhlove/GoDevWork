@@ -1,0 +1,77 @@
+GET http://localhost:9200/_cat/indices
+
+###
+GET http://localhost:9200/get-together/_doc/1
+
+###
+GET http://localhost:9200/get-together/_search?size=2
+
+###
+GET http://localhost:9200/get-together/_search?size=4
+
+###
+GET http://localhost:9200/kibana_sample_data_logs/_search?size=4
+
+###
+GET http://localhost:9200/get-together/_search
+Content-Type: application/json
+
+{
+  "query": {
+    "query_string": {
+      "query": "elasticsearch"
+    }
+  }
+}
+
+### 关键词查询
+#default_field   指定搜索字段
+#default_operator 指定字符串的匹配方式
+# example
+# query = "elasticsearch san francisco"
+# operator => AND 则能匹配到 "elasticsearch san francisco"
+# operator => OR 则能匹配到 "elasticsearch" "elasticsearch san" "elasticsearch san francisco"
+GET http://localhost:9200/get-together/_search?size=4
+Content-Type: application/json
+
+{
+  "query": {
+    "query_string": {
+      "query": "elasticsearch san francisco",
+      "default_field": "name",
+      "default_operator": "AND"
+    }
+  }
+}
+
+### 精确匹配
+GET http://localhost:9200/get-together/_search?size=2
+Content-Type: application/json
+
+{
+  "query": {
+    "term": {
+      "name": "elasticsearch"
+    }
+  }
+}
+
+###
+GET http://localhost:9200/get-together/_search?size=2
+Content-Type: application/json
+
+{
+  "query": {
+    "query_string": {
+      "query": "elasticsearch",
+      "default_field": "name"
+    }
+  }
+}
+
+### 过滤器
+
+
+
+
+
