@@ -1,0 +1,7 @@
+GET http://localhost:9200/_cat/indices
+
+###
+GET http://localhost:9200/get-together/_search?size=20
+
+###
+
