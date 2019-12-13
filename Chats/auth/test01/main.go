@@ -39,6 +39,8 @@ func main() {
 	fmt.Println(e.GetAllObjects())
 	fmt.Println(e.GetAllSubjects())
 
+	e.GetModel().AddDef("m", "match", "r.user == admin")
+
 	if err = e.SavePolicy(); err != nil {
 		panic(err)
 	}
