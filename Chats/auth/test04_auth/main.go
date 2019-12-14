@@ -20,7 +20,7 @@ func main() {
 	}
 	checkRouter := router.NewCheckRouter(adapter)
 	//resource list
-	checkRouter.Router.POST("/manager/auth/add/:user/:resource/:auth", checkRouter.AddRules)
+	checkRouter.Router.GET("/manager/auth/add/:user/:resource/:auth", checkRouter.AddRules)
 	checkRouter.Router.DELETE("/manager/auth/delete", checkRouter.DelRules)
 	checkRouter.Router.GET("/manager/auth/login", login)
 

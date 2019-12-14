@@ -1,6 +1,13 @@
-POST http://localhost:1234/manager/auth/add
+POST http://localhost:1234/manager/auth/add/
 Content-Type: application/x-www-form-urlencoded
 
 token=7
+
+###
+GET http://localhost:1234/manager/auth/add/yzh/manager-auth/login?token=7
+
+
+###
+GET http://localhost:1234/manager/auth/login?target=login&token=1
 
 ###

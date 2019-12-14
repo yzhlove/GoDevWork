@@ -27,28 +27,40 @@ func Err(w http.ResponseWriter, msg string) {
 	_, _ = w.Write([]byte(msg))
 }
 
+func Crash(w http.ResponseWriter, msg string) {
+	w.WriteHeader(http.StatusInternalServerError)
+	_, _ = w.Write([]byte(msg))
+}
+
+func Succeed(w http.ResponseWriter, msg string) {
+	w.WriteHeader(http.StatusOK)
+	_, _ = w.Write([]byte(msg))
+}
+
 func getResource(url string) string {
 	s := strings.Split(url, "/")
 	if len(s) < 3 {
 		return ""
 	}
-	return s[1] + s[2]
+	return s[1] + "-" + s[2]
 }
 
 func (c *CheckRouter) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	_ = r.ParseForm()
+	params := r.URL.Query()
+	fmt.Println("params ==> ", params)
 	var username string
-	if u, ok := conf.UserList[r.FormValue("token")]; !ok {
+	if u, ok := conf.UserList[params.Get("token")]; !ok {
 		Err(w, "not found user")
 		return
 	} else {
 		username = u
 	}
-	target := r.FormValue("target")
+	target := params.Get("target")
 	if username != "super" && target == "" {
 		Err(w, "target is null")
 		return
 	}
+	fmt.Printf("check:%s %s %s \n", username, getResource(r.URL.Path), target)
 	if ok, err := c.adapter.Enforce(username, getResource(r.URL.Path), target); err != nil {
 		Err(w, err.Error())
 		return
@@ -61,8 +73,25 @@ func (c *CheckRouter) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 }
 
 func (c *CheckRouter) AddRules(w http.ResponseWriter, r *http.Request, t httprouter.Params) {
-	fmt.Println(r.Context().Value("username")," add rules ...")
-	
+	fmt.Println(r.Context().Value("username"), " add rules ...")
+	user := t.ByName("user")
+	resource := t.ByName("resource")
+	auth := t.ByName("auth")
+	fmt.Println("| user => ", user, " resource => ", resource, " auth => ", auth)
+
+	if _, err := c.adapter.AddPolicy(user, resource, auth); err != nil {
+		Crash(w, "add policy => "+err.Error())
+		return
+	}
+	if err := c.adapter.SavePolicy(); err != nil {
+		Crash(w, "save policy => "+err.Error())
+		return
+	}
+	//if err := c.adapter.LoadPolicy(); err != nil {
+	//	Crash(w, "load policy => "+err.Error())
+	//	return
+	//}
+	Succeed(w, "ok")
 }
 
 func (c *CheckRouter) DelRules(w http.ResponseWriter, r *http.Request, t httprouter.Params) {
