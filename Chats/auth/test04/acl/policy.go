@@ -1,0 +1,12 @@
+package acl
+
+func NewAdapter() {
+
+
+
+}
+
+
+
+
+
