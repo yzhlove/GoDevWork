@@ -4,7 +4,7 @@ Content-Type: application/x-www-form-urlencoded
 token=7
 
 ###
-GET http://localhost:1234/manager/auth/add/yzh/manager-auth/login?token=7
+GET http://localhost:1234/manager/auth/add/lcm/manager-auth/login?token=7
 
 
 ###

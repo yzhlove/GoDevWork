@@ -14,7 +14,7 @@ func login(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 
 func main() {
 
-	adapter, err := acl.NewCheckAdapter()
+	adapter, err := acl.NewCheckAdpater2()
 	if err != nil {
 		panic(err)
 	}

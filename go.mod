@@ -11,7 +11,9 @@ require (
 	github.com/mikespook/gorbac v2.1.0+incompatible
 	github.com/philhofer/fwd v1.0.0 // indirect
 	github.com/pkg/errors v0.8.1 // indirect
+	github.com/smartystreets/goconvey v1.6.4 // indirect
 	github.com/storyicon/grbac v0.0.0-20190801030200-88ce5668903d
 	github.com/stretchr/testify v1.4.0 // indirect
 	github.com/tinylib/msgp v1.1.0
+	github.com/unknwon/goconfig v0.0.0-20191126170842-860a72fb44fd
 )
