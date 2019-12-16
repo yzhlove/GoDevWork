@@ -5,7 +5,7 @@ go 1.13
 require (
 	bou.ke/monkey v1.0.1 // indirect
 	github.com/HouzuoGuo/tiedot v0.0.0-20191112163212-3246d2a872c5
-	github.com/casbin/casbin v1.9.1 // indirect
+	github.com/casbin/casbin v1.9.1
 	github.com/casbin/casbin/v2 v2.1.2
 	github.com/julienschmidt/httprouter v1.3.0
 	github.com/mikespook/gorbac v2.1.0+incompatible
