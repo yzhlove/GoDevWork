@@ -7,6 +7,7 @@ import (
 	"github.com/casbin/casbin/v2/model"
 	"github.com/casbin/casbin/v2/persist"
 	"github.com/unknwon/goconfig"
+	"strconv"
 	"strings"
 )
 
@@ -68,9 +69,9 @@ func (a *Adapter) savePolicyFile(rules []string) error {
 
 	a.conf.DeleteSection("rules")
 
-	for _, rule := range rules {
+	for i, rule := range rules {
 		fmt.Println("set str => ", rule)
-		a.conf.SetValue("rules", "-", strings.Trim(rule, "\n"))
+		a.conf.SetValue("rules", strconv.Itoa(i), strings.Trim(rule, "\n"))
 	}
 	return goconfig.SaveConfigFile(a.conf, a.path)
 }

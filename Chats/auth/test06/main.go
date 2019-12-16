@@ -9,7 +9,7 @@ func main() {
 		panic("casbin init err:" + err.Error())
 	}
 
-	if _, err = e.AddPolicy("yzh", "manager-list", "btn-list"); err != nil {
+	if _, err = e.AddPolicy("yzh", "manager-login", "btn-list"); err != nil {
 		panic("add policy err:" + err.Error())
 	}
 
