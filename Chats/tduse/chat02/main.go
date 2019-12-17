@@ -20,7 +20,7 @@ func main() {
 	tid, err := teacher.Insert(map[string]interface{}{
 		"name": "lcm",
 		"url":  "golang org",
-		"age":  20,
+		"age":  88,
 	})
 	if err != nil {
 		panic(err)
@@ -58,27 +58,27 @@ func main() {
 	//	panic(err)
 	//}
 
-	var search = make([]map[string]interface{}, 1)
-	search[0] = make(map[string]interface{})
-	search[0]["eq"] = "lcm"
-	search[0]["in"] = []string{"name"}
-
-	fmt.Println("query interface => ", search)
-
-	queryResult := make(map[int]struct{})
-	if err := db.EvalQuery(search, teacher, &queryResult); err != nil {
-		panic(err)
-	}
-
-	for id := range queryResult {
-		fmt.Println("id => ", id)
-
-		if _doc, err := teacher.Read(id); err != nil {
-			panic(err)
-		} else {
-			fmt.Println("_doc => ", _doc)
-		}
-
-	}
+	//var search = make([]map[string]interface{}, 1)
+	//search[0] = make(map[string]interface{})
+	//search[0]["eq"] = "lcm"
+	//search[0]["in"] = []string{"name"}
+	//
+	//fmt.Println("query interface => ", search)
+	//
+	//queryResult := make(map[int]struct{})
+	//if err := db.EvalQuery(search, teacher, &queryResult); err != nil {
+	//	panic(err)
+	//}
+	//
+	//for id := range queryResult {
+	//	fmt.Println("id => ", id)
+	//
+	//	if _doc, err := teacher.Read(id); err != nil {
+	//		panic(err)
+	//	} else {
+	//		fmt.Println("_doc => ", _doc)
+	//	}
+	//
+	//}
 
 }
