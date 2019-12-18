@@ -1,8 +1,8 @@
 package userlog
 
 import (
-	"yo-star.com/nekopara/manager/logger/userlogger/base"
-	"yo-star.com/nekopara/manager/logger/userlogger/tiedb"
+	"WorkSpace/GoDevWork/Chats/userlogger2/base"
+	"WorkSpace/GoDevWork/Chats/userlogger2/tiedb"
 )
 
 type LogReaderManager struct {

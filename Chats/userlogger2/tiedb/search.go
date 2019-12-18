@@ -1,12 +1,13 @@
 package tiedb
 
 import (
+	"WorkSpace/GoDevWork/Chats/userlogger2/base"
 	"encoding/json"
 	"errors"
 	"fmt"
 	"github.com/HouzuoGuo/tiedot/db"
 	"time"
-	"yo-star.com/nekopara/manager/logger/userlogger/base"
+
 )
 
 type LogQuery interface {

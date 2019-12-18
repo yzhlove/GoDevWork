@@ -1,11 +1,11 @@
 package tiedb
 
 import (
+	"WorkSpace/GoDevWork/Chats/userlogger2/base"
+	"WorkSpace/GoDevWork/Chats/userlogger2/config"
 	"fmt"
 	"github.com/HouzuoGuo/tiedot/db"
 	"os"
-	"yo-star.com/nekopara/manager/config"
-	"yo-star.com/nekopara/manager/logger/userlogger/base"
 )
 
 //默认索引

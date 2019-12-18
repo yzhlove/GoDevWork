@@ -24,8 +24,9 @@ func main() {
 	//
 	//fmt.Println(v)
 
-	//f.DeleteSection("test")
-	f.DeleteKey("test", "lcm")
+	f.DeleteSection("test")
+	//f.DeleteKey("test", "lcm")
+
 
 	save(f)
 

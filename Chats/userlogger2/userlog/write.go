@@ -1,9 +1,9 @@
 package userlog
 
 import (
+	"WorkSpace/GoDevWork/Chats/userlogger2/base"
+	"WorkSpace/GoDevWork/Chats/userlogger2/tiedb"
 	"fmt"
-	"yo-star.com/nekopara/manager/logger/userlogger/base"
-	"yo-star.com/nekopara/manager/logger/userlogger/tiedb"
 )
 
 type LogWriterManager struct {
