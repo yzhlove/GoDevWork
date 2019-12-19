@@ -5,6 +5,6 @@ p, yzh, manager-user, update
 p, yzh, manager-user, create
 p, xjj, manager-user, login
 p, abc, manager-user, login
-p, abc, manager-list, index
+p, abc, manager-list, login
 p, love, manager-default, default
 p, like, manager-default, yes

@@ -41,8 +41,13 @@ func main() {
 
 	e.GetModel().AddDef("m", "match", "r.user == admin")
 
+	fmt.Println("===============================")
+	fmt.Println(e.GetPermissionsForUser("yzh"))
+
+	fmt.Println("===============================")
+	fmt.Println(e.DeletePermissionsForUser("abc"))
+
 	if err = e.SavePolicy(); err != nil {
 		panic(err)
 	}
-
 }
