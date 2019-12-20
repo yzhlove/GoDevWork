@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	read()
+	write()
 }
 
 func write() {
