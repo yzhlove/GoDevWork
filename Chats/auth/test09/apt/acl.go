@@ -75,11 +75,15 @@ func (ctx *EnforcerContext) GetAuth(username string) []string {
 }
 
 func (ctx *EnforcerContext) SetAuth(user string, auths []string) (err error) {
-	for _, auth := range auths {
-		if _, err = ctx.e.AddPolicy(user, auth); err != nil {
-			return
-		}
-	}
+	//for _, auth := range auths {
+	//	if _, err = ctx.e.AddPolicy(user, auth); err != nil {
+	//		return
+	//	}
+	//}
+	//if _, err = ctx.e.AddPolicy(user, auths); err != nil {
+	//	return
+	//}
+	ctx.e.AddPermissionForUser(user,auths...)
 	fmt.Println("user == ", user, " auth === ", auths)
 	return ctx.e.SavePolicy()
 }

@@ -51,6 +51,6 @@ func main() {
 			after.SetValue(user, "auth", strings.TrimRight(strings.Join(rules, "|"), "|"))
 		}
 	}
-	
+
 	_ = goconfig.SaveConfigFile(after, "Chats/auth/test10/new.ini")
 }

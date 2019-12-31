@@ -25,29 +25,31 @@ func Test_Acl(t *testing.T) {
 
 	//_, _ = adapter.DelAuth("yzh")
 	//adapter.Delete("yzh", "login")
-	adapter.DelAuth("yzh")
-
+	//adapter.DelAuth("yzh")
+	adapter.SetAuth("yzh", []string{"hello", "world", "what", "are", "you", "doing"})
 	/*
-		=== RUN   Test_Acl
-		line ===>  p, yzh, super
-		tokens ==>  [p  yzh  super]
-		tokens ==>  [p yzh super]
-		 key ==>  p  sec ==>  p
-		line ===>  p, yzh, login
-		tokens ==>  [p  yzh  login]
-		tokens ==>  [p yzh login]
-		 key ==>  p  sec ==>  p
-		line ===>  p, yzh, manager
-		tokens ==>  [p  yzh  manager]
-		tokens ==>  [p yzh manager]
-		 key ==>  p  sec ==>  p
-		sec =>  p  ptype =>  p  rules =>  [super super]
-		user ==  super  auth ===  [super]
-		===============================  222
-		sec ==>  p
-		ptype ==>  p
-		fieldIndex ==>  0
-		fieldValues ==>  [yzh]
+			=== RUN   Test_Acl
+			line ===>  p, yzh, super
+			tokens ==>  [p  yzh  super]
+			tokens ==>  [p yzh super]
+			 key ==>  p  sec ==>  p
+			line ===>  p, yzh, login
+			tokens ==>  [p  yzh  login]
+			tokens ==>  [p yzh login]
+			 key ==>  p  sec ==>  p
+			line ===>  p, yzh, manager
+			tokens ==>  [p  yzh  manager]
+			tokens ==>  [p yzh manager]
+			 key ==>  p  sec ==>  p
+			sec =>  p  ptype =>  p  rules =>  [super super]
+			user ==  super  auth ===  [super]
+			===============================  222
+		sec =>  p  ptype =>  p  rules =>  [yzh hello world what are you doing]
+		user ==  yzh  auth ===  [hello world what are you doing]
+			sec ==>  p
+			ptype ==>  p
+			fieldIndex ==>  0
+			fieldValues ==>  [yzh]
 	*/
 
 }
