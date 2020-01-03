@@ -16,4 +16,5 @@ require (
 	github.com/stretchr/testify v1.4.0 // indirect
 	github.com/tinylib/msgp v1.1.0
 	github.com/unknwon/goconfig v0.0.0-20191126170842-860a72fb44fd
+	stathat.com/c/consistent v1.0.0
 )
