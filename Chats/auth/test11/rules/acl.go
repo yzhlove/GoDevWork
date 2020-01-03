@@ -46,7 +46,7 @@ func (c *Enforcer) IsSuper(user string) bool {
 	if user == config.DefaultSuperName {
 		return true
 	}
-	for _, auth := range c.Auths(user) {
+	for _, auth := range c.GetAuths(user) {
 		if auth == config.DefaultSuperAuth {
 			return true
 		}
@@ -54,7 +54,7 @@ func (c *Enforcer) IsSuper(user string) bool {
 	return false
 }
 
-func (c *Enforcer) Auths(user string) []string {
+func (c *Enforcer) GetAuths(user string) []string {
 	as := c.e.GetPermissionsForUser(user)
 	if len(as) > 0 {
 		auths := make([]string, 0, len(as))
