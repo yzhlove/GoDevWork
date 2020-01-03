@@ -43,6 +43,14 @@ func (c *Enforcer) ECheck(user, auth string) (ok bool) {
 }
 
 func (c *Enforcer) IsSuper(user string) bool {
+	if user == config.DefaultSuperName {
+		return true
+	}
+	for _, auth := range c.Auths(user) {
+		if auth == config.DefaultSuperAuth {
+			return true
+		}
+	}
 	return false
 }
 

@@ -67,13 +67,11 @@ func (s *Storage) Exists(user string) bool {
 }
 
 func (s *Storage) GetUserList() []string {
-
-	return nil
+	return s.db.GetSectionList()
 }
 
-func (s *Storage) GetPasswd() string {
-
-	return ""
+func (s *Storage) GetPasswd(user string) string {
+	return s.db.MustValue(user, "passwd", "")
 }
 
 func (s *Storage) save() error {
