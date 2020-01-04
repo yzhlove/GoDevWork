@@ -57,7 +57,7 @@ func (s *Storage) createSuper() {
 }
 
 func (s *Storage) LoadAuths() []string {
-	return []string{"p, yzh, super", "p, yzh, login", "p, yzh, manager"}
+	return []string{"p, yzh, login", "p, yzh, manager"}
 }
 
 func (s *Storage) SaveAuth(auth []string) error {

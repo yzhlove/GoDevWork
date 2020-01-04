@@ -34,7 +34,8 @@ func NewEnforcerContext(s *storage.Storage) (*EnforcerContext, error) {
 	if ctx.e, err = casbin.NewEnforcer(mode, newAdapter(s)); err != nil {
 		return nil, err
 	}
-	return ctx, ctx.SetAuth(conf.SuperName, []string{conf.SuperAuth})
+	err = ctx.SetAuth(conf.SuperName, []string{conf.SuperAuth})
+	return ctx, err
 }
 
 //验证权限
@@ -83,7 +84,8 @@ func (ctx *EnforcerContext) SetAuth(user string, auths []string) (err error) {
 	//if _, err = ctx.e.AddPolicy(user, auths); err != nil {
 	//	return
 	//}
-	ctx.e.AddPermissionForUser(user,auths...)
+	ok, err := ctx.e.AddPermissionForUser(user, auths...)
+	fmt.Println(ok, " - ", err)
 	fmt.Println("user == ", user, " auth === ", auths)
 	return ctx.e.SavePolicy()
 }

@@ -15,26 +15,27 @@ p = user, auth
 [policy_effect]
 e = some(where (p.eft == allow))
 [matchers]
-m = p.user == r.user && p.auth == r.auth || r.auth == "super" || p.auth == "super"
+m = p.user == r.user && p.auth == r.auth || p.user == r.user && p.auth == "super" || r.user == "super"
 `
 
-type Enforcer struct {
-	e *casbin.Enforcer
+type EnforcerManager struct {
+	e       *casbin.Enforcer
+	storage *storage.Storage
 }
 
-func NewEnforcer(s *storage.Storage) (c *Enforcer, err error) {
-	var m model.Model
-	if m, err = model.NewModelFromString(acl); err != nil {
-		return
+func NewEnforcer(s *storage.Storage) (c *EnforcerManager, err error) {
+	m, err := model.NewModelFromString(acl)
+	if err != nil {
+		return nil, err
 	}
-	c = &Enforcer{}
-	if c.e, err = casbin.NewEnforcer(m, newFileAdapter(s)); err == nil {
-		err = s.SaveAuth(config.DefaultSuperName, []string{config.DefaultSuperAuth})
+	c = &EnforcerManager{storage: s}
+	if c.e, err = casbin.NewEnforcer(m, newFileAdapter(s)); err != nil {
+		return nil, err
 	}
 	return
 }
 
-func (c *Enforcer) ECheck(user, auth string) (ok bool) {
+func (c *EnforcerManager) Check(user, auth string) (ok bool) {
 	ok, err := c.e.Enforce(user, auth)
 	if err != nil {
 		return false
@@ -42,7 +43,7 @@ func (c *Enforcer) ECheck(user, auth string) (ok bool) {
 	return
 }
 
-func (c *Enforcer) IsSuper(user string) bool {
+func (c *EnforcerManager) IsSuper(user string) bool {
 	if user == config.DefaultSuperName {
 		return true
 	}
@@ -54,7 +55,7 @@ func (c *Enforcer) IsSuper(user string) bool {
 	return false
 }
 
-func (c *Enforcer) GetAuths(user string) []string {
+func (c *EnforcerManager) GetAuths(user string) []string {
 	as := c.e.GetPermissionsForUser(user)
 	if len(as) > 0 {
 		auths := make([]string, 0, len(as))
@@ -68,7 +69,11 @@ func (c *Enforcer) GetAuths(user string) []string {
 	return nil
 }
 
-func (c *Enforcer) SetAuths(user string, auth []string) (err error) {
-	_, err = c.e.AddPermissionForUser(user, auth...)
-	return
+func (c *EnforcerManager) SetAuths(user string, auths []string) (err error) {
+	for _, auth := range auths {
+		if _, err = c.e.AddPermissionForUser(user, auth); err != nil {
+			return err
+		}
+	}
+	return c.storage.SaveAuth(user, auths)
 }

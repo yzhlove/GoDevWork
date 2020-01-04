@@ -22,12 +22,27 @@ func Test_Casbin(t *testing.T) {
 		t.Error(err)
 		return
 	}
-
-	t.Log("auths ", e.GetAuths("liuxiaoyu"))
-
 	t.Log("isSuper ", e.IsSuper("liuxiaoyu"))
 	t.Log("isSuper ", e.IsSuper("guoxh"))
 	t.Log("isSuper ", e.IsSuper("super"))
 
-	_ = e.SetAuths("nokia", []string{"aaa", "bbb", "ccc", "ddd", "eee", "fff"})
+	err = e.SetAuths("nokia", []string{"aaa", "bbb", "ccc", "ddd", "eee", "fff"})
+	if err != nil {
+		t.Error(err)
+		return
+	}
+	t.Log("auths ", e.GetAuths("super"))
+	t.Log("auths ", e.GetAuths("guoxh"))
+	t.Log("auths ", e.GetAuths("liuxiaoyu"))
+	//
+
+	t.Log("===================================")
+
+	t.Log(e.Check("super", "abc"))
+	t.Log(e.Check("guoxh", "abc"))
+	t.Log(e.Check("liuxiaoyu", "ban"))
+	t.Log(e.Check("liuxiaoyu", "abc"))
+	t.Log(e.Check("wuyifan", "abcderf"))
+	t.Log(e.Check("wuyifan", "ban"))
+
 }

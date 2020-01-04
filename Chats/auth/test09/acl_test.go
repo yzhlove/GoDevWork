@@ -23,10 +23,18 @@ func Test_Acl(t *testing.T) {
 		return
 	}
 
+	t.Log(adapter.Enforcer("yzh", "abc"))
+	t.Log(adapter.Enforcer("yzh", "login"))
+	t.Log(adapter.Enforcer("wuyifan", "adc"))
+
 	//_, _ = adapter.DelAuth("yzh")
 	//adapter.Delete("yzh", "login")
 	//adapter.DelAuth("yzh")
-	adapter.SetAuth("yzh", []string{"hello", "world", "what", "are", "you", "doing"})
+	//err = adapter.SetAuth("yzh", []string{"hello", "world", "what", "are", "you", "doing"})
+	//if err != nil {
+	//	t.Error(err)
+	//	return
+	//}
 	/*
 			=== RUN   Test_Acl
 			line ===>  p, yzh, super

@@ -6,19 +6,17 @@ import (
 	"github.com/casbin/casbin/v2/model"
 )
 
-var storageError = errors.New("storage load err")
-
 type FileAdapter struct {
-	s *storage.Storage
+	storage *storage.Storage
 }
 
 func newFileAdapter(s *storage.Storage) *FileAdapter {
-	return &FileAdapter{s: s}
+	return &FileAdapter{storage: s}
 }
 
 func (a *FileAdapter) LoadPolicy(model model.Model) error {
-	if a.s != nil {
-		for user, auths := range a.s.LoadAuth() {
+	if a.storage != nil {
+		for user, auths := range a.storage.LoadAuth() {
 			if len(auths) > 1 {
 				key := auths[0]
 				sec := key[:1]
@@ -36,10 +34,7 @@ func (a *FileAdapter) SavePolicy(_ model.Model) error {
 }
 
 func (a *FileAdapter) AddPolicy(_ string, _ string, rule []string) error {
-	if len(rule) > 1 {
-		return a.s.SaveAuth(rule[0], rule[1:])
-	}
-	return nil
+	return errors.New("not implemented")
 }
 
 func (a *FileAdapter) RemovePolicy(sec string, ptype string, rule []string) error {
