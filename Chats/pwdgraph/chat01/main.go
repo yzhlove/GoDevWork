@@ -10,7 +10,7 @@ import (
 var key = []byte("abcdefghijklmnopqrstuvwxyz")
 
 func main() {
-	
+
 	result := RC4Encrypt([]byte("yuzihan"))
 	fmt.Printf("%x \n", result)
 
