@@ -37,5 +37,8 @@ func Test_RC4Length(t *testing.T) {
 
 	fmt.Println("src => ", len(src), " dst => ", len(dst))
 	fmt.Printf("%v %v \n", src, dst)
+	for _, b := range dst {
+		fmt.Print(string(b))
+	}
 
 }
