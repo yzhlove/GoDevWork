@@ -53,8 +53,7 @@ func generate(url string) string {
 	t := uint64(0xFF)
 
 	for i := 0; i < 8; i++ {
-		fmt.Printf("%v %.4b %x\n", number&t, number&t, number&t)
-		fmt.Println("byte => ", byte(number&t))
+		fmt.Printf("%v %.4b %x %v\n", number&t, number&t, number&t, byte(number&t))
 		number >>= 8
 	}
 
