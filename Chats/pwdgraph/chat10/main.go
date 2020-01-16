@@ -66,3 +66,7 @@ func getEncodeString(id, number uint32) string {
 	str.WriteString(Dict[code&status])
 	return str.String()
 }
+
+func getDecodeString(code string) {
+
+}
