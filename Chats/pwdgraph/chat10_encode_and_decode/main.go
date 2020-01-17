@@ -26,6 +26,7 @@ func main() {
 	var number uint32 = 223344
 	var id uint32 = 1000
 	str := getEncodeString(id, number)
+	fmt.Println("str ==> ", str)
 	getDecodeString(str)
 
 }
@@ -68,9 +69,11 @@ func getEncodeString(id, number uint32) string {
 	verify := getVerifyCode16(rc4Number)
 	fmt.Println(" get encode verify ==>  ", verify)
 	code |= uint64(id) << (32 + 16)
+	fmt.Println("code 1 ==> ", code)
 	code |= uint64(verify) << 32
+	fmt.Println("code 2 ==> ", code)
 	code |= uint64(rc4Number)
-	fmt.Println(" code ===> ", code)
+	fmt.Println("code 3 ==> ", code)
 	str := strings.Builder{}
 	var status uint64 = 0x1F
 	for i := 0; i < 12; i++ {
