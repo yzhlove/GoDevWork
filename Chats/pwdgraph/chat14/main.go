@@ -5,6 +5,8 @@ import (
 	"fmt"
 )
 
+//骚操作
+
 func main() {
 
 	var number uint32 = 123456
