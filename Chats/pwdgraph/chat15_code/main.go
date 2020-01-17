@@ -3,6 +3,7 @@ package main
 import (
 	"crypto/rc4"
 	"encoding/binary"
+	"errors"
 	"fmt"
 	"hash/crc32"
 	"math"
@@ -27,12 +28,29 @@ func main() {
 
 	var number uint32 = 223344
 	var id uint32 = 1000
-
-	code, err := generateEncodeCode(generateRedisCode(id, number))
+	//生成兑换码
+	redisCode := generateRedisCode(id, number)
+	fmt.Println("redisCode=>", redisCode)
+	code, err := generateEncodeString(redisCode)
 	if err != nil {
 		panic(err)
 	}
 	fmt.Println("code => ", code)
+
+	newId, newNumber, err := parseDecodeString(code)
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println("id=>", newId, " number=>", newNumber)
+	fmt.Println("newRedisCode=>", generateRedisCode(newId, newNumber))
+
+	/*
+		outPut:
+		redisCode=> 4294967519344
+		code =>  BG77S54WVA4HA
+		id=> 1000  number=> 223344
+		newRedisCode=> 4294967519344
+	*/
 
 }
 
@@ -74,7 +92,7 @@ func generateRedisCode(id, number uint32) uint64 {
 }
 
 //生成兑换码	(兑换码服务器实现)
-func generateEncodeCode(number uint64) (string, error) {
+func generateEncodeString(number uint64) (string, error) {
 	//兑换码组成:	16位ID	16位校验码	32位随机数
 	var code uint64
 	//rc4code
@@ -98,4 +116,44 @@ func generateEncodeCode(number uint64) (string, error) {
 	return str.String(), nil
 }
 
+//获取字典对应字符的下标 (兑换码服务器实现)
+func getDictI(char uint8) int {
+	for i, v := range dict {
+		if v == rune(char) {
+			return i
+		}
+	}
+	return -1
+}
 
+//将兑换码还原成uint64 (兑换码服务器实现)
+func parseDecodeNumber(code string) uint64 {
+	var number uint64
+	for i := 0; i < len(code); i++ {
+		char := uint64(getDictI(code[i]))
+		number |= char << (5 * i)
+	}
+	return number
+}
+
+//解析兑换码	(兑换码服务器实现)
+func parseDecodeString(code string) (id, rc4code uint32, err error) {
+	//验证长度
+	if !checkVerifyCodeLength(code) {
+		err = errors.New("code length is invalid")
+		return
+	}
+	//兑换码->uint64
+	number := parseDecodeNumber(code)
+	//验证验证码
+	if !checkVerifyCode(number) {
+		err = errors.New("verify id invalid")
+		return
+	}
+	//rc4decode
+	if rc4code, err = generateRC4Code(uint32(number)); err != nil {
+		return
+	}
+	id = uint32(number >> 48)
+	return
+}
