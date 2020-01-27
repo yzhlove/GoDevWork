@@ -8,7 +8,7 @@ import (
 func New(typ string) Cache {
 
 	var c Cache
-	if typ == "inmemory" {
+	if typ == "IN_MEMORY" {
 		c = newInMemoryCache()
 	}
 	if c == nil {
