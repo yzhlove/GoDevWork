@@ -1,0 +1,13 @@
+PUT http://localhost:1234/cache/testkey/testvalue
+
+###
+
+GET http://localhost:1234/cache/testkey
+
+###
+GET http://localhost:1234/status
+
+###
+DELETE http://localhost:1234/cache/testkey
+
+###

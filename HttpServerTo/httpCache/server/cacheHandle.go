@@ -20,7 +20,9 @@ func getUrls(r *http.Request) (key, value string, err error) {
 	path := r.URL.EscapedPath()
 	params := make([]string, 0, 2)
 	for _, v := range strings.Split(path, "/") {
-		params = append(params, strings.Trim(v, " "))
+		if len(v) > 0 {
+			params = append(params, strings.Trim(v, " "))
+		}
 	}
 	if len(params) > 3 || len(params) < 1 {
 		err = errors.New("invalid url")
@@ -38,6 +40,7 @@ func (h *cacheHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	key, value, err := getUrls(r)
 	if err != nil {
 		w.WriteHeader(http.StatusForbidden)
+		log.Println(err)
 		return
 	}
 	switch r.Method {
