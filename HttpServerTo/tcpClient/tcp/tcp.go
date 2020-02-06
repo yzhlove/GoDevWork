@@ -104,6 +104,7 @@ func (c *TcpClient) RunPipeline(rs []*Result) {
 		}
 		for _, result := range rs {
 			result.Value, result.Err = c.recv()
+			fmt.Println("Result => ", *result)
 		}
 	}
 }
