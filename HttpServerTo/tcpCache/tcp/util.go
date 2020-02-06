@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"net"
 	"strconv"
+	"strings"
 )
 
 func readLen(r *bufio.Reader) (length int, err error) {
@@ -12,7 +13,7 @@ func readLen(r *bufio.Reader) (length int, err error) {
 	if err != nil {
 		return
 	}
-	length, err = strconv.Atoi(lenStr)
+	length, err = strconv.Atoi(strings.TrimSpace(lenStr))
 	return
 }
 

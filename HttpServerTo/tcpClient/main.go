@@ -1,0 +1,11 @@
+package main
+
+import "WorkSpace/GoDevWork/HttpServerTo/tcpClient/tcp"
+
+func main() {
+	cli := tcp.New()
+	cli.Run(&tcp.Result{Opt: "set", Key: "yzh", Value: "1996"})
+	cli.Run(&tcp.Result{Opt: "get", Key: "yzh"})
+	cli.Run(&tcp.Result{Opt: "del", Key: "yzh"})
+	cli.Run(&tcp.Result{Opt: "get", Key: "yzh"})
+}

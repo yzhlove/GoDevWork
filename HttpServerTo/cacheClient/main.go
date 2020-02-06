@@ -2,6 +2,7 @@ package main
 
 import (
 	"WorkSpace/GoDevWork/HttpServerTo/cacheClient/client"
+	"flag"
 	"fmt"
 	"time"
 )
@@ -93,10 +94,36 @@ func pipeline(c client.Client, msgs []*client.Message, r *result) {
 }
 
 func operator(id, count int, ch chan *result) {
-
+	//c := client.New(typ, server)
+	//cmds := []*client.Client{}
+	//valueStr := strings.Repeat("a", valueSize)
+	//r := &result{0, 0, 0, []statistic{}}
+	//for i := 0 ;i < count;i++ {
+	//	var tmp int
+	//	if keyspacelen > 0 {
+	//		tmp = rand.Intn(keyspacelen)
+	//	} else {
+	//		tmp = id * count + i
+	//	}
+	//	key := fmt.Sprintf("%d",tmp)
+	//	value := fmt.Sprintf("%s%d",valueStr,tmp)
+	//
+	//}
 }
 
+var (
+	server, operation string
+	typ               int
+	valueSize         int
+	threads           int
+	keyspacelen       int
+	pipelen           int
+)
+
 func init() {
+	flag.IntVar(&typ, "type", client.RedisClient, "cache server type")
+	flag.StringVar(&server, "h", "localhost", "ip address")
+	flag.StringVar(&operation, "t", "set", "test set")
 
 }
 
