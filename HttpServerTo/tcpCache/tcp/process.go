@@ -42,7 +42,7 @@ func (s *Server) process(conn net.Conn) {
 	for {
 		opt, err := in.ReadByte()
 		if err != nil {
-			if err == io.EOF {
+			if err != io.EOF {
 				log.Println("close connection err: " + err.Error())
 			}
 			return
