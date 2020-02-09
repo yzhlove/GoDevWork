@@ -1,9 +1,5 @@
 package main
 
-import (
-	"github.com/unknwon/goconfig"
-)
-
 func main() {
 	c, err := goconfig.LoadConfigFile("./goconfig.ini")
 	if err != nil {

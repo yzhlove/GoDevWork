@@ -26,7 +26,7 @@ func main() {
 	}
 
 	fmt.Println()
-
+	fmt.Println("members ======> ", hash.Members())
 	hash.Remove("A")
 	hash.Remove("C")
 
