@@ -88,13 +88,14 @@ func (s *Server) process(conn net.Conn) {
 		}
 		switch opt {
 		case 'G':
-
+			s.get(resultCh, reader)
 		case 'S':
-
+			s.set(resultCh, reader)
 		case 'D':
-
+			s.del(resultCh, reader)
 		default:
-
+			log.Println("unknown operator: ", opt)
+			return
 		}
 	}
 }
