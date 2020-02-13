@@ -1,0 +1,11 @@
+syntax = "proto3";
+package proto;
+
+message String {
+    string Var = 1;
+}
+
+service HelloServiceInterface {
+    rpc Hello (String) returns (String);
+    rpc Channel (stream String) returns (stream String);
+}

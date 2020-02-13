@@ -1,0 +1,10 @@
+syntax = "proto3";
+package proto;
+message String {
+    string value = 1;
+}
+service HelloServiceInterface {
+    rpc Hello (String) returns (String);
+}
+
+//protoc --go_out=plugins=grpc:. hello.proto
