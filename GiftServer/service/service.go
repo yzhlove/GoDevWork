@@ -24,6 +24,7 @@ func Run(service ServiceInterface, sig ...os.Signal) (err error) {
 	if len(sig) == 0 {
 		sig = []os.Signal{syscall.SIGINT, syscall.SIGTERM}
 	}
+
 	signalChan := make(chan os.Signal, 1)
 	signalNotify(signalChan, sig...)
 	<-signalChan
