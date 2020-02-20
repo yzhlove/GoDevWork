@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package proto;
+
+message String {
+    string Var = 1;
+}
+
+service PubSubServiceInterface {
+    rpc Pub (String) returns (String);
+    rpc Sub (String) returns (stream String);
+}

@@ -4,6 +4,7 @@ go 1.13
 
 require (
 	github.com/garyburd/redigo v1.6.0
+	github.com/gogo/protobuf v1.3.1
 	github.com/golang/protobuf v1.3.3
 	github.com/hashicorp/memberlist v0.1.6
 	github.com/moby/moby v1.13.1
