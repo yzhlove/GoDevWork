@@ -20,6 +20,7 @@ func main() {
 		panic(err)
 	}
 
+	defer stream.CloseSend()
 	for {
 		result, err := stream.Recv()
 		if err != nil {
