@@ -8,7 +8,9 @@ require (
 	github.com/golang/protobuf v1.3.3
 	github.com/hashicorp/memberlist v0.1.6
 	github.com/moby/moby v1.13.1
+	github.com/philhofer/fwd v1.0.0 // indirect
 	github.com/sirupsen/logrus v1.4.2
+	github.com/tinylib/msgp v1.1.1
 	google.golang.org/grpc v1.27.1
 	stathat.com/c/consistent v1.0.0
 )

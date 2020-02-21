@@ -3,6 +3,7 @@ package app
 import (
 	"WorkSpace/GoDevWork/GiftServer/config"
 	"WorkSpace/GoDevWork/GiftServer/db"
+	"WorkSpace/GoDevWork/GiftServer/entity"
 	pb "WorkSpace/GoDevWork/GiftServer/proto"
 	"WorkSpace/GoDevWork/GiftServer/pubsub"
 	log "github.com/sirupsen/logrus"
@@ -27,6 +28,11 @@ func (p *app) Init() error {
 
 	//redis
 	if err := db.Init(); err != nil {
+		return err
+	}
+
+	//entity
+	if err := entity.Init(); err != nil {
 		return err
 	}
 

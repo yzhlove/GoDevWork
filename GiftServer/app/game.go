@@ -1,6 +1,7 @@
 package app
 
 import (
+	"WorkSpace/GoDevWork/GiftServer/entity"
 	"WorkSpace/GoDevWork/GiftServer/manager"
 	pb "WorkSpace/GoDevWork/GiftServer/proto"
 	"WorkSpace/GoDevWork/GiftServer/pubsub"
@@ -8,7 +9,7 @@ import (
 )
 
 func (p *app) CodeVerify(_ context.Context, req *pb.VerifyReq) (*pb.VerifyResp, error) {
-	resp := &pb.VerifyResp{Status: -1}
+	resp := &pb.VerifyResp{Status: 1}
 	if manager.CodeVerify(req.UserId, req.Zone, req.Code) {
 		resp.Status = 0
 	}
@@ -19,13 +20,9 @@ func (p *app) Sync(req *pb.SyncReq, stream pb.GiftService_SyncServer) error {
 
 	channel, ok := pubsub.Sub(req.Zone)
 	if !ok {
-		codes, err := manager.GetCodeInfoList(req.Zone)
-		if err != nil {
-			return err
-		}
 		go func() {
-			for i := range codes {
-				channel <- codes[i]
+			for _, code := range entity.Entity.CodesMap {
+				channel <- manager.GeneratePtoCodeMessage(code)
 			}
 		}()
 	}

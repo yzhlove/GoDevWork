@@ -1,13 +1,15 @@
 package helper
 
-import "testing"
+import (
+	"testing"
+)
 
 func Test_EncodeAndDecode(t *testing.T) {
 
 	id := 1
-	num := uint64(223344)
+	num := int64(223344)
 
-	code := Encode(id, num)
+	code := Encode(uint32(id), num)
 	t.Log("code => ", code)
 
 	old, ok := Decode(code)

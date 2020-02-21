@@ -1,13 +1,21 @@
 package app
 
 import (
+	"WorkSpace/GoDevWork/GiftServer/manager"
 	pb "WorkSpace/GoDevWork/GiftServer/proto"
+	"WorkSpace/GoDevWork/GiftServer/pubsub"
 	"context"
 )
 
 func (p *app) Generate(_ context.Context, req *pb.Manager_GenReq) (*pb.Manager_Nil, error) {
 
-	//pubsub.Pub(req.ZoneIds, req)
+	message, err := manager.GenerateCodeInfo(req)
+	if err != nil {
+		return nil, err
+	}
+
+	pubsub.Pub(req.ZoneIds, message)
+
 	return &pb.Manager_Nil{}, nil
 }
 

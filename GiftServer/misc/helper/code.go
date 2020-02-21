@@ -1,6 +1,7 @@
 package helper
 
 import (
+	"WorkSpace/GoDevWork/GiftServer/config"
 	"hash/crc32"
 	"strconv"
 )
@@ -15,9 +16,13 @@ var (
 	_codelen = uint64(len(_code))
 )
 
-func Encode(id int, num uint64) uint64 {
-	verifyCode := crc32.ChecksumIEEE([]byte(strconv.FormatUint(num, 10) + slot))
-	return (uint64(id) << 54) | (num << 12) | uint64(verifyCode%code)
+func GetBucketTop(code string) int {
+	return int(crc32.ChecksumIEEE([]byte(code)) % config.BucketMax)
+}
+
+func Encode(id uint32, num int64) uint64 {
+	verifyCode := crc32.ChecksumIEEE([]byte(strconv.FormatInt(num, 10) + slot))
+	return (uint64(id) << 54) | uint64(num<<12) | uint64(verifyCode%code)
 }
 
 func Decode(num uint64) (id uint32, ok bool) {

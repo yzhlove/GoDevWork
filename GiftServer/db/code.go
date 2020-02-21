@@ -1,40 +1,51 @@
 package db
 
 import (
+	"WorkSpace/GoDevWork/GiftServer/misc/helper"
 	"WorkSpace/GoDevWork/GiftServer/obj"
 	"github.com/garyburd/redigo/redis"
+	"strconv"
 	"time"
 )
 
-func SetCodeInfoList(infos []obj.CodeInfo) error {
+func SetCodeInfo(code *obj.CodeInfo) error {
+
 	c := RedisClient.Get()
 	defer c.Close()
-	codes := make(map[uint32][]byte, 4)
-	for _, code := range infos {
-		if data, err := code.MarshalMsg(nil); err != nil {
+
+	data, err := code.MarshalMsg(nil)
+	if err != nil {
+		return err
+	}
+	if err := c.Send("HMSET", buildKey("CodeInfoList"), data); err != nil {
+		return err
+	}
+	if err := incrMaxId(c); err != nil {
+		return err
+	}
+	_ = c.Flush()
+	for i := 0; i < 2; i++ {
+		if _, err := c.Receive(); err != nil {
 			return err
-		} else {
-			codes[code.Id] = data
 		}
 	}
-	_, err := c.Do("HMSET", redis.Args{}.Add("CodeInfoList").AddFlat(codes)...)
-	return err
+	return nil
 }
 
-func GetCodeInfoList() (map[uint32]obj.CodeInfo, error) {
+func GetCodeInfoList() (map[uint32]*obj.CodeInfo, error) {
 
 	c := RedisClient.Get()
 	defer c.Close()
 
-	data, err := redis.ByteSlices(c.Do("HVALS", "CodeInfoList"))
+	data, err := redis.ByteSlices(c.Do("HVALS", buildKey("CodeInfoList")))
 	if err != nil {
 		return nil, err
 	}
 	ts := time.Now().Unix()
-	codes := make(map[uint32]obj.CodeInfo, len(data))
+	codes := make(map[uint32]*obj.CodeInfo, len(data))
 	ids := make([]uint32, 0, len(codes))
 	for _, v := range data {
-		var code obj.CodeInfo
+		code := &obj.CodeInfo{}
 		if _, err = code.UnmarshalMsg(v); err != nil {
 			return nil, err
 		}
@@ -54,19 +65,59 @@ func DelCodeInfoList(ids []uint32) error {
 	c := RedisClient.Get()
 	defer c.Close()
 
-	_, err := c.Do("HMDEL", redis.Args{}.Add("CodeInfoList").AddFlat(ids)...)
+	_, err := c.Do("HMDEL", redis.Args{}.Add(buildKey("CodeInfoList")).AddFlat(ids)...)
 	return err
 }
 
-func GetCodeInfo(id uint32) (code obj.CodeInfo, err error) {
+func SetCodes(id uint32, codes map[int][]string) error {
+	c := RedisClient.Get()
+	defer c.Close()
+	for key, value := range codes {
+		if _, err := c.Do("HMSET", redis.Args{}.Add(buildBucketKey("Codes", id, strconv.Itoa(key))).AddFlat(value)...); err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+func ExistsCode(id uint32, code string) (bool, error) {
 	c := RedisClient.Get()
 	defer c.Close()
 
-	data, err := redis.Bytes(c.Do("HGET", "CodeInfoList", id))
-	if err != nil {
-		return obj.CodeInfo{}, err
-	}
-	_, err = code.UnmarshalMsg(data)
-	return
+	i := strconv.Itoa(helper.GetBucketTop(code))
+	return redis.Bool(c.Do("HEXISTS", buildBucketKey("Codes", id, i)))
 }
+
+func GetCodeTimes(id uint32, code string) (int, error) {
+	c := RedisClient.Get()
+	defer c.Close()
+
+	i := strconv.Itoa(helper.GetBucketTop(code))
+	return redis.Int(c.Do("HGET", buildBucketKey("Codes", id, i), code))
+}
+
+func IncrCodeTimes(id uint32, code string) (int, error) {
+	c := RedisClient.Get()
+	defer c.Close()
+	i := strconv.Itoa(helper.GetBucketTop(code))
+	return redis.Int(c.Do("HINCRBY", buildBucketKey("Codes", id, i), 1))
+}
+
+func IsUseCode(uid uint64, id uint32, code string) (bool, error) {
+	c := RedisClient.Get()
+	defer c.Close()
+
+	sid := strconv.FormatUint(uint64(id), 10)
+	return redis.Bool(c.Do("SISMEMBER", buildUserKey("UserCodes", uid, sid), code))
+}
+
+func SetUserCode(uid uint64, id uint32, code string) error {
+	c := RedisClient.Get()
+	defer c.Close()
+
+	sid := strconv.FormatUint(uint64(id), 10)
+	_, err := c.Do("SADD", buildUserKey("UserCodes", uid, sid), code)
+	return err
+}
+
 

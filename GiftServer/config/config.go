@@ -1,5 +1,9 @@
 package config
 
+const (
+	BucketMax = 10
+)
+
 var (
 	Listen               = ":53000"
 	MaxConcurrentStreams = uint32(1024)
