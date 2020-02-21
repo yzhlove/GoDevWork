@@ -68,7 +68,10 @@ func CodeVerify(uid uint64, zone uint32, code string) (bool, error) {
 	}
 
 	//设置code为已使用状态
-
+	if err := db.SetUseCode(uid, id, code); err != nil {
+		return false, err
+	}
+	return true, nil
 }
 
 func GeneratePtoCodeMessage(code *obj.CodeInfo) *pb.Manager_CodeInfo {

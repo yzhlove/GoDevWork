@@ -96,12 +96,12 @@ func GetCodeTimes(id uint32, code string) (int, error) {
 	return redis.Int(c.Do("HGET", buildBucketKey("Codes", id, i), code))
 }
 
-func IncrCodeTimes(id uint32, code string) (int, error) {
-	c := RedisClient.Get()
-	defer c.Close()
-	i := strconv.Itoa(helper.GetBucketTop(code))
-	return redis.Int(c.Do("HINCRBY", buildBucketKey("Codes", id, i), 1))
-}
+//func incrCodeTimes(id uint32, code string) (int, error) {
+//	c := RedisClient.Get()
+//	defer c.Close()
+//	i := strconv.Itoa(helper.GetBucketTop(code))
+//	return redis.Int(c.Do("HINCRBY", buildBucketKey("Codes", id, i), 1))
+//}
 
 func IsUseCode(uid uint64, id uint32, code string) (bool, error) {
 	c := RedisClient.Get()
@@ -111,13 +111,32 @@ func IsUseCode(uid uint64, id uint32, code string) (bool, error) {
 	return redis.Bool(c.Do("SISMEMBER", buildUserKey("UserCodes", uid, sid), code))
 }
 
-func SetUserCode(uid uint64, id uint32, code string) error {
+//func setUserCode(uid uint64, id uint32, code string) error {
+//	c := RedisClient.Get()
+//	defer c.Close()
+//
+//	sid := strconv.FormatUint(uint64(id), 10)
+//	_, err := c.Do("SADD", buildUserKey("UserCodes", uid, sid), code)
+//	return err
+//}
+
+func SetUseCode(uid uint64, id uint32, code string) error {
 	c := RedisClient.Get()
 	defer c.Close()
 
+	i := strconv.Itoa(helper.GetBucketTop(code))
 	sid := strconv.FormatUint(uint64(id), 10)
-	_, err := c.Do("SADD", buildUserKey("UserCodes", uid, sid), code)
-	return err
+	if err := c.Send("HINCRBY", buildBucketKey("Codes", id, i), 1); err != nil {
+		return err
+	}
+	if err := c.Send("SADD", buildUserKey("UserCodes", uid, sid), code); err != nil {
+		return err
+	}
+	_ = c.Flush()
+	for i := 0; i < 2; i++ {
+		if _, err := c.Receive(); err != nil {
+			return err
+		}
+	}
+	return nil
 }
-
-

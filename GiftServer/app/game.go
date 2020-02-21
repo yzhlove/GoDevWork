@@ -10,7 +10,9 @@ import (
 
 func (p *app) CodeVerify(_ context.Context, req *pb.VerifyReq) (*pb.VerifyResp, error) {
 	resp := &pb.VerifyResp{Status: 1}
-	if manager.CodeVerify(req.UserId, req.Zone, req.Code) {
+	if ok, err := manager.CodeVerify(req.UserId, req.Zone, req.Code); err != nil {
+		return nil, err
+	} else if ok {
 		resp.Status = 0
 	}
 	return resp, nil
