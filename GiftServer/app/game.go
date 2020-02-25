@@ -1,11 +1,12 @@
 package app
 
 import (
-	"WorkSpace/GoDevWork/GiftServer/entity"
 	"WorkSpace/GoDevWork/GiftServer/manager"
 	pb "WorkSpace/GoDevWork/GiftServer/proto"
 	"WorkSpace/GoDevWork/GiftServer/pubsub"
 	"context"
+	"errors"
+	"io"
 )
 
 func (p *app) CodeVerify(_ context.Context, req *pb.VerifyReq) (*pb.VerifyResp, error) {
@@ -20,24 +21,17 @@ func (p *app) CodeVerify(_ context.Context, req *pb.VerifyReq) (*pb.VerifyResp, 
 
 func (p *app) Sync(req *pb.SyncReq, stream pb.GiftService_SyncServer) error {
 
-	channel, ok := pubsub.Sub(req.Zone)
-	if !ok {
-		go func() {
-			for _, code := range entity.Entity.CodesMap {
-				channel <- manager.GeneratePtoCodeMessage(code)
-			}
-		}()
-	}
+	stream.Context()
 
-	defer pubsub.CloseChan(req.Zone)
-
-	for msg := range channel {
+	for msg := range pubsub.Sub(req.Zone) {
 		if code, ok := msg.(*pb.Manager_CodeInfo); ok {
 			if err := stream.Send(code); err != nil {
+				if errors.Is(err, io.EOF) {
+					break
+				}
 				return err
 			}
 		}
 	}
-
 	return nil
 }

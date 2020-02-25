@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+package proto;
+
+
+message Manager {
+    message Msg {
+        uint32 Zone = 1;
+        string Var = 2;
+    }
+    message Zone {
+        uint32 Var = 1;
+    }
+    message Nil {
+    }
+}
+
+service PubSubServiceInterface {
+    rpc Pub (Manager.Msg) returns (Manager.Nil);
+    rpc Sub (Manager.Zone) returns (stream
+Manager.Msg);
+}
+
+
