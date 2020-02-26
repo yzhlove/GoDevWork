@@ -5,8 +5,6 @@ import (
 	pb "WorkSpace/GoDevWork/GiftServer/proto"
 	"WorkSpace/GoDevWork/GiftServer/pubsub"
 	"context"
-	"errors"
-	"io"
 )
 
 func (p *app) CodeVerify(_ context.Context, req *pb.VerifyReq) (*pb.VerifyResp, error) {
@@ -21,17 +19,23 @@ func (p *app) CodeVerify(_ context.Context, req *pb.VerifyReq) (*pb.VerifyResp, 
 
 func (p *app) Sync(req *pb.SyncReq, stream pb.GiftService_SyncServer) error {
 
-	stream.Context()
-
-	for msg := range pubsub.Sub(req.Zone) {
-		if code, ok := msg.(*pb.Manager_CodeInfo); ok {
-			if err := stream.Send(code); err != nil {
-				if errors.Is(err, io.EOF) {
-					break
+	c := pubsub.Sub(req.Zone)
+	ctx := stream.Context()
+	for {
+		select {
+		case msg, ok := <-c.MsgChan:
+			if ok {
+				if code, ok := msg.(*pb.Manager_CodeInfo); ok {
+					if err := stream.Send(code); err != nil {
+						return err
+					}
 				}
-				return err
+			} else {
+				return nil
 			}
+		case <-ctx.Done():
+			pubsub.Close(c)
+			return nil
 		}
 	}
-	return nil
 }
