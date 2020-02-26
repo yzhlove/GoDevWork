@@ -13,7 +13,7 @@ import (
 
 func GenerateCodeInfo(req *pb.Manager_GenReq) (*pb.Manager_CodeInfo, error) {
 
-	id := entity.Entity.MaxId
+	id := entity.GetMaxId()
 	generate, err := helper.GenerateCode(id, req.Num)
 	if err != nil {
 		return nil, err

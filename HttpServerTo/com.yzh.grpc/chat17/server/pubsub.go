@@ -36,7 +36,7 @@ func (q *Queue) Sub(z uint32) *Manager {
 		Ch:   make(chan interface{}, Max),
 		Exit: make(chan struct{}),
 	}
-	ipc := make(chan interface{}, Max)
+	ipc := make(chan interface{})
 	q.Lock()
 	q.sub[manager] = z
 	q.Unlock()
@@ -72,10 +72,12 @@ func sendFirstMsg(ipc chan interface{}, manager *Manager) {
 			}
 		}
 	}()
+	fmt.Println("=========== send message ")
 	for _, s := range getMsgList() {
 		ipc <- s
 		time.Sleep(5 * time.Second)
 	}
+	fmt.Println("============ send message ok .  ")
 }
 
 func getMsgList() []*proto.Manager_Msg {

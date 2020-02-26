@@ -15,7 +15,7 @@ func CodeVerify(uid uint64, zone uint32, code string) (bool, error) {
 	exists := false
 	if !ok {
 		//是否是固定code
-		if id, ok = entity.Entity.FixCodesMap[code]; !ok {
+		if id, ok = entity.GetFixCodeId(code); !ok {
 			return false, errors.New("code is invalid :" + code)
 		}
 		exists = true
@@ -33,7 +33,7 @@ func CodeVerify(uid uint64, zone uint32, code string) (bool, error) {
 	}
 
 	//获取code的详细信息
-	base, ok := entity.Entity.CodesMap[id]
+	base, ok := entity.GetCodesMap()[id]
 	if !ok {
 		return false, errors.New("id is invalid:" + strconv.Itoa(int(id)))
 	}
