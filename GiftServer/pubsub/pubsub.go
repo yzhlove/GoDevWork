@@ -11,6 +11,7 @@ const Max = 16
 type Content struct {
 	MsgChan  chan interface{}
 	StopChan chan struct{}
+	CloseCh  chan struct{}
 }
 
 type PubSub struct {
@@ -47,42 +48,37 @@ func Sub(z uint32) *Content {
 	c := &Content{
 		MsgChan:  make(chan interface{}, Max),
 		StopChan: make(chan struct{}),
+		CloseCh:  make(chan struct{}),
 	}
-	post := make(chan interface{}, Max)
 	_pubsub.Lock()
 	_pubsub.queue[c] = z
 	_pubsub.Unlock()
-	go postCodeMessage(post, c)
+	go postCodeMessage(c)
 	return c
 }
 
 func Close(c *Content) {
-	close(c.StopChan)
-	close(c.MsgChan)
 	if _, ok := _pubsub.queue[c]; ok {
 		_pubsub.Lock()
 		delete(_pubsub.queue, c)
 		_pubsub.Unlock()
 	}
-}
-
-func postCodeMessage(post chan interface{}, c *Content) {
-	defer close(post)
 	go func() {
-		for {
-			select {
-			case inter, ok := <-post:
-				if ok {
-					c.MsgChan <- inter
-				} else {
-					return
-				}
-			case <-c.StopChan:
-				return
-			}
+		select {
+		case <-c.CloseCh:
+			close(c.MsgChan)
 		}
 	}()
+	close(c.StopChan)
+}
+
+func postCodeMessage(c *Content) {
+	defer close(c.CloseCh)
 	for _, code := range entity.GetCodesMap() {
-		post <- manager.GeneratePtoCodeMessage(code)
+		select {
+		case <-c.StopChan:
+			return
+		case c.MsgChan <- manager.GeneratePtoCodeMessage(code):
+		}
 	}
 }

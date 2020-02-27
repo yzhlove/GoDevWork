@@ -1,6 +1,7 @@
 package helper
 
 import (
+	log "github.com/sirupsen/logrus"
 	"math/rand"
 	"time"
 )
@@ -20,6 +21,7 @@ func GenerateCode(id, count uint32) (chan int64, error) {
 	generate := make(chan int64, 256)
 	status := make(map[int64]struct{}, 128)
 	go func() {
+		defer close(generate)
 		var index uint32
 		for {
 			if index >= count {
@@ -31,6 +33,7 @@ func GenerateCode(id, count uint32) (chan int64, error) {
 			}
 			status[number] = struct{}{}
 			generate <- number
+			log.Info("set number ==> ", number)
 			index++
 		}
 	}()

@@ -5,6 +5,7 @@ import (
 	pb "WorkSpace/GoDevWork/GiftServer/proto"
 	"WorkSpace/GoDevWork/GiftServer/pubsub"
 	"context"
+	log "github.com/sirupsen/logrus"
 )
 
 func (p *app) CodeVerify(_ context.Context, req *pb.VerifyReq) (*pb.VerifyResp, error) {
@@ -18,7 +19,7 @@ func (p *app) CodeVerify(_ context.Context, req *pb.VerifyReq) (*pb.VerifyResp, 
 }
 
 func (p *app) Sync(req *pb.SyncReq, stream pb.GiftService_SyncServer) error {
-
+	log.Info("new stream to ", req.Zone)
 	c := pubsub.Sub(req.Zone)
 	ctx := stream.Context()
 	for {
@@ -35,6 +36,7 @@ func (p *app) Sync(req *pb.SyncReq, stream pb.GiftService_SyncServer) error {
 			}
 		case <-ctx.Done():
 			pubsub.Close(c)
+			log.Error("close stream ...")
 			return nil
 		}
 	}

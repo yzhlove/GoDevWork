@@ -17,7 +17,7 @@ func SetCodeInfo(code *obj.CodeInfo) error {
 	if err != nil {
 		return err
 	}
-	if err := c.Send("HMSET", buildKey("CodeInfoList"), data); err != nil {
+	if err := c.Send("HSET", buildKey("CodeInfoList"), code.Id, data); err != nil {
 		return err
 	}
 	if err := incrMaxId(c); err != nil {
@@ -73,7 +73,11 @@ func SetCodes(id uint32, codes map[int][]string) error {
 	c := RedisClient.Get()
 	defer c.Close()
 	for key, value := range codes {
-		if _, err := c.Do("HMSET", redis.Args{}.Add(buildBucketKey("Codes", id, strconv.Itoa(key))).AddFlat(value)...); err != nil {
+		status := make(map[string]int, len(value))
+		for _, v := range value {
+			status[v] = 0
+		}
+		if _, err := c.Do("HMSET", redis.Args{}.Add(buildBucketKey("Codes", id, strconv.Itoa(key))).AddFlat(status)...); err != nil {
 			return err
 		}
 	}
@@ -96,13 +100,6 @@ func GetCodeTimes(id uint32, code string) (int, error) {
 	return redis.Int(c.Do("HGET", buildBucketKey("Codes", id, i), code))
 }
 
-//func incrCodeTimes(id uint32, code string) (int, error) {
-//	c := RedisClient.Get()
-//	defer c.Close()
-//	i := strconv.Itoa(helper.GetBucketTop(code))
-//	return redis.Int(c.Do("HINCRBY", buildBucketKey("Codes", id, i), 1))
-//}
-
 func IsUseCode(uid uint64, id uint32, code string) (bool, error) {
 	c := RedisClient.Get()
 	defer c.Close()
@@ -110,15 +107,6 @@ func IsUseCode(uid uint64, id uint32, code string) (bool, error) {
 	sid := strconv.FormatUint(uint64(id), 10)
 	return redis.Bool(c.Do("SISMEMBER", buildUserKey("UserCodes", uid, sid), code))
 }
-
-//func setUserCode(uid uint64, id uint32, code string) error {
-//	c := RedisClient.Get()
-//	defer c.Close()
-//
-//	sid := strconv.FormatUint(uint64(id), 10)
-//	_, err := c.Do("SADD", buildUserKey("UserCodes", uid, sid), code)
-//	return err
-//}
 
 func SetUseCode(uid uint64, id uint32, code string) error {
 	c := RedisClient.Get()

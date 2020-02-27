@@ -15,17 +15,19 @@ func main() {
 		panic(err)
 	}
 	client := proto.NewGiftServiceClient(conn)
-	stream, err := client.Sync(context.Background(),
-		&proto.SyncReq{Zone: 1})
+	_, err = client.Generate(context.Background(), &proto.Manager_GenReq{
+		FixCode:      "abcdefg",
+		Num:          10,
+		StartTime:    0,
+		EndTime:      0,
+		TimesPerCode: 0,
+		TimesPerUser: 0,
+		ZoneIds:      nil,
+		Items:        nil,
+	})
 	if err != nil {
 		panic(err)
 	}
-	defer stream.CloseSend()
-	for {
-		msg, err := stream.Recv()
-		if err != nil {
-			panic(err)
-		}
-		fmt.Println("RecvMessage:", msg)
-	}
+	fmt.Println("generate ok !")
+
 }

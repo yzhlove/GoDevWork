@@ -27,6 +27,7 @@ func GenerateCodeInfo(req *pb.Manager_GenReq) (*pb.Manager_CodeInfo, error) {
 
 	code := generateCode(id, req)
 	if err := db.SetCodeInfo(code); err != nil {
+		log.Error("set db err:", err)
 		return nil, err
 	}
 
