@@ -62,6 +62,7 @@ func NewEtcd(endpoints []string, timeout time.Duration) (etcd *Etcd, err error) 
 	return
 }
 
+//根据key获取value
 func (etcd *Etcd) Get(key string) (value []byte, err error) {
 	var resp *clientv3.GetResponse
 	ctx, cancel := context.WithTimeout(context.Background(), etcd.timeout)
@@ -76,6 +77,7 @@ func (etcd *Etcd) Get(key string) (value []byte, err error) {
 	return
 }
 
+//根据key前缀获取value列表
 func (etcd *Etcd) GetPrefixKeys(prefix string) (keys []string, values []string, err error) {
 	var resp *clientv3.GetResponse
 	ctx, cancel := context.WithTimeout(context.Background(), etcd.timeout)
@@ -95,6 +97,7 @@ func (etcd *Etcd) GetPrefixKeys(prefix string) (keys []string, values []string, 
 	return
 }
 
+//根据key前缀获取指定条数
 func (etcd *Etcd) GetLimitKyes(prefix string, limit int64) (keys []string, values []string, err error) {
 	var resp *clientv3.GetResponse
 	ctx, cancel := context.WithTimeout(context.Background(), etcd.timeout)
@@ -114,6 +117,7 @@ func (etcd *Etcd) GetLimitKyes(prefix string, limit int64) (keys []string, value
 	return
 }
 
+//put一个值
 func (etcd *Etcd) Put(key, value string) (err error) {
 	ctx, cancel := context.WithTimeout(context.Background(), etcd.timeout)
 	defer cancel()
@@ -123,6 +127,7 @@ func (etcd *Etcd) Put(key, value string) (err error) {
 	return
 }
 
+//Put一个不存在的值
 func (etcd *Etcd) PutNotExist(key, value string) (success bool, old string, err error) {
 	var txn *clientv3.TxnResponse
 	ctx, cancel := context.WithTimeout(context.Background(), etcd.timeout)
@@ -140,6 +145,7 @@ func (etcd *Etcd) PutNotExist(key, value string) (success bool, old string, err 
 	return
 }
 
+//更新一个已经存在的值
 func (etcd *Etcd) Update(key, value, old string) (success bool, err error) {
 	var txnResp *clientv3.TxnResponse
 	ctx, cancel := context.WithTimeout(context.Background(), etcd.timeout)
@@ -153,6 +159,7 @@ func (etcd *Etcd) Update(key, value, old string) (success bool, err error) {
 	return
 }
 
+//根据key删除
 func (etcd *Etcd) Delete(key string) (err error) {
 	ctx, cancel := context.WithTimeout(context.Background(), etcd.timeout)
 	defer cancel()
@@ -160,6 +167,7 @@ func (etcd *Etcd) Delete(key string) (err error) {
 	return
 }
 
+//根据一个key前缀删除
 func (etcd *Etcd) DeletePrefixKeys(prefix string) (err error) {
 	ctx, cancel := context.WithTimeout(context.Background(), etcd.timeout)
 	defer cancel()
@@ -167,6 +175,7 @@ func (etcd *Etcd) DeletePrefixKeys(prefix string) (err error) {
 	return
 }
 
+//watch 一个key
 func (etcd *Etcd) Watch(key string) (keyChangedEventResp *WatchKeyChangeResponse) {
 	watcher := clientv3.NewWatcher(etcd.cli)
 	watchChans := watcher.Watch(context.Background(), key)
@@ -204,6 +213,7 @@ func (etcd *Etcd) handleKeyChangedEvent(event *clientv3.Event, events chan *KeyC
 	events <- changedEvent
 }
 
+//watch一个key前缀
 func (etcd *Etcd) WatchPrefix(prefix string) (keyChangedEventResp *WatchKeyChangeResponse) {
 	watcher := clientv3.NewWatcher(etcd.cli)
 	watchChans := watcher.Watch(context.Background(), prefix, clientv3.WithPrefix())
@@ -224,6 +234,7 @@ func (etcd *Etcd) WatchPrefix(prefix string) (keyChangedEventResp *WatchKeyChang
 	return
 }
 
+//创建一个指定时间的临时key
 func (etcd *Etcd) TxWithTtl(key, value string, ttl int64) (txResp *TxResponse, err error) {
 	var (
 		txnResp   *clientv3.TxnResponse
@@ -264,6 +275,7 @@ func (etcd *Etcd) TxWithTtl(key, value string, ttl int64) (txResp *TxResponse, e
 	return
 }
 
+//创建一个不间断续约的临时key
 func (etcd *Etcd) TxKeepaliveWithTtl(key, value string, ttl int64) (txResp *TxResponse, err error) {
 	var (
 		txnResp    *clientv3.TxnResponse
