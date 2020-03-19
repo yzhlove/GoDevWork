@@ -7,24 +7,34 @@ import (
 )
 
 var (
-	slot    = "*#06#"
+	slot    = "*#06#" //颜值
 	code    = []rune("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz")
 	codelen = uint64(len(code))
 )
 
 func main() {
 
-	var number uint64 = 123456789
-	n := ToEncodeNumber(number)
-	fmt.Println("toNumber => ", n)
-	c := ToEncodeString(n)
-	fmt.Println("code => ", c)
+	var source uint64 = 123456789
+	//补位
+	newSource := ToEncodeNumber(source)
+	fmt.Printf("source %v \tnewSource %v \n", source, newSource)
+	//编码
+	encodeStr := ToEncodeString(newSource)
+	fmt.Printf("newSource %v \tencodeStr %v \n", newSource, encodeStr)
+	//解码
+	decodeNumber := ToDecodeString(encodeStr)
+	fmt.Printf("encodeStr %v \tdecodeNumber %v \n", encodeStr, decodeNumber)
+	//还原source
+	toSource := ToDecodeNumber(decodeNumber)
+	fmt.Printf("toSource %v \n", toSource)
 
-	c2 := ToDecodeString(c)
-	fmt.Println("c2 ==> ", c2)
-
-	ToDecodeNumber(c2)
-
+	/*
+		output:
+		source 123456789        newSource 18217445214902027264
+		newSource 18217445214902027264  encodeStr 6PNiL1j5khL
+		encodeStr 6PNiL1j5khL   decodeNumber 18217445214902027264
+		toSource 123456789
+	*/
 }
 
 func ToEncodeNumber(num uint64) uint64 {
@@ -32,8 +42,8 @@ func ToEncodeNumber(num uint64) uint64 {
 	checkCode := crc32.ChecksumIEEE([]byte(str)) % (1 << 8)
 	var baseNumber uint64
 	for i := 0; i < 5; i++ {
-		baseNumber <<= uint64(i) * 11
-		baseNumber |= num & (1<<11 - 1)
+		baseNumber <<= 11
+		baseNumber |= num&(1<<10-1) | (1 << 10)
 		num >>= 10
 	}
 	return baseNumber | (1 << 63) | (uint64(checkCode) << 55)
@@ -47,21 +57,6 @@ func ToEncodeString(number uint64) string {
 	}
 	newCode = append(newCode, code[number])
 	return string(newCode)
-}
-
-func ToDecodeNumber(number uint64) uint64 {
-	var baseNumber uint64
-	for i := 0; i < 5; i++ {
-		baseNumber <<= uint64(i) * 10
-		fmt.Printf("%b \n", number)
-		fmt.Printf("nnn ==> %b \n", uint64(1<<10-1))
-		fmt.Println(" result =>  ", number&uint64(1<<10-1))
-		baseNumber |= number & uint64(1<<10-1)
-		fmt.Printf("%b \n", baseNumber)
-		number >>= 11
-	}
-	fmt.Println("baseNumber => ", baseNumber)
-	return 0
 }
 
 func ToDecodeString(code string) (number uint64) {
@@ -78,4 +73,20 @@ func ToDecodeString(code string) (number uint64) {
 		number = number*codelen + post(runes[i-1])
 	}
 	return
+}
+
+func ToDecodeNumber(number uint64) uint64 {
+	var baseNumber uint64
+	for i := 0; i < 5; i++ {
+		baseNumber <<= 10
+		baseNumber |= number & uint64(1<<10-1)
+		number >>= 11
+	}
+	checkCode := number & (1<<8 - 1)
+	str := strconv.FormatUint(baseNumber, 10) + slot
+	getCheckCode := crc32.ChecksumIEEE([]byte(str)) % (1 << 8)
+	if checkCode == uint64(getCheckCode) {
+		return baseNumber
+	}
+	return 0
 }
