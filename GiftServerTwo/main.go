@@ -1,23 +1,15 @@
 package main
 
 import (
-	"fmt"
-	"go.etcd.io/etcd/clientv3"
-	"time"
+	"WorkSpace/GoDevWork/GiftServerTwo/app"
+	"WorkSpace/GoDevWork/GiftServerTwo/service"
+	log "github.com/sirupsen/logrus"
 )
 
 func main() {
 
-	cli, err := clientv3.New(clientv3.Config{
-		Endpoints:   []string{"localhost:2379"},
-		DialTimeout: 5 * time.Second,
-	})
-
-	if err != nil {
-		panic(err)
+	if err := service.Run(app.New()); err != nil {
+		log.Fatal(err)
 	}
-
-	defer cli.Close()
-	fmt.Println("connection ok ...")
-
+	log.Exit(0)
 }

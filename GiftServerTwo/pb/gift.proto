@@ -1,0 +1,63 @@
+syntax = "proto3";
+
+package pb;
+
+message Manager {
+    message Nil {
+    }
+    message Item {
+        uint32 Id = 1;
+        int32 Num = 2;
+    }
+    message GenReq {
+        string FixCode = 1;
+        uint32 Num = 2;
+        int64 StartTime = 3;
+        int64 EndTime = 4;
+        uint32 TimesPerCode = 5;
+        uint32 TimesPerUser = 6;
+        repeated uint32 ZoneIds = 7;
+        repeated Item Items = 8;
+    }
+    message ExportReq {
+        uint32 Id = 1;
+    }
+    message CodeStatus {
+        string Code = 1;
+        int64 UserId = 2;
+        uint32 ZoneId = 3;
+    }
+    message ExportResp {
+        repeated CodeStatus Details = 1;
+    }
+    message CodeInfo {
+        uint32 Id = 1;
+        uint32 Used = 2;
+        GenReq GenInfo = 3;
+    }
+    message ListResp {
+        repeated CodeInfo Details = 1;
+    }
+}
+
+message VerifyReq {
+    string Code = 1;
+    uint32 Zone = 2;
+    uint64 UserId = 3;
+}
+
+message VerifyResp {
+    uint32 Status = 1;
+}
+
+message SyncReq {
+    uint32 Zone = 1;
+}
+
+service GiftService {
+    rpc Sync (SyncReq) returns (stream Manager.CodeInfo);
+    rpc CodeVerify (VerifyReq) returns (VerifyResp);
+    rpc Generate (Manager.GenReq) returns (Manager.Nil);
+    rpc List (Manager.Nil) returns (Manager.ListResp);
+    rpc Export (Manager.ExportReq) returns (Manager.ExportResp);
+}
