@@ -1,6 +1,9 @@
 package main
 
-import "container/list"
+import (
+	"container/list"
+	"fmt"
+)
 
 //////////////////////////////////////////////
 // LFU
@@ -8,9 +11,24 @@ import "container/list"
 
 func main() {
 
-	cacheLFU := New(3)
-	cacheLFU.Set("one", 1)
-	cacheLFU.Set("two", 2)
+	cacheLFU := New(20)
+	cacheLFU.Set("1", 1)
+	cacheLFU.Set("2", 2)
+	cacheLFU.Set("3", 3)
+	cacheLFU.Get("3")
+	cacheLFU.Get("3")
+	cacheLFU.Get("2")
+	cacheLFU.Get("1")
+	for k, e := range cacheLFU.bykey {
+		fmt.Printf("Map -> key:%v Value:%v \n", k, e)
+	}
+
+	fmt.Println("========================")
+
+	for e := cacheLFU.freqs.Front(); e != nil; e = e.Next() {
+		bucket := e.Value.(*FrequencyItem)
+		fmt.Println(bucket.freq, " - ", len(bucket.entries))
+	}
 
 }
 
