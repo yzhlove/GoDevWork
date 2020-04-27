@@ -2,7 +2,8 @@ package geeone
 
 import (
 	"container/list"
-	"github.com/moby/moby/pkg/parsers/kernel"
+	"fmt"
+	"strings"
 )
 
 type Value interface {
@@ -33,7 +34,27 @@ func New(maxBytes int64, onEvicted EvictFunc) *Cache {
 	}
 }
 
-func (c *Cache) Add(key string, value Value) {
+func (e *entry) String() string {
+	return fmt.Sprintf(" key:%v value:%v \n", e.key, e.value)
+}
+
+func (c *Cache) Show() {
+	sb := strings.Builder{}
+	sb.WriteString(fmt.Sprintf("====================[cache]====================\n"))
+	sb.WriteString(fmt.Sprintf("|\tmaxBytes:%d cntBytes:%d \n", c.maxBytes, c.cntBytes))
+	sb.WriteString(fmt.Sprintf("|\tHashMap--> \n"))
+	for key, element := range c.hashMap {
+		sb.WriteString(fmt.Sprintf("|\t\t key:%v  => %v \n", key, element.Value.(*entry).String()))
+	}
+	sb.WriteString(fmt.Sprintf("|\tcacheList--> \n"))
+	for e := c.cacheList.Front(); e != nil; e = e.Next() {
+		sb.WriteString(fmt.Sprintf("|\t\t value:%v \n", e.Value.(*entry).String()))
+	}
+	sb.WriteString(fmt.Sprintf("===============================================\n"))
+	fmt.Print(sb.String())
+}
+
+func (c *Cache) Set(key string, value Value) {
 	if e, ok := c.hashMap[key]; ok {
 		c.cacheList.MoveToFront(e)
 		kv := e.Value.(*entry)
@@ -44,7 +65,7 @@ func (c *Cache) Add(key string, value Value) {
 		c.hashMap[key] = element
 		c.cntBytes += int64(len(key)) + int64(value.Len())
 	}
-	for c.maxBytes != 0 && c.maxBytes > c.cntBytes {
+	for c.maxBytes != 0 && c.maxBytes < c.cntBytes {
 		c.RemoveOldest()
 	}
 }
