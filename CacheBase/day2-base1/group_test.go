@@ -26,7 +26,13 @@ func Test_Get(t *testing.T) {
 	counts := make(map[string]int, len(db))
 	gee := NewGroup("scores", 2<<10, GetterFunc(func(key string) ([]byte, error) {
 		log.Println("[SlowDB] search key", key)
-
+		if v ,ok := db[key];ok {
+			if _ ,ok := counts[key];!ok {
+				counts[key] = 0
+			}
+			counts[key]++
+			return []byte(v) , nil
+		}
 		return nil, nil
 	}))
 }
