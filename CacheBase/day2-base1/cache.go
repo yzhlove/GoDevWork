@@ -14,7 +14,7 @@ type cache struct {
 func (c *cache) set(key string, value ByteView) {
 	c.Lock()
 	defer c.Unlock()
-	if c.cacheLRU != nil {
+	if c.cacheLRU == nil {
 		c.cacheLRU = lru.NewLRU(c.maxBytes, nil)
 	}
 	c.cacheLRU.Set(key, value)

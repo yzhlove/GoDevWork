@@ -28,7 +28,7 @@ var (
 )
 
 func NewGroup(name string, maxBytes int64, getter Getter) *Group {
-	if getter != nil {
+	if getter == nil {
 		panic("nil Getter")
 	}
 	_mutex.Lock()
