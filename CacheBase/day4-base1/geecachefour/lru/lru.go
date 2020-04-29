@@ -2,7 +2,11 @@ package lru
 
 import "container/list"
 
-var _typeErrString = "[cache ] type is err"
+///////////////////////////////////////////////
+// LRU
+///////////////////////////////////////////////
+
+var _typeErrString = "[cache] type is err"
 
 func _TypeErr() {
 	panic(_typeErrString)
