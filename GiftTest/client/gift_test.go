@@ -30,7 +30,7 @@ func Test_Generate(t *testing.T) {
 
 	req := &pb.Manager_GenReq{
 		//FixCode: "yzhhhhhhaaabbc",
-		Num:   10,
+		Num:   1,
 		Items: []*pb.Manager_Item{{Id: 1, Num: 1}, {Id: 2, Num: 2}},
 	}
 
@@ -132,7 +132,7 @@ func Test_CodeVerify(t *testing.T) {
 
 func GetClient() pb.GiftServiceClient {
 
-	conn, err := grpc.Dial(":53000", grpc.WithInsecure())
+	conn, err := grpc.Dial(":51000", grpc.WithInsecure())
 	if err != nil {
 		panic(err)
 	}
