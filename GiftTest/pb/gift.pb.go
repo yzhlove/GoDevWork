@@ -32,7 +32,7 @@ func (m *Manager) Reset()         { *m = Manager{} }
 func (m *Manager) String() string { return proto.CompactTextString(m) }
 func (*Manager) ProtoMessage()    {}
 func (*Manager) Descriptor() ([]byte, []int) {
-	return fileDescriptor_gift_9b72a7143c6ff089, []int{0}
+	return fileDescriptor_gift_037c360db233c7f7, []int{0}
 }
 func (m *Manager) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -68,7 +68,7 @@ func (m *Manager_Nil) Reset()         { *m = Manager_Nil{} }
 func (m *Manager_Nil) String() string { return proto.CompactTextString(m) }
 func (*Manager_Nil) ProtoMessage()    {}
 func (*Manager_Nil) Descriptor() ([]byte, []int) {
-	return fileDescriptor_gift_9b72a7143c6ff089, []int{0, 0}
+	return fileDescriptor_gift_037c360db233c7f7, []int{0, 0}
 }
 func (m *Manager_Nil) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -106,7 +106,7 @@ func (m *Manager_Item) Reset()         { *m = Manager_Item{} }
 func (m *Manager_Item) String() string { return proto.CompactTextString(m) }
 func (*Manager_Item) ProtoMessage()    {}
 func (*Manager_Item) Descriptor() ([]byte, []int) {
-	return fileDescriptor_gift_9b72a7143c6ff089, []int{0, 1}
+	return fileDescriptor_gift_037c360db233c7f7, []int{0, 1}
 }
 func (m *Manager_Item) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -154,17 +154,16 @@ type Manager_GenReq struct {
 	Num          uint32          `protobuf:"varint,2,opt,name=Num,proto3" json:"Num,omitempty"`
 	StartTime    int64           `protobuf:"varint,3,opt,name=StartTime,proto3" json:"StartTime,omitempty"`
 	EndTime      int64           `protobuf:"varint,4,opt,name=EndTime,proto3" json:"EndTime,omitempty"`
-	TimesPerCode uint32          `protobuf:"varint,5,opt,name=TimesPerCode,proto3" json:"TimesPerCode,omitempty"`
-	TimesPerUser uint32          `protobuf:"varint,6,opt,name=TimesPerUser,proto3" json:"TimesPerUser,omitempty"`
-	ZoneIds      []uint32        `protobuf:"varint,7,rep,packed,name=ZoneIds" json:"ZoneIds,omitempty"`
-	Items        []*Manager_Item `protobuf:"bytes,8,rep,name=Items" json:"Items,omitempty"`
+	TimesPerUser uint32          `protobuf:"varint,5,opt,name=TimesPerUser,proto3" json:"TimesPerUser,omitempty"`
+	ZoneIds      []uint32        `protobuf:"varint,6,rep,packed,name=ZoneIds" json:"ZoneIds,omitempty"`
+	Items        []*Manager_Item `protobuf:"bytes,7,rep,name=Items" json:"Items,omitempty"`
 }
 
 func (m *Manager_GenReq) Reset()         { *m = Manager_GenReq{} }
 func (m *Manager_GenReq) String() string { return proto.CompactTextString(m) }
 func (*Manager_GenReq) ProtoMessage()    {}
 func (*Manager_GenReq) Descriptor() ([]byte, []int) {
-	return fileDescriptor_gift_9b72a7143c6ff089, []int{0, 2}
+	return fileDescriptor_gift_037c360db233c7f7, []int{0, 2}
 }
 func (m *Manager_GenReq) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -221,13 +220,6 @@ func (m *Manager_GenReq) GetEndTime() int64 {
 	return 0
 }
 
-func (m *Manager_GenReq) GetTimesPerCode() uint32 {
-	if m != nil {
-		return m.TimesPerCode
-	}
-	return 0
-}
-
 func (m *Manager_GenReq) GetTimesPerUser() uint32 {
 	if m != nil {
 		return m.TimesPerUser
@@ -249,6 +241,50 @@ func (m *Manager_GenReq) GetItems() []*Manager_Item {
 	return nil
 }
 
+type Manager_GenResp struct {
+	Id uint32 `protobuf:"varint,1,opt,name=Id,proto3" json:"Id,omitempty"`
+}
+
+func (m *Manager_GenResp) Reset()         { *m = Manager_GenResp{} }
+func (m *Manager_GenResp) String() string { return proto.CompactTextString(m) }
+func (*Manager_GenResp) ProtoMessage()    {}
+func (*Manager_GenResp) Descriptor() ([]byte, []int) {
+	return fileDescriptor_gift_037c360db233c7f7, []int{0, 3}
+}
+func (m *Manager_GenResp) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *Manager_GenResp) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_Manager_GenResp.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalTo(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (dst *Manager_GenResp) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Manager_GenResp.Merge(dst, src)
+}
+func (m *Manager_GenResp) XXX_Size() int {
+	return m.Size()
+}
+func (m *Manager_GenResp) XXX_DiscardUnknown() {
+	xxx_messageInfo_Manager_GenResp.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_Manager_GenResp proto.InternalMessageInfo
+
+func (m *Manager_GenResp) GetId() uint32 {
+	if m != nil {
+		return m.Id
+	}
+	return 0
+}
+
 type Manager_ExportReq struct {
 	Id uint32 `protobuf:"varint,1,opt,name=Id,proto3" json:"Id,omitempty"`
 }
@@ -257,7 +293,7 @@ func (m *Manager_ExportReq) Reset()         { *m = Manager_ExportReq{} }
 func (m *Manager_ExportReq) String() string { return proto.CompactTextString(m) }
 func (*Manager_ExportReq) ProtoMessage()    {}
 func (*Manager_ExportReq) Descriptor() ([]byte, []int) {
-	return fileDescriptor_gift_9b72a7143c6ff089, []int{0, 3}
+	return fileDescriptor_gift_037c360db233c7f7, []int{0, 4}
 }
 func (m *Manager_ExportReq) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -295,7 +331,7 @@ func (m *Manager_ExportReq) GetId() uint32 {
 
 type Manager_CodeStatus struct {
 	Code   string `protobuf:"bytes,1,opt,name=Code,proto3" json:"Code,omitempty"`
-	UserId int64  `protobuf:"varint,2,opt,name=UserId,proto3" json:"UserId,omitempty"`
+	UserId uint64 `protobuf:"varint,2,opt,name=UserId,proto3" json:"UserId,omitempty"`
 	ZoneId uint32 `protobuf:"varint,3,opt,name=ZoneId,proto3" json:"ZoneId,omitempty"`
 }
 
@@ -303,7 +339,7 @@ func (m *Manager_CodeStatus) Reset()         { *m = Manager_CodeStatus{} }
 func (m *Manager_CodeStatus) String() string { return proto.CompactTextString(m) }
 func (*Manager_CodeStatus) ProtoMessage()    {}
 func (*Manager_CodeStatus) Descriptor() ([]byte, []int) {
-	return fileDescriptor_gift_9b72a7143c6ff089, []int{0, 4}
+	return fileDescriptor_gift_037c360db233c7f7, []int{0, 5}
 }
 func (m *Manager_CodeStatus) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -339,7 +375,7 @@ func (m *Manager_CodeStatus) GetCode() string {
 	return ""
 }
 
-func (m *Manager_CodeStatus) GetUserId() int64 {
+func (m *Manager_CodeStatus) GetUserId() uint64 {
 	if m != nil {
 		return m.UserId
 	}
@@ -361,7 +397,7 @@ func (m *Manager_ExportResp) Reset()         { *m = Manager_ExportResp{} }
 func (m *Manager_ExportResp) String() string { return proto.CompactTextString(m) }
 func (*Manager_ExportResp) ProtoMessage()    {}
 func (*Manager_ExportResp) Descriptor() ([]byte, []int) {
-	return fileDescriptor_gift_9b72a7143c6ff089, []int{0, 5}
+	return fileDescriptor_gift_037c360db233c7f7, []int{0, 6}
 }
 func (m *Manager_ExportResp) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -397,24 +433,24 @@ func (m *Manager_ExportResp) GetDetails() []*Manager_CodeStatus {
 	return nil
 }
 
-type Manager_CodeInfo struct {
+type Manager_GiftInfo struct {
 	Id      uint32          `protobuf:"varint,1,opt,name=Id,proto3" json:"Id,omitempty"`
 	Used    uint32          `protobuf:"varint,2,opt,name=Used,proto3" json:"Used,omitempty"`
 	GenInfo *Manager_GenReq `protobuf:"bytes,3,opt,name=GenInfo" json:"GenInfo,omitempty"`
 }
 
-func (m *Manager_CodeInfo) Reset()         { *m = Manager_CodeInfo{} }
-func (m *Manager_CodeInfo) String() string { return proto.CompactTextString(m) }
-func (*Manager_CodeInfo) ProtoMessage()    {}
-func (*Manager_CodeInfo) Descriptor() ([]byte, []int) {
-	return fileDescriptor_gift_9b72a7143c6ff089, []int{0, 6}
+func (m *Manager_GiftInfo) Reset()         { *m = Manager_GiftInfo{} }
+func (m *Manager_GiftInfo) String() string { return proto.CompactTextString(m) }
+func (*Manager_GiftInfo) ProtoMessage()    {}
+func (*Manager_GiftInfo) Descriptor() ([]byte, []int) {
+	return fileDescriptor_gift_037c360db233c7f7, []int{0, 7}
 }
-func (m *Manager_CodeInfo) XXX_Unmarshal(b []byte) error {
+func (m *Manager_GiftInfo) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *Manager_CodeInfo) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *Manager_GiftInfo) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_Manager_CodeInfo.Marshal(b, m, deterministic)
+		return xxx_messageInfo_Manager_GiftInfo.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalTo(b)
@@ -424,33 +460,33 @@ func (m *Manager_CodeInfo) XXX_Marshal(b []byte, deterministic bool) ([]byte, er
 		return b[:n], nil
 	}
 }
-func (dst *Manager_CodeInfo) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_Manager_CodeInfo.Merge(dst, src)
+func (dst *Manager_GiftInfo) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Manager_GiftInfo.Merge(dst, src)
 }
-func (m *Manager_CodeInfo) XXX_Size() int {
+func (m *Manager_GiftInfo) XXX_Size() int {
 	return m.Size()
 }
-func (m *Manager_CodeInfo) XXX_DiscardUnknown() {
-	xxx_messageInfo_Manager_CodeInfo.DiscardUnknown(m)
+func (m *Manager_GiftInfo) XXX_DiscardUnknown() {
+	xxx_messageInfo_Manager_GiftInfo.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_Manager_CodeInfo proto.InternalMessageInfo
+var xxx_messageInfo_Manager_GiftInfo proto.InternalMessageInfo
 
-func (m *Manager_CodeInfo) GetId() uint32 {
+func (m *Manager_GiftInfo) GetId() uint32 {
 	if m != nil {
 		return m.Id
 	}
 	return 0
 }
 
-func (m *Manager_CodeInfo) GetUsed() uint32 {
+func (m *Manager_GiftInfo) GetUsed() uint32 {
 	if m != nil {
 		return m.Used
 	}
 	return 0
 }
 
-func (m *Manager_CodeInfo) GetGenInfo() *Manager_GenReq {
+func (m *Manager_GiftInfo) GetGenInfo() *Manager_GenReq {
 	if m != nil {
 		return m.GenInfo
 	}
@@ -458,14 +494,14 @@ func (m *Manager_CodeInfo) GetGenInfo() *Manager_GenReq {
 }
 
 type Manager_ListResp struct {
-	Details []*Manager_CodeInfo `protobuf:"bytes,1,rep,name=Details" json:"Details,omitempty"`
+	Details []*Manager_GiftInfo `protobuf:"bytes,1,rep,name=Details" json:"Details,omitempty"`
 }
 
 func (m *Manager_ListResp) Reset()         { *m = Manager_ListResp{} }
 func (m *Manager_ListResp) String() string { return proto.CompactTextString(m) }
 func (*Manager_ListResp) ProtoMessage()    {}
 func (*Manager_ListResp) Descriptor() ([]byte, []int) {
-	return fileDescriptor_gift_9b72a7143c6ff089, []int{0, 7}
+	return fileDescriptor_gift_037c360db233c7f7, []int{0, 8}
 }
 func (m *Manager_ListResp) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -494,24 +530,68 @@ func (m *Manager_ListResp) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_Manager_ListResp proto.InternalMessageInfo
 
-func (m *Manager_ListResp) GetDetails() []*Manager_CodeInfo {
+func (m *Manager_ListResp) GetDetails() []*Manager_GiftInfo {
 	if m != nil {
 		return m.Details
 	}
 	return nil
 }
 
+type Manager_DeleteReq struct {
+	Id uint32 `protobuf:"varint,1,opt,name=Id,proto3" json:"Id,omitempty"`
+}
+
+func (m *Manager_DeleteReq) Reset()         { *m = Manager_DeleteReq{} }
+func (m *Manager_DeleteReq) String() string { return proto.CompactTextString(m) }
+func (*Manager_DeleteReq) ProtoMessage()    {}
+func (*Manager_DeleteReq) Descriptor() ([]byte, []int) {
+	return fileDescriptor_gift_037c360db233c7f7, []int{0, 9}
+}
+func (m *Manager_DeleteReq) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *Manager_DeleteReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_Manager_DeleteReq.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalTo(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (dst *Manager_DeleteReq) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Manager_DeleteReq.Merge(dst, src)
+}
+func (m *Manager_DeleteReq) XXX_Size() int {
+	return m.Size()
+}
+func (m *Manager_DeleteReq) XXX_DiscardUnknown() {
+	xxx_messageInfo_Manager_DeleteReq.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_Manager_DeleteReq proto.InternalMessageInfo
+
+func (m *Manager_DeleteReq) GetId() uint32 {
+	if m != nil {
+		return m.Id
+	}
+	return 0
+}
+
 type VerifyReq struct {
 	Code   string `protobuf:"bytes,1,opt,name=Code,proto3" json:"Code,omitempty"`
 	Zone   uint32 `protobuf:"varint,2,opt,name=Zone,proto3" json:"Zone,omitempty"`
-	UserId int64  `protobuf:"varint,3,opt,name=UserId,proto3" json:"UserId,omitempty"`
+	UserId uint64 `protobuf:"varint,3,opt,name=UserId,proto3" json:"UserId,omitempty"`
 }
 
 func (m *VerifyReq) Reset()         { *m = VerifyReq{} }
 func (m *VerifyReq) String() string { return proto.CompactTextString(m) }
 func (*VerifyReq) ProtoMessage()    {}
 func (*VerifyReq) Descriptor() ([]byte, []int) {
-	return fileDescriptor_gift_9b72a7143c6ff089, []int{1}
+	return fileDescriptor_gift_037c360db233c7f7, []int{1}
 }
 func (m *VerifyReq) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -554,7 +634,7 @@ func (m *VerifyReq) GetZone() uint32 {
 	return 0
 }
 
-func (m *VerifyReq) GetUserId() int64 {
+func (m *VerifyReq) GetUserId() uint64 {
 	if m != nil {
 		return m.UserId
 	}
@@ -569,7 +649,7 @@ func (m *VerifyResp) Reset()         { *m = VerifyResp{} }
 func (m *VerifyResp) String() string { return proto.CompactTextString(m) }
 func (*VerifyResp) ProtoMessage()    {}
 func (*VerifyResp) Descriptor() ([]byte, []int) {
-	return fileDescriptor_gift_9b72a7143c6ff089, []int{2}
+	return fileDescriptor_gift_037c360db233c7f7, []int{2}
 }
 func (m *VerifyResp) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -613,7 +693,7 @@ func (m *SyncReq) Reset()         { *m = SyncReq{} }
 func (m *SyncReq) String() string { return proto.CompactTextString(m) }
 func (*SyncReq) ProtoMessage()    {}
 func (*SyncReq) Descriptor() ([]byte, []int) {
-	return fileDescriptor_gift_9b72a7143c6ff089, []int{3}
+	return fileDescriptor_gift_037c360db233c7f7, []int{3}
 }
 func (m *SyncReq) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -649,19 +729,74 @@ func (m *SyncReq) GetZone() uint32 {
 	return 0
 }
 
+type SyncResp struct {
+	Info   []*Manager_GiftInfo `protobuf:"bytes,1,rep,name=Info" json:"Info,omitempty"`
+	Status uint32              `protobuf:"varint,2,opt,name=Status,proto3" json:"Status,omitempty"`
+}
+
+func (m *SyncResp) Reset()         { *m = SyncResp{} }
+func (m *SyncResp) String() string { return proto.CompactTextString(m) }
+func (*SyncResp) ProtoMessage()    {}
+func (*SyncResp) Descriptor() ([]byte, []int) {
+	return fileDescriptor_gift_037c360db233c7f7, []int{4}
+}
+func (m *SyncResp) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *SyncResp) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_SyncResp.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalTo(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (dst *SyncResp) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_SyncResp.Merge(dst, src)
+}
+func (m *SyncResp) XXX_Size() int {
+	return m.Size()
+}
+func (m *SyncResp) XXX_DiscardUnknown() {
+	xxx_messageInfo_SyncResp.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_SyncResp proto.InternalMessageInfo
+
+func (m *SyncResp) GetInfo() []*Manager_GiftInfo {
+	if m != nil {
+		return m.Info
+	}
+	return nil
+}
+
+func (m *SyncResp) GetStatus() uint32 {
+	if m != nil {
+		return m.Status
+	}
+	return 0
+}
+
 func init() {
 	proto.RegisterType((*Manager)(nil), "pb.Manager")
 	proto.RegisterType((*Manager_Nil)(nil), "pb.Manager.Nil")
 	proto.RegisterType((*Manager_Item)(nil), "pb.Manager.Item")
 	proto.RegisterType((*Manager_GenReq)(nil), "pb.Manager.GenReq")
+	proto.RegisterType((*Manager_GenResp)(nil), "pb.Manager.GenResp")
 	proto.RegisterType((*Manager_ExportReq)(nil), "pb.Manager.ExportReq")
 	proto.RegisterType((*Manager_CodeStatus)(nil), "pb.Manager.CodeStatus")
 	proto.RegisterType((*Manager_ExportResp)(nil), "pb.Manager.ExportResp")
-	proto.RegisterType((*Manager_CodeInfo)(nil), "pb.Manager.CodeInfo")
+	proto.RegisterType((*Manager_GiftInfo)(nil), "pb.Manager.GiftInfo")
 	proto.RegisterType((*Manager_ListResp)(nil), "pb.Manager.ListResp")
+	proto.RegisterType((*Manager_DeleteReq)(nil), "pb.Manager.DeleteReq")
 	proto.RegisterType((*VerifyReq)(nil), "pb.VerifyReq")
 	proto.RegisterType((*VerifyResp)(nil), "pb.VerifyResp")
 	proto.RegisterType((*SyncReq)(nil), "pb.SyncReq")
+	proto.RegisterType((*SyncResp)(nil), "pb.SyncResp")
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -678,9 +813,10 @@ const _ = grpc.SupportPackageIsVersion4
 type GiftServiceClient interface {
 	Sync(ctx context.Context, in *SyncReq, opts ...grpc.CallOption) (GiftService_SyncClient, error)
 	CodeVerify(ctx context.Context, in *VerifyReq, opts ...grpc.CallOption) (*VerifyResp, error)
-	Generate(ctx context.Context, in *Manager_GenReq, opts ...grpc.CallOption) (*Manager_Nil, error)
+	Generate(ctx context.Context, in *Manager_GenReq, opts ...grpc.CallOption) (*Manager_GenResp, error)
 	List(ctx context.Context, in *Manager_Nil, opts ...grpc.CallOption) (*Manager_ListResp, error)
 	Export(ctx context.Context, in *Manager_ExportReq, opts ...grpc.CallOption) (*Manager_ExportResp, error)
+	Delete(ctx context.Context, in *Manager_DeleteReq, opts ...grpc.CallOption) (*Manager_Nil, error)
 }
 
 type giftServiceClient struct {
@@ -707,7 +843,7 @@ func (c *giftServiceClient) Sync(ctx context.Context, in *SyncReq, opts ...grpc.
 }
 
 type GiftService_SyncClient interface {
-	Recv() (*Manager_CodeInfo, error)
+	Recv() (*SyncResp, error)
 	grpc.ClientStream
 }
 
@@ -715,8 +851,8 @@ type giftServiceSyncClient struct {
 	grpc.ClientStream
 }
 
-func (x *giftServiceSyncClient) Recv() (*Manager_CodeInfo, error) {
-	m := new(Manager_CodeInfo)
+func (x *giftServiceSyncClient) Recv() (*SyncResp, error) {
+	m := new(SyncResp)
 	if err := x.ClientStream.RecvMsg(m); err != nil {
 		return nil, err
 	}
@@ -732,8 +868,8 @@ func (c *giftServiceClient) CodeVerify(ctx context.Context, in *VerifyReq, opts 
 	return out, nil
 }
 
-func (c *giftServiceClient) Generate(ctx context.Context, in *Manager_GenReq, opts ...grpc.CallOption) (*Manager_Nil, error) {
-	out := new(Manager_Nil)
+func (c *giftServiceClient) Generate(ctx context.Context, in *Manager_GenReq, opts ...grpc.CallOption) (*Manager_GenResp, error) {
+	out := new(Manager_GenResp)
 	err := c.cc.Invoke(ctx, "/pb.GiftService/Generate", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -759,13 +895,23 @@ func (c *giftServiceClient) Export(ctx context.Context, in *Manager_ExportReq, o
 	return out, nil
 }
 
+func (c *giftServiceClient) Delete(ctx context.Context, in *Manager_DeleteReq, opts ...grpc.CallOption) (*Manager_Nil, error) {
+	out := new(Manager_Nil)
+	err := c.cc.Invoke(ctx, "/pb.GiftService/Delete", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // GiftServiceServer is the server API for GiftService service.
 type GiftServiceServer interface {
 	Sync(*SyncReq, GiftService_SyncServer) error
 	CodeVerify(context.Context, *VerifyReq) (*VerifyResp, error)
-	Generate(context.Context, *Manager_GenReq) (*Manager_Nil, error)
+	Generate(context.Context, *Manager_GenReq) (*Manager_GenResp, error)
 	List(context.Context, *Manager_Nil) (*Manager_ListResp, error)
 	Export(context.Context, *Manager_ExportReq) (*Manager_ExportResp, error)
+	Delete(context.Context, *Manager_DeleteReq) (*Manager_Nil, error)
 }
 
 func RegisterGiftServiceServer(s *grpc.Server, srv GiftServiceServer) {
@@ -781,7 +927,7 @@ func _GiftService_Sync_Handler(srv interface{}, stream grpc.ServerStream) error 
 }
 
 type GiftService_SyncServer interface {
-	Send(*Manager_CodeInfo) error
+	Send(*SyncResp) error
 	grpc.ServerStream
 }
 
@@ -789,7 +935,7 @@ type giftServiceSyncServer struct {
 	grpc.ServerStream
 }
 
-func (x *giftServiceSyncServer) Send(m *Manager_CodeInfo) error {
+func (x *giftServiceSyncServer) Send(m *SyncResp) error {
 	return x.ServerStream.SendMsg(m)
 }
 
@@ -865,6 +1011,24 @@ func _GiftService_Export_Handler(srv interface{}, ctx context.Context, dec func(
 	return interceptor(ctx, in, info, handler)
 }
 
+func _GiftService_Delete_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Manager_DeleteReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(GiftServiceServer).Delete(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/pb.GiftService/Delete",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(GiftServiceServer).Delete(ctx, req.(*Manager_DeleteReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _GiftService_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "pb.GiftService",
 	HandlerType: (*GiftServiceServer)(nil),
@@ -884,6 +1048,10 @@ var _GiftService_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Export",
 			Handler:    _GiftService_Export_Handler,
+		},
+		{
+			MethodName: "Delete",
+			Handler:    _GiftService_Delete_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{
@@ -996,13 +1164,8 @@ func (m *Manager_GenReq) MarshalTo(dAtA []byte) (int, error) {
 		i++
 		i = encodeVarintGift(dAtA, i, uint64(m.EndTime))
 	}
-	if m.TimesPerCode != 0 {
-		dAtA[i] = 0x28
-		i++
-		i = encodeVarintGift(dAtA, i, uint64(m.TimesPerCode))
-	}
 	if m.TimesPerUser != 0 {
-		dAtA[i] = 0x30
+		dAtA[i] = 0x28
 		i++
 		i = encodeVarintGift(dAtA, i, uint64(m.TimesPerUser))
 	}
@@ -1018,14 +1181,14 @@ func (m *Manager_GenReq) MarshalTo(dAtA []byte) (int, error) {
 			dAtA2[j1] = uint8(num)
 			j1++
 		}
-		dAtA[i] = 0x3a
+		dAtA[i] = 0x32
 		i++
 		i = encodeVarintGift(dAtA, i, uint64(j1))
 		i += copy(dAtA[i:], dAtA2[:j1])
 	}
 	if len(m.Items) > 0 {
 		for _, msg := range m.Items {
-			dAtA[i] = 0x42
+			dAtA[i] = 0x3a
 			i++
 			i = encodeVarintGift(dAtA, i, uint64(msg.Size()))
 			n, err := msg.MarshalTo(dAtA[i:])
@@ -1034,6 +1197,29 @@ func (m *Manager_GenReq) MarshalTo(dAtA []byte) (int, error) {
 			}
 			i += n
 		}
+	}
+	return i, nil
+}
+
+func (m *Manager_GenResp) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalTo(dAtA)
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *Manager_GenResp) MarshalTo(dAtA []byte) (int, error) {
+	var i int
+	_ = i
+	var l int
+	_ = l
+	if m.Id != 0 {
+		dAtA[i] = 0x8
+		i++
+		i = encodeVarintGift(dAtA, i, uint64(m.Id))
 	}
 	return i, nil
 }
@@ -1125,7 +1311,7 @@ func (m *Manager_ExportResp) MarshalTo(dAtA []byte) (int, error) {
 	return i, nil
 }
 
-func (m *Manager_CodeInfo) Marshal() (dAtA []byte, err error) {
+func (m *Manager_GiftInfo) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalTo(dAtA)
@@ -1135,7 +1321,7 @@ func (m *Manager_CodeInfo) Marshal() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *Manager_CodeInfo) MarshalTo(dAtA []byte) (int, error) {
+func (m *Manager_GiftInfo) MarshalTo(dAtA []byte) (int, error) {
 	var i int
 	_ = i
 	var l int
@@ -1189,6 +1375,29 @@ func (m *Manager_ListResp) MarshalTo(dAtA []byte) (int, error) {
 			}
 			i += n
 		}
+	}
+	return i, nil
+}
+
+func (m *Manager_DeleteReq) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalTo(dAtA)
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *Manager_DeleteReq) MarshalTo(dAtA []byte) (int, error) {
+	var i int
+	_ = i
+	var l int
+	_ = l
+	if m.Id != 0 {
+		dAtA[i] = 0x8
+		i++
+		i = encodeVarintGift(dAtA, i, uint64(m.Id))
 	}
 	return i, nil
 }
@@ -1273,6 +1482,41 @@ func (m *SyncReq) MarshalTo(dAtA []byte) (int, error) {
 	return i, nil
 }
 
+func (m *SyncResp) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalTo(dAtA)
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *SyncResp) MarshalTo(dAtA []byte) (int, error) {
+	var i int
+	_ = i
+	var l int
+	_ = l
+	if len(m.Info) > 0 {
+		for _, msg := range m.Info {
+			dAtA[i] = 0xa
+			i++
+			i = encodeVarintGift(dAtA, i, uint64(msg.Size()))
+			n, err := msg.MarshalTo(dAtA[i:])
+			if err != nil {
+				return 0, err
+			}
+			i += n
+		}
+	}
+	if m.Status != 0 {
+		dAtA[i] = 0x10
+		i++
+		i = encodeVarintGift(dAtA, i, uint64(m.Status))
+	}
+	return i, nil
+}
+
 func encodeVarintGift(dAtA []byte, offset int, v uint64) int {
 	for v >= 1<<7 {
 		dAtA[offset] = uint8(v&0x7f | 0x80)
@@ -1334,9 +1578,6 @@ func (m *Manager_GenReq) Size() (n int) {
 	if m.EndTime != 0 {
 		n += 1 + sovGift(uint64(m.EndTime))
 	}
-	if m.TimesPerCode != 0 {
-		n += 1 + sovGift(uint64(m.TimesPerCode))
-	}
 	if m.TimesPerUser != 0 {
 		n += 1 + sovGift(uint64(m.TimesPerUser))
 	}
@@ -1352,6 +1593,18 @@ func (m *Manager_GenReq) Size() (n int) {
 			l = e.Size()
 			n += 1 + l + sovGift(uint64(l))
 		}
+	}
+	return n
+}
+
+func (m *Manager_GenResp) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Id != 0 {
+		n += 1 + sovGift(uint64(m.Id))
 	}
 	return n
 }
@@ -1402,7 +1655,7 @@ func (m *Manager_ExportResp) Size() (n int) {
 	return n
 }
 
-func (m *Manager_CodeInfo) Size() (n int) {
+func (m *Manager_GiftInfo) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -1432,6 +1685,18 @@ func (m *Manager_ListResp) Size() (n int) {
 			l = e.Size()
 			n += 1 + l + sovGift(uint64(l))
 		}
+	}
+	return n
+}
+
+func (m *Manager_DeleteReq) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Id != 0 {
+		n += 1 + sovGift(uint64(m.Id))
 	}
 	return n
 }
@@ -1475,6 +1740,24 @@ func (m *SyncReq) Size() (n int) {
 	_ = l
 	if m.Zone != 0 {
 		n += 1 + sovGift(uint64(m.Zone))
+	}
+	return n
+}
+
+func (m *SyncResp) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if len(m.Info) > 0 {
+		for _, e := range m.Info {
+			l = e.Size()
+			n += 1 + l + sovGift(uint64(l))
+		}
+	}
+	if m.Status != 0 {
+		n += 1 + sovGift(uint64(m.Status))
 	}
 	return n
 }
@@ -1797,25 +2080,6 @@ func (m *Manager_GenReq) Unmarshal(dAtA []byte) error {
 			}
 		case 5:
 			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field TimesPerCode", wireType)
-			}
-			m.TimesPerCode = 0
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowGift
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				m.TimesPerCode |= (uint32(b) & 0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-		case 6:
-			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field TimesPerUser", wireType)
 			}
 			m.TimesPerUser = 0
@@ -1833,7 +2097,7 @@ func (m *Manager_GenReq) Unmarshal(dAtA []byte) error {
 					break
 				}
 			}
-		case 7:
+		case 6:
 			if wireType == 0 {
 				var v uint32
 				for shift := uint(0); ; shift += 7 {
@@ -1906,7 +2170,7 @@ func (m *Manager_GenReq) Unmarshal(dAtA []byte) error {
 			} else {
 				return fmt.Errorf("proto: wrong wireType = %d for field ZoneIds", wireType)
 			}
-		case 8:
+		case 7:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Items", wireType)
 			}
@@ -1937,6 +2201,75 @@ func (m *Manager_GenReq) Unmarshal(dAtA []byte) error {
 				return err
 			}
 			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipGift(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthGift
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *Manager_GenResp) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowGift
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= (uint64(b) & 0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: GenResp: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: GenResp: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Id", wireType)
+			}
+			m.Id = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGift
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Id |= (uint32(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
 		default:
 			iNdEx = preIndex
 			skippy, err := skipGift(dAtA[iNdEx:])
@@ -2099,7 +2432,7 @@ func (m *Manager_CodeStatus) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.UserId |= (int64(b) & 0x7F) << shift
+				m.UserId |= (uint64(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -2225,7 +2558,7 @@ func (m *Manager_ExportResp) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *Manager_CodeInfo) Unmarshal(dAtA []byte) error {
+func (m *Manager_GiftInfo) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -2248,10 +2581,10 @@ func (m *Manager_CodeInfo) Unmarshal(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: CodeInfo: wiretype end group for non-group")
+			return fmt.Errorf("proto: GiftInfo: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: CodeInfo: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: GiftInfo: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
@@ -2401,11 +2734,80 @@ func (m *Manager_ListResp) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Details = append(m.Details, &Manager_CodeInfo{})
+			m.Details = append(m.Details, &Manager_GiftInfo{})
 			if err := m.Details[len(m.Details)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}
 			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipGift(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthGift
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *Manager_DeleteReq) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowGift
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= (uint64(b) & 0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: DeleteReq: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: DeleteReq: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Id", wireType)
+			}
+			m.Id = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGift
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Id |= (uint32(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
 		default:
 			iNdEx = preIndex
 			skippy, err := skipGift(dAtA[iNdEx:])
@@ -2518,7 +2920,7 @@ func (m *VerifyReq) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.UserId |= (int64(b) & 0x7F) << shift
+				m.UserId |= (uint64(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -2682,6 +3084,106 @@ func (m *SyncReq) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
+func (m *SyncResp) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowGift
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= (uint64(b) & 0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: SyncResp: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: SyncResp: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Info", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGift
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthGift
+			}
+			postIndex := iNdEx + msglen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Info = append(m.Info, &Manager_GiftInfo{})
+			if err := m.Info[len(m.Info)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 2:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Status", wireType)
+			}
+			m.Status = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGift
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Status |= (uint32(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		default:
+			iNdEx = preIndex
+			skippy, err := skipGift(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthGift
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
 func skipGift(dAtA []byte) (n int, err error) {
 	l := len(dAtA)
 	iNdEx := 0
@@ -2787,43 +3289,46 @@ var (
 	ErrIntOverflowGift   = fmt.Errorf("proto: integer overflow")
 )
 
-func init() { proto.RegisterFile("gift.proto", fileDescriptor_gift_9b72a7143c6ff089) }
+func init() { proto.RegisterFile("gift.proto", fileDescriptor_gift_037c360db233c7f7) }
 
-var fileDescriptor_gift_9b72a7143c6ff089 = []byte{
-	// 556 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x6c, 0x54, 0xcd, 0x6e, 0xd3, 0x40,
-	0x10, 0xae, 0x63, 0x27, 0x4e, 0x26, 0xa4, 0x54, 0x23, 0xa8, 0xac, 0x05, 0xac, 0x28, 0x42, 0xc8,
-	0x52, 0x21, 0x54, 0xe1, 0x80, 0xc4, 0x81, 0x03, 0x50, 0x22, 0x0b, 0x88, 0xaa, 0x0d, 0xe5, 0x80,
-	0xb8, 0x38, 0xf5, 0xa6, 0xb2, 0x94, 0xd8, 0xc6, 0xbb, 0x45, 0xed, 0x8d, 0x47, 0xe0, 0xb1, 0x38,
-	0xf6, 0xc8, 0x11, 0x25, 0xef, 0xc0, 0x89, 0x03, 0x9a, 0xb5, 0x9d, 0x38, 0x21, 0x27, 0xcf, 0xcf,
-	0x37, 0x33, 0xdf, 0x7c, 0xb3, 0x32, 0xc0, 0x45, 0x34, 0x55, 0xfd, 0x34, 0x4b, 0x54, 0x82, 0xb5,
-	0x74, 0xd2, 0xfb, 0x6b, 0x81, 0xfd, 0x21, 0x88, 0x83, 0x0b, 0x91, 0xb1, 0x3a, 0x98, 0xa3, 0x68,
-	0xc6, 0x3c, 0xb0, 0x7c, 0x25, 0xe6, 0xb8, 0x0f, 0x35, 0x3f, 0x74, 0x8c, 0xae, 0xe1, 0x75, 0x78,
-	0xcd, 0x0f, 0xf1, 0x00, 0xcc, 0xd1, 0xe5, 0xdc, 0xa9, 0x75, 0x0d, 0xaf, 0xce, 0xc9, 0x64, 0x7f,
-	0x0c, 0x68, 0x0c, 0x45, 0xcc, 0xc5, 0x57, 0x74, 0xc0, 0x7e, 0x1b, 0x5d, 0xbd, 0x4e, 0x42, 0xa1,
-	0x2b, 0x5a, 0xbc, 0x74, 0xab, 0x65, 0x1d, 0x5d, 0x86, 0xf7, 0xa1, 0x35, 0x56, 0x41, 0xa6, 0x3e,
-	0x46, 0x73, 0xe1, 0x98, 0x5d, 0xc3, 0x33, 0xf9, 0x3a, 0x40, 0x9d, 0x4e, 0xe2, 0x50, 0xe7, 0x2c,
-	0x9d, 0x2b, 0x5d, 0xec, 0xc1, 0x2d, 0xfa, 0xca, 0x53, 0x91, 0xe9, 0x41, 0x75, 0xdd, 0x72, 0x23,
-	0x56, 0xc5, 0x9c, 0x49, 0x91, 0x39, 0x8d, 0x4d, 0x0c, 0xc5, 0x68, 0xc2, 0xe7, 0x24, 0x16, 0x7e,
-	0x28, 0x1d, 0xbb, 0x6b, 0x7a, 0x1d, 0x5e, 0xba, 0xf8, 0x08, 0xea, 0xb4, 0xba, 0x74, 0x9a, 0x5d,
-	0xd3, 0x6b, 0x0f, 0x0e, 0xfa, 0xe9, 0xa4, 0x5f, 0xa8, 0xd3, 0xa7, 0x04, 0xcf, 0xd3, 0xec, 0x1e,
-	0xb4, 0x4e, 0xae, 0xd2, 0x24, 0x53, 0xb4, 0xfa, 0x96, 0x4e, 0xec, 0x14, 0x80, 0xa8, 0x8c, 0x55,
-	0xa0, 0x2e, 0x25, 0x22, 0x58, 0x15, 0x55, 0xb4, 0x8d, 0x87, 0xd0, 0x20, 0x22, 0x7e, 0xa8, 0x55,
-	0x31, 0x79, 0xe1, 0x51, 0x3c, 0x67, 0xa2, 0x55, 0xe9, 0xf0, 0xc2, 0x63, 0x2f, 0x01, 0xca, 0x71,
-	0x32, 0xc5, 0x63, 0xb0, 0xdf, 0x08, 0x15, 0x44, 0x33, 0xe9, 0x18, 0x9a, 0xe6, 0x61, 0x95, 0xe6,
-	0x7a, 0x34, 0x2f, 0x61, 0xec, 0x0b, 0x34, 0x29, 0xec, 0xc7, 0xd3, 0xe4, 0xbf, 0xab, 0x22, 0x58,
-	0x67, 0x52, 0x84, 0xc5, 0x7d, 0xb4, 0x8d, 0x8f, 0xc1, 0x1e, 0x8a, 0x98, 0xe0, 0x9a, 0x48, 0x7b,
-	0x80, 0xd5, 0x09, 0xf9, 0xc5, 0x79, 0x09, 0x61, 0x2f, 0xa0, 0xf9, 0x3e, 0x92, 0x39, 0xb7, 0xfe,
-	0x36, 0xb7, 0x3b, 0xdb, 0xdc, 0xa8, 0x64, 0xc5, 0xac, 0xf7, 0x0e, 0x5a, 0x9f, 0x44, 0x16, 0x4d,
-	0xaf, 0x49, 0xc8, 0x5d, 0x52, 0x21, 0x58, 0x24, 0x42, 0x49, 0x8f, 0xec, 0x8a, 0x7c, 0x66, 0x55,
-	0xbe, 0xde, 0x43, 0x80, 0xb2, 0x99, 0x4c, 0x09, 0x95, 0xeb, 0x50, 0x2c, 0x5b, 0x78, 0xbd, 0x07,
-	0x60, 0x8f, 0xaf, 0xe3, 0xf3, 0x62, 0xa0, 0x6e, 0x6e, 0xac, 0x9b, 0x0f, 0xbe, 0xd7, 0xa0, 0x3d,
-	0x8c, 0xa6, 0x6a, 0x2c, 0xb2, 0x6f, 0xd1, 0xb9, 0xc0, 0x23, 0xb0, 0x08, 0x8e, 0x6d, 0x5a, 0xa4,
-	0x28, 0x64, 0x3b, 0xb7, 0x3a, 0x36, 0xf0, 0x28, 0x3f, 0x7d, 0xce, 0x02, 0x3b, 0x84, 0x5a, 0xad,
-	0xc7, 0xf6, 0xab, 0xae, 0x4c, 0xf1, 0x29, 0x34, 0x87, 0x22, 0x16, 0x59, 0xa0, 0x04, 0xee, 0x10,
-	0x98, 0xdd, 0xae, 0xc6, 0x46, 0xd1, 0x0c, 0x9f, 0x80, 0x45, 0x42, 0xe3, 0x76, 0x62, 0x93, 0xce,
-	0xea, 0x16, 0xcf, 0xa1, 0x91, 0xbf, 0x1a, 0xbc, 0x5b, 0xcd, 0xaf, 0x1e, 0x2e, 0x3b, 0xdc, 0x15,
-	0x96, 0xe9, 0x2b, 0xe7, 0xe7, 0xc2, 0x35, 0x6e, 0x16, 0xae, 0xf1, 0x7b, 0xe1, 0x1a, 0x3f, 0x96,
-	0xee, 0xde, 0xcd, 0xd2, 0xdd, 0xfb, 0xb5, 0x74, 0xf7, 0x26, 0x0d, 0xfd, 0xe3, 0x78, 0xf6, 0x2f,
-	0x00, 0x00, 0xff, 0xff, 0xb2, 0xcf, 0xce, 0x41, 0x46, 0x04, 0x00, 0x00,
+var fileDescriptor_gift_037c360db233c7f7 = []byte{
+	// 600 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x7c, 0x54, 0xcd, 0x6e, 0xd3, 0x40,
+	0x10, 0xae, 0x7f, 0x62, 0x27, 0x93, 0xa6, 0x54, 0x03, 0x54, 0x66, 0x0b, 0x56, 0x64, 0x10, 0xb2,
+	0x04, 0x44, 0x55, 0x7b, 0x40, 0xe2, 0xc0, 0x01, 0x5a, 0x2a, 0x8b, 0x52, 0x55, 0x0e, 0xe5, 0x80,
+	0xb8, 0xb8, 0xf5, 0xa6, 0xb2, 0xd4, 0xda, 0xc6, 0xbb, 0x45, 0xed, 0x5b, 0xf4, 0x49, 0x78, 0x0e,
+	0x8e, 0x15, 0x27, 0x8e, 0x28, 0x79, 0x11, 0x34, 0x6b, 0x3b, 0x71, 0xd2, 0x88, 0x53, 0x76, 0xf6,
+	0x9b, 0x9f, 0xef, 0xfb, 0x66, 0x63, 0x80, 0xb3, 0x64, 0x24, 0x07, 0x79, 0x91, 0xc9, 0x0c, 0xf5,
+	0xfc, 0xc4, 0xbb, 0x69, 0x81, 0xfd, 0x29, 0x4a, 0xa3, 0x33, 0x5e, 0xb0, 0x16, 0x18, 0x87, 0xc9,
+	0x39, 0xf3, 0xc1, 0x0c, 0x24, 0xbf, 0xc0, 0x35, 0xd0, 0x83, 0xd8, 0xd1, 0xfa, 0x9a, 0xdf, 0x0b,
+	0xf5, 0x20, 0xc6, 0x75, 0x30, 0x0e, 0x2f, 0x2f, 0x1c, 0xbd, 0xaf, 0xf9, 0xad, 0x90, 0x8e, 0xec,
+	0xb7, 0x06, 0xd6, 0x3e, 0x4f, 0x43, 0xfe, 0x1d, 0x1d, 0xb0, 0x3f, 0x24, 0x57, 0xef, 0xb3, 0x98,
+	0xab, 0x8a, 0x4e, 0x58, 0x87, 0xcd, 0xb2, 0x9e, 0x2a, 0xc3, 0xc7, 0xd0, 0x19, 0xca, 0xa8, 0x90,
+	0x9f, 0x93, 0x0b, 0xee, 0x18, 0x7d, 0xcd, 0x37, 0xc2, 0xd9, 0x05, 0x75, 0xda, 0x4b, 0x63, 0x85,
+	0x99, 0x0a, 0xab, 0x43, 0xf4, 0x60, 0x95, 0x7e, 0xc5, 0x11, 0x2f, 0x8e, 0x05, 0x2f, 0x9c, 0x96,
+	0x6a, 0x39, 0x77, 0x47, 0xd5, 0x5f, 0xb3, 0x94, 0x07, 0xb1, 0x70, 0xac, 0xbe, 0xe1, 0xf7, 0xc2,
+	0x3a, 0xc4, 0xe7, 0xd0, 0x22, 0x59, 0xc2, 0xb1, 0xfb, 0x86, 0xdf, 0xdd, 0x5e, 0x1f, 0xe4, 0x27,
+	0x83, 0x4a, 0xf9, 0x80, 0x80, 0xb0, 0x84, 0xd9, 0x23, 0xb0, 0x95, 0x26, 0x91, 0x2f, 0x3a, 0xc0,
+	0x36, 0xa1, 0xb3, 0x77, 0x95, 0x67, 0x85, 0x24, 0xc5, 0x8b, 0xe0, 0x11, 0x00, 0xe9, 0x1d, 0xca,
+	0x48, 0x5e, 0x0a, 0x44, 0x30, 0x1b, 0x66, 0xa8, 0x33, 0x6e, 0x80, 0x45, 0x1c, 0x83, 0x58, 0x99,
+	0x61, 0x86, 0x55, 0x44, 0xf7, 0x25, 0x49, 0x65, 0x46, 0x2f, 0xac, 0x22, 0xf6, 0x16, 0xa0, 0x1e,
+	0x27, 0x72, 0xdc, 0x02, 0x7b, 0x97, 0xcb, 0x28, 0x39, 0x17, 0x8e, 0xa6, 0x14, 0x6c, 0x34, 0x15,
+	0xcc, 0x46, 0x87, 0x75, 0x1a, 0xfb, 0x06, 0xed, 0xfd, 0x64, 0x24, 0x83, 0x74, 0x94, 0xdd, 0x59,
+	0x26, 0x82, 0x79, 0x2c, 0x78, 0x5c, 0xad, 0x45, 0x9d, 0xf1, 0xa5, 0x52, 0x4e, 0xe9, 0x8a, 0x48,
+	0x77, 0x1b, 0x9b, 0x13, 0xca, 0x45, 0x87, 0x75, 0x0a, 0x7b, 0x03, 0xed, 0x83, 0x44, 0x94, 0xdc,
+	0x06, 0x8b, 0xdc, 0x1e, 0xcc, 0x55, 0x56, 0x24, 0x66, 0xcc, 0x36, 0xa1, 0xb3, 0xcb, 0xcf, 0xb9,
+	0xe4, 0x4b, 0x8c, 0xf4, 0x3e, 0x42, 0xe7, 0x0b, 0x2f, 0x92, 0xd1, 0x35, 0x81, 0xcb, 0x7c, 0x44,
+	0x30, 0xc9, 0xa1, 0x9a, 0x3b, 0x9d, 0x1b, 0xde, 0x1a, 0x4d, 0x6f, 0xbd, 0x67, 0x00, 0x75, 0x33,
+	0x91, 0x53, 0x56, 0x69, 0x52, 0x35, 0xae, 0x8a, 0xbc, 0x27, 0x60, 0x0f, 0xaf, 0xd3, 0xd3, 0x6a,
+	0xa0, 0x6a, 0xae, 0xcd, 0x9a, 0x7b, 0x07, 0xd0, 0x2e, 0x61, 0x91, 0x23, 0xfd, 0x3b, 0xc8, 0xa1,
+	0xff, 0xe9, 0x54, 0x19, 0x8d, 0x61, 0x7a, 0x73, 0xd8, 0xf6, 0x4f, 0x1d, 0xba, 0x94, 0x3a, 0xe4,
+	0xc5, 0x8f, 0xe4, 0x94, 0xe3, 0x53, 0x30, 0xa9, 0x3b, 0x76, 0xa9, 0x57, 0x45, 0x83, 0xad, 0xce,
+	0x02, 0x91, 0x6f, 0x69, 0xf8, 0xa2, 0x7c, 0x5d, 0xa5, 0x16, 0xec, 0x11, 0x3a, 0x35, 0x89, 0xad,
+	0x35, 0x43, 0x91, 0xe3, 0x0e, 0xb4, 0xf7, 0x79, 0xca, 0x8b, 0x48, 0x72, 0x5c, 0xb2, 0x43, 0x76,
+	0xff, 0xce, 0x9d, 0xc8, 0xf1, 0x15, 0x98, 0xb4, 0x4f, 0xbc, 0xd7, 0x04, 0xe9, 0x7b, 0x30, 0xa7,
+	0x71, 0xba, 0xf2, 0xd7, 0x60, 0x95, 0x8f, 0x13, 0x1f, 0x36, 0xf1, 0xe9, 0xff, 0x83, 0x6d, 0x2c,
+	0xbb, 0x56, 0xef, 0xd8, 0x2a, 0x77, 0x3f, 0x5f, 0x38, 0x7d, 0x0f, 0x6c, 0x91, 0xc0, 0x3b, 0xe7,
+	0xd7, 0xd8, 0xd5, 0x6e, 0xc7, 0xae, 0xf6, 0x77, 0xec, 0x6a, 0x37, 0x13, 0x77, 0xe5, 0x76, 0xe2,
+	0xae, 0xfc, 0x99, 0xb8, 0x2b, 0x27, 0x96, 0xfa, 0x90, 0xed, 0xfc, 0x0b, 0x00, 0x00, 0xff, 0xff,
+	0xca, 0xb8, 0xf4, 0x0e, 0xd6, 0x04, 0x00, 0x00,
 }
