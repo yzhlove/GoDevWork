@@ -40,7 +40,7 @@ func (c *HttpContext) Log(format string, v ...interface{}) {
 	log.Printf("[server %s ] %s", c.self, fmt.Sprintf(format, v...))
 }
 
-func (c *HttpContext) ServerHTTP(w http.ResponseWriter, r *http.Request) {
+func (c *HttpContext) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	if !strings.HasPrefix(r.URL.Path, defaultBasePath) {
 		panic(errors.New("http context server unexpected path:" + r.URL.Path))
 	}
@@ -99,9 +99,5 @@ func (h *httpGetter) Get(group, key string) ([]byte, error) {
 	if res.StatusCode != http.StatusOK {
 		return nil, fmt.Errorf("server returned: %v ", res.Status)
 	}
-	bytes, err := ioutil.ReadAll(res.Body)
-	if err != nil {
-		return nil, fmt.Errorf("reading response body: %v ", err)
-	}
-	return bytes, nil
+	return ioutil.ReadAll(res.Body)
 }

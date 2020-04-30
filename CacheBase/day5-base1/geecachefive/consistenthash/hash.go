@@ -1,7 +1,6 @@
 package consistenthash
 
 import (
-	"fmt"
 	"hash/crc32"
 	"sort"
 	"strconv"
@@ -36,7 +35,6 @@ func (m *Map) Set(keys ...string) {
 	for _, key := range keys {
 		for i := 0; i < m.replicas; i++ {
 			bucket := int(m.hash([]byte(strconv.Itoa(i) + key)))
-			fmt.Println("set --> ", bucket)
 			m.keys = append(m.keys, bucket)
 			m.hashMap[bucket] = key
 		}

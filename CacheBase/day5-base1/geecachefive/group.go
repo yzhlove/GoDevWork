@@ -20,6 +20,7 @@ type Group struct {
 	name   string
 	getter Getter
 	m      manager
+	peers  PeerPick
 }
 
 var (
@@ -57,7 +58,7 @@ func (g *Group) Get(key string) (ByteView, error) {
 		log.Println("hit.")
 		return v, nil
 	}
-	return g.load(key)
+	return g.LoadValue(key)
 }
 
 func (g *Group) load(key string) (view ByteView, err error) {
@@ -68,4 +69,28 @@ func (g *Group) load(key string) (view ByteView, err error) {
 	view = ByteView{buffer: _copy(bytes)}
 	g.m.set(key, view)
 	return
+}
+
+func (g *Group) RegisterPeers(peers PeerPick) {
+	if g.peers != nil {
+		panic("RegisterPeerPicker called more than once")
+	}
+	g.peers = peers
+}
+
+func (g *Group) LoadValue(key string) (value ByteView, err error) {
+	if g.peers != nil {
+		if peer, ok := g.peers.PickPeer(key); ok {
+			if value, err := g.getFromPeer(peer, key); err == nil {
+				return value, nil
+			}
+			log.Printf("[geecache] failed to get for peer: %v", err)
+		}
+	}
+	return g.load(key)
+}
+
+func (g *Group) getFromPeer(peer PeerGetter, key string) (ByteView, error) {
+	bytes, err := peer.Get(g.name, key)
+	return ByteView{buffer: bytes}, err
 }
