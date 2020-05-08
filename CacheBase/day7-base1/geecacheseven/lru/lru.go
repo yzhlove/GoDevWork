@@ -27,9 +27,9 @@ type Cache struct {
 	Callback Event
 }
 
-func NewLRU(capicaty int64, event Event) *Cache {
+func NewLRU(capacity int64, event Event) *Cache {
 	return &Cache{
-		capBytes: capicaty,
+		capBytes: capacity,
 		vector:   list.New(),
 		hashMap:  make(map[string]*list.Element),
 		Callback: event,
