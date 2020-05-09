@@ -1,2 +1,18 @@
 syntax = "proto3";
 
+package pb;
+
+message Cache {
+  message Req {
+    string Group = 1;
+    string Key = 2;
+  }
+  message Resp {
+    bytes value = 1;
+  }
+}
+
+service GroupCache {
+  rpc Get(Cache.Req) returns (Cache.Resp);
+}
+

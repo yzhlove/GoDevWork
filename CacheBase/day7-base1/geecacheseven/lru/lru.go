@@ -27,6 +27,14 @@ type Cache struct {
 	Callback Event
 }
 
+func getEntry(e *list.Element) *entry {
+	if kv, ok := e.Value.(*entry); ok {
+		return kv
+	}
+	typeofError()
+	return nil
+}
+
 func NewLRU(capacity int64, event Event) *Cache {
 	return &Cache{
 		capBytes: capacity,
@@ -34,4 +42,48 @@ func NewLRU(capacity int64, event Event) *Cache {
 		hashMap:  make(map[string]*list.Element),
 		Callback: event,
 	}
+}
+
+func (c *Cache) Set(key string, value Value) {
+	if v, ok := c.hashMap[key]; ok {
+		c.vector.MoveToFront(v)
+		if kv := getEntry(v); kv != nil {
+			c.cntBytes += int64(value.Len()) - int64(kv.value.Len())
+			kv.value = value
+		}
+	} else {
+		e := c.vector.PushFront(&entry{key: key, value: value})
+		c.cntBytes += int64(len(key)) + int64(value.Len())
+		c.hashMap[key] = e
+	}
+	for c.capBytes != 0 && c.capBytes < c.cntBytes {
+		c.RemoveOldest()
+	}
+}
+
+func (c *Cache) Get(key string) (Value, bool) {
+	if v, ok := c.hashMap[key]; ok {
+		c.vector.MoveToFront(v)
+		if kv := getEntry(v); kv != nil {
+			return kv.value, true
+		}
+	}
+	return nil, false
+}
+
+func (c *Cache) RemoveOldest() {
+	if v := c.vector.Back(); v != nil {
+		c.vector.Remove(v)
+		if kv := getEntry(v); kv != nil {
+			delete(c.hashMap, kv.key)
+			c.cntBytes -= int64(len(kv.key)) + int64(kv.value.Len())
+			if c.Callback != nil {
+				c.Callback(kv.key, kv.value)
+			}
+		}
+	}
+}
+
+func (c *Cache) Len() int {
+	return c.vector.Len()
 }
