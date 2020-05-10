@@ -61,6 +61,8 @@ func (g *Group) Get(key string) (ByteView, error) {
 		log.Println("[GeeCache] hit.")
 		return v, nil
 	}
+	view, err := g.load(key)
+	fmt.Println("geecache get ====> ", view.String(), " ", err)
 	return g.load(key)
 }
 
@@ -83,7 +85,7 @@ func (g *Group) load(key string) (value ByteView, err error) {
 		}
 		return g.getLocally(key)
 	})
-	if err != nil {
+	if err == nil {
 		return v.(ByteView), nil
 	}
 	return

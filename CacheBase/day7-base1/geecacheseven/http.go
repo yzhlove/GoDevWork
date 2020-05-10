@@ -66,6 +66,7 @@ func (h *HttpContext) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	fmt.Println("http cache get key ===> ", view.String())
 	body, err := proto.Marshal(&pb.Cache_Resp{Value: view.Bytes()})
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
