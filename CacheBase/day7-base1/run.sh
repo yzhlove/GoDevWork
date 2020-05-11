@@ -1,7 +1,9 @@
+#!/bin/bash
+
 go build -o cahce_server
-./server -port=8001 &
-./server -port=8002 &
-./server -port=8003 -api=true &
+./cahce_server -port=8001 &
+./cahce_server -port=8002 &
+./cahce_server -port=8003 -api=true &
 
 #sleep 2
 #echo ">>> start test"
