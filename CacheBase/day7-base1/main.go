@@ -73,7 +73,7 @@ func startAPIServer(apiAddr string, gee *geecacheseven.Group) {
 			return
 		}
 		log.Println("api get key:", key, " result:", view.String())
-		writer.Header().Set("Content-Type", "text/plain")
+		writer.Header().Set("Content-Type", "application/octet-stream")
 		writer.Write(view.Bytes())
 	}))
 	log.Println("start api server is running at ", apiAddr)

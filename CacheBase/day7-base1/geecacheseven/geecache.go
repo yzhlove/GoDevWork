@@ -61,8 +61,6 @@ func (g *Group) Get(key string) (ByteView, error) {
 		log.Println("[GeeCache] hit.")
 		return v, nil
 	}
-	view, err := g.load(key)
-	fmt.Println("geecache get ====> ", view.String(), " ", err)
 	return g.load(key)
 }
 
