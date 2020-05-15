@@ -17,24 +17,16 @@ func Test_Generate(t *testing.T) {
 		return
 	}
 
-	/*
-		string FixCode = 1;
-		uint32 Num = 2;
-		int64 StartTime = 3;
-		int64 EndTime = 4;
-		uint32 TimesPerCode = 5;
-		uint32 TimesPerUser = 6;
-		repeated uint32 ZoneIds = 7;
-		repeated Item Items = 8;
-	*/
-
 	req := &pb.Manager_GenReq{
 		//FixCode: "yzhhhhhhaaabbc",
-		Num:   1,
-		Items: []*pb.Manager_Item{{Id: 1, Num: 1}, {Id: 2, Num: 2}},
+		Items:        []*pb.Manager_Item{{Id: 1, Num: 1}, {Id: 2, Num: 2}},
+		Num:          100,
+		TimesPerUser: 2,
+		StartTime:    time.Now().Unix(),
+		EndTime:      time.Now().Add(time.Hour * 24).Unix(),
 	}
 
-	ctx, cancel := context.WithTimeout(context.Background(), time.Second*5)
+	ctx, cancel := context.WithTimeout(context.Background(), time.Second*10)
 	if _, err := client.Generate(ctx, req); err != nil {
 		t.Error(err)
 		return
