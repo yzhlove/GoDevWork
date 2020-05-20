@@ -32,7 +32,7 @@ func (s *Server) Start() {
 			fmt.Println("resolve tcp addr err: ", err)
 			return
 		}
-		listenner, err := net.ListenTCP(s.IPVersion, addr)
+		listener, err := net.ListenTCP(s.IPVersion, addr)
 		if err != nil {
 			fmt.Println("listen ", s.IPVersion, " err ", err)
 			return
@@ -40,7 +40,7 @@ func (s *Server) Start() {
 		fmt.Println("start ZINX server ", s.Name, " succeed ,now listening ...")
 		var cid uint32
 		for {
-			conn, err := listenner.AcceptTCP()
+			conn, err := listener.AcceptTCP()
 			if err != nil {
 				fmt.Println("Accept err:", err)
 				continue
