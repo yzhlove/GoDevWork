@@ -1,6 +1,8 @@
 package sign
 
-import "sync"
+import (
+	"sync"
+)
 
 type requestFunc func() (interface{}, error)
 
