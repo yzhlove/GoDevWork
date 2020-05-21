@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net"
 	"time"
+	"zinx-day2-base1/config"
 	"zinx-day2-base1/ziface"
 )
 
@@ -15,17 +16,24 @@ type Server struct {
 	Router    ziface.RouterInterface
 }
 
-func NewServer(name string) *Server {
-	return &Server{
-		Name:      name,
+func NewServer() ziface.ServerInterface {
+
+	config.GlobalConfig.Reload()
+
+	server := &Server{
+		Name:      config.GlobalConfig.Name,
 		IPVersion: "tcp4",
-		IP:        "0.0.0.0",
-		Port:      7777,
+		IP:        config.GlobalConfig.Host,
+		Port:      config.GlobalConfig.TcpPort,
 	}
+
+	return server
 }
 
 func (s *Server) Start() {
 	fmt.Printf("[START] server listenner at IP %s:%d ,is starting ... \n", s.IP, s.Port)
+	fmt.Printf("[Zinx] Version:%s Maxconn:%d MaxPacketSize:%d \n",
+		config.GlobalConfig.Version, config.GlobalConfig.MaxConn, config.GlobalConfig.MaxPacketSize)
 	go func() {
 		tcpAddr, err := net.ResolveTCPAddr(s.IPVersion, fmt.Sprintf("%s:%d", s.IP, s.Port))
 		if err != nil {
