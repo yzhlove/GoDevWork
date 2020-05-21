@@ -68,7 +68,7 @@ func (c *Connection) Start() {
 }
 
 func (c *Connection) Stop() {
-	if c.isClosed {
+	if !c.isClosed {
 		c.isClosed = true
 		c.Conn.Close()
 		c.ExitChan <- struct{}{}
