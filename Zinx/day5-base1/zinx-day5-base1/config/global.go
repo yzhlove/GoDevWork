@@ -3,7 +3,7 @@ package config
 import (
 	"encoding/json"
 	"io/ioutil"
-	"zinx-day4-base1/ziface"
+	"zinx-day5-base1/ziface"
 )
 
 type GlobalConf struct {
