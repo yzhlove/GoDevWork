@@ -37,8 +37,8 @@ func LoadDefaultConf() *Conf {
 		Host:             "0.0.0.0",
 		MaxConn:          12000,
 		MaxPackSize:      4096,
-		WorkerPoolSize:   3,
-		MaxWorkerTaskLen: 3,
+		WorkerPoolSize:   20,
+		MaxWorkerTaskLen: 5,
 	}
 }
 
