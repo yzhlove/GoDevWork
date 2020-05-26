@@ -114,6 +114,6 @@ func NewConn(conn *net.TCPConn, connID uint32, handler ziface.MessageHandleInter
 		ConnID:     connID,
 		MsgHandler: handler,
 		ExitChan:   make(chan struct{}, 1),
-		msgChan:    make(chan []byte, 128),
+		msgChan:    make(chan []byte),
 	}
 }
