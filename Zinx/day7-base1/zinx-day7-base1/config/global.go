@@ -36,10 +36,10 @@ func LoadDefaultConf() *Conf {
 		Version:           "1.0",
 		TcpPort:           7777,
 		Host:              "0.0.0.0",
-		MaxConn:           12000,
+		MaxConn:           6,
 		MaxPackSize:       4096,
-		WorkerPoolSize:    20,
-		MaxWorkerTaskSize: 5,
+		WorkerPoolSize:    4,
+		MaxWorkerTaskSize: 10,
 	}
 }
 

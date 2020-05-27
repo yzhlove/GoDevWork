@@ -27,7 +27,7 @@ func init() {
 		MaxConn:     12000,
 		MaxPackSize: 4096,
 	}
-	GlobalConfig.Reload()
+	//GlobalConfig.Reload()
 }
 
 func (g *GlobalConf) Reload() {

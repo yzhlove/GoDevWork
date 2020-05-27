@@ -15,6 +15,10 @@ type TcpServer struct {
 	handler   ziface.MsgHandleInterface
 	manager   ziface.ConnManagerInterface
 	stopCh    chan struct{}
+	//server 连接时 hook
+	onConnStart ziface.CallbackConnFunc
+	//server 断开时 hook
+	onConnStop ziface.CallbackConnFunc
 }
 
 func NewTcpServer() ziface.ServerInterface {
@@ -86,4 +90,26 @@ func (s *TcpServer) GetConnManager() ziface.ConnManagerInterface {
 
 func (s *TcpServer) GetMsgHandle() ziface.MsgHandleInterface {
 	return s.handler
+}
+
+func (s *TcpServer) SetOnConnStart(fn ziface.CallbackConnFunc) {
+	s.onConnStart = fn
+}
+
+func (s *TcpServer) SetOnConnStop(fn ziface.CallbackConnFunc) {
+	s.onConnStop = fn
+}
+
+func (s *TcpServer) CallOnConnStart(conn ziface.ConnectionInterface) {
+	if s.onConnStart != nil {
+		fmt.Println("--> CallOnConnStart ...")
+		s.onConnStart(conn)
+	}
+}
+
+func (s *TcpServer) CallOnConnStop(conn ziface.ConnectionInterface) {
+	if s.onConnStop != nil {
+		fmt.Printf("--> CallonConnStop ...")
+		s.onConnStop(conn)
+	}
 }

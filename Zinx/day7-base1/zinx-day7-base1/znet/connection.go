@@ -77,14 +77,21 @@ func (c *ConnContext) startWriter() {
 	for {
 		select {
 		case msg, ok := <-c.msgChan:
-			if ok {
-				if _, err := c.Conn.Write(msg); err != nil {
-					fmt.Println("send message err:", err)
-					return
-				}
-				break
+			if !ok {
+				return
 			}
-			return
+			if _, err := c.Conn.Write(msg); err != nil {
+				fmt.Println("send message err:", err)
+				return
+			}
+		case msg, ok := <-c.msgBufChan:
+			if !ok {
+				return
+			}
+			if _, err := c.Conn.Write(msg); err != nil {
+				fmt.Println("send buf message err:", err)
+				return
+			}
 		case <-c.exitChan:
 			return
 		}
@@ -105,16 +112,30 @@ func (c *ConnContext) Send(msgID uint32, data []byte) error {
 	return errors.New("conn closed when send message")
 }
 
-
+func (c *ConnContext) SendBuf(msgID uint32, data []byte) error {
+	if !c.isClosed {
+		pack := &Package{}
+		if msg, err := pack.Pack(NewMsgPackage(msgID, data)); err != nil {
+			fmt.Printf("package pack err id:%d reason:%v \n", msgID, err)
+			return err
+		} else {
+			c.msgBufChan <- msg
+		}
+		return nil
+	}
+	return errors.New("conn closed when send message")
+}
 
 func (c *ConnContext) Start() {
 	go c.startWriter()
 	go c.startReader()
+	c.tcpServer.CallOnConnStart(c)
 }
 
 func (c *ConnContext) Stop() {
 	if !c.isClosed {
 		c.isClosed = true
+		c.tcpServer.CallOnConnStop(c)
 		c.Conn.Close()
 		c.exitChan <- struct{}{}
 		c.tcpServer.GetConnManager().Del(c)

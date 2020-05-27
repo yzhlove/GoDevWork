@@ -65,6 +65,6 @@ func send(api uint32, data []byte) {
 			}
 		}
 
-		time.Sleep(time.Second)
+		time.Sleep(time.Second * 5)
 	}
 }
