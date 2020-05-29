@@ -8,15 +8,15 @@ import (
 
 func main() {
 	server := znet.NewTcpServer()
-	server.Register(0, &pingRouter{})
+	server.Register(0, &panicRouter{})
 	server.Run()
 }
 
-type pingRouter struct {
+type panicRouter struct {
 	znet.AbstractRouter
 }
 
-func (pingRouter) Handle(req ziface.ReqImp) {
+func (panicRouter) Handle(req ziface.ReqImp) {
 	fmt.Println("[ping] msg id:", req.GetMsgID(), " client say:", string(req.GetMsgData()))
 	panic("test panic err")
 }
