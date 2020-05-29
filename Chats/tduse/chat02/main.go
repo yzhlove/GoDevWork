@@ -40,7 +40,7 @@ func main() {
 	//}
 
 	//teacher.ForEachDoc(func(id int, doc []byte) (moveOn bool) {
-	//	var f map[string]interface{}
+	//	var f map[string]ziface{}
 	//	if json.Unmarshal(doc, &f) != nil {
 	//		panic(err)
 	//	}
@@ -53,17 +53,17 @@ func main() {
 	//	panic(err)
 	//}
 
-	//var query interface{}
+	//var query ziface{}
 	//if json.Unmarshal([]byte(`[{"eq":"lcm","in":["name"]}]`), &query) != nil {
 	//	panic(err)
 	//}
 
-	//var search = make([]map[string]interface{}, 1)
-	//search[0] = make(map[string]interface{})
+	//var search = make([]map[string]ziface{}, 1)
+	//search[0] = make(map[string]ziface{})
 	//search[0]["eq"] = "lcm"
 	//search[0]["in"] = []string{"name"}
 	//
-	//fmt.Println("query interface => ", search)
+	//fmt.Println("query ziface => ", search)
 	//
 	//queryResult := make(map[int]struct{})
 	//if err := db.EvalQuery(search, teacher, &queryResult); err != nil {

@@ -11,7 +11,7 @@ const Max = 16
 
 type pubsub struct {
 	sync.RWMutex
-	//queue map[uint32]chan interface{}
+	//queue map[uint32]chan ziface{}
 	queue map[chan interface{}]uint32
 }
 

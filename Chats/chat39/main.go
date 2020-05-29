@@ -111,10 +111,10 @@ func search2() {
 
 	ids := make(map[int]struct{})
 
-	//s1 := map[string]interface{}{
+	//s1 := map[string]ziface{}{
 	//	"int-from": 1,
 	//	"int-to":   2,
-	//	"in":       []interface{}{"number"},
+	//	"in":       []ziface{}{"number"},
 	//	"limit":    20,
 	//}
 
@@ -135,16 +135,16 @@ func search2() {
 		"n": s,
 	}
 
-	//var s2 []interface{}
-	//s2 = append(s2, map[string]interface{}{
+	//var s2 []ziface{}
+	//s2 = append(s2, map[string]ziface{}{
 	//	"eq": "lcmlove",
-	//	"in": []interface{}{"name"},
+	//	"in": []ziface{}{"name"},
 	//})
 	//
-	//s2 = append(s2, map[string]interface{}{
+	//s2 = append(s2, map[string]ziface{}{
 	//	"int-from": 1,
 	//	"int-to":   2,
-	//	"in":       []interface{}{"number"},
+	//	"in":       []ziface{}{"number"},
 	//	"limit":    20,
 	//})
 
