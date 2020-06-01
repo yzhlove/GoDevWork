@@ -1,20 +1,26 @@
 package core
 
-import "sync"
+import (
+	"fmt"
+	"sync"
+)
 
 // 一个地图中的格子
 type Grid struct {
-	GID       int //格子ID
-	MinX      int
-	MaxX      int
-	MinY      int
-	MaxY      int
-	playerIds map[int]struct{} //格子内的玩家或者物体成员的ID
-	mutex     sync.RWMutex
+	GID                    int              //格子ID
+	MinX, MinY, MaxX, MaxY int              //格子的上下左右坐标
+	playerIds              map[int]struct{} //格子内的玩家或者物体成员的ID
+	mutex                  sync.RWMutex
 }
 
 func NewGrid(gid, minX, minY, maxX, maxY int) *Grid {
-	return &Grid{}
+	return &Grid{
+		GID:  gid,
+		MinX: minX,
+		MinY: minY,
+		MaxX: maxX,
+		MaxY: maxY,
+	}
 }
 
 func (g *Grid) Add(playID int) {
@@ -37,4 +43,9 @@ func (g *Grid) GetPlayIds() []int {
 		ids = append(ids, id)
 	}
 	return ids
+}
+
+func (g *Grid) String() string {
+	return fmt.Sprintf("Grid : %d ,minX %d maxX %d minY %d maxY %d playerIds:%v ",
+		g.GID, g.MinX, g.MaxX, g.MinY, g.MaxY, g.playerIds)
 }
