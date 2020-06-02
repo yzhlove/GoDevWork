@@ -22,3 +22,7 @@ message BroadCast{
     int32 ActionData = 5;
   }
 }
+
+message Talk {
+  string Content = 1;
+}

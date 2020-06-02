@@ -5,6 +5,15 @@ import (
 	"log"
 )
 
+const (
+	AOI_MIN_X = 85
+	AOI_MAX_X = 410
+	AOI_MIN_Y = 75
+	AOI_MAX_Y = 400
+	AOI_CNT_X = 10
+	AOI_CNT_Y = 20
+)
+
 type AOIMgr struct {
 	MinX, MinY, MaxX, MaxY int           //区域的上下左右坐标
 	CntX, CntY             int           //x,y轴方向格子的数量

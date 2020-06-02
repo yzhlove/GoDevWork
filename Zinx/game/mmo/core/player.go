@@ -62,7 +62,7 @@ func (p *Player) SyncPid() {
 	p.Send(1, &pb.SyncPid{Pid: p.PID})
 }
 
-func (p *Player) BroadCastStartPostion() {
+func (p *Player) BroadCastStartPosition() {
 	p.Send(200, &pb.BroadCast{
 		Pid: p.PID,
 		Tp:  2,
@@ -73,4 +73,13 @@ func (p *Player) BroadCastStartPostion() {
 			V: p.V,
 		}},
 	})
+}
+
+func (p *Player) Talk(content string) {
+	msg := &pb.BroadCast{Pid: p.PID, Tp: 1,
+		Data: &pb.BroadCast_Content{Content: content},
+	}
+	for _, player := range WorldMgr.GetPlayers() {
+		player.Send(200, msg)
+	}
 }
