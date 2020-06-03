@@ -20,7 +20,6 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 
-//同步客户端玩家ID
 type SyncPid struct {
 	Pid                  int32    `protobuf:"varint,1,opt,name=Pid,proto3" json:"Pid,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
@@ -60,7 +59,6 @@ func (m *SyncPid) GetPid() int32 {
 	return 0
 }
 
-//玩家位置
 type Position struct {
 	X                    float32  `protobuf:"fixed32,1,opt,name=X,proto3" json:"X,omitempty"`
 	Y                    float32  `protobuf:"fixed32,2,opt,name=Y,proto3" json:"Y,omitempty"`
@@ -124,7 +122,6 @@ func (m *Position) GetV() float32 {
 	return 0
 }
 
-//玩家广播数据
 type BroadCast struct {
 	Pid int32 `protobuf:"varint,1,opt,name=Pid,proto3" json:"Pid,omitempty"`
 	Tp  int32 `protobuf:"varint,2,opt,name=Tp,proto3" json:"Tp,omitempty"`
@@ -236,7 +233,6 @@ func (*BroadCast) XXX_OneofWrappers() []interface{} {
 	}
 }
 
-//玩家聊天数据
 type Talk struct {
 	Content              string   `protobuf:"bytes,1,opt,name=Content,proto3" json:"Content,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
@@ -276,7 +272,6 @@ func (m *Talk) GetContent() string {
 	return ""
 }
 
-//玩家信息
 type Player struct {
 	Pid                  int32     `protobuf:"varint,1,opt,name=Pid,proto3" json:"Pid,omitempty"`
 	P                    *Position `protobuf:"bytes,2,opt,name=P,proto3" json:"P,omitempty"`
@@ -326,7 +321,7 @@ func (m *Player) GetP() *Position {
 
 //同步玩家显示数据
 type SyncPlayers struct {
-	Ps                   []*Player `protobuf:"bytes,1,rep,name=ps,proto3" json:"ps,omitempty"`
+	Ps                   []*Player `protobuf:"bytes,1,rep,name=Ps,proto3" json:"Ps,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}  `json:"-"`
 	XXX_unrecognized     []byte    `json:"-"`
 	XXX_sizecache        int32     `json:"-"`
@@ -392,7 +387,7 @@ var fileDescriptor_c06e4cca6c2cc899 = []byte{
 	0xc4, 0x3a, 0x10, 0xff, 0x6a, 0x55, 0x02, 0x91, 0x5b, 0x59, 0x01, 0x51, 0x23, 0x8f, 0x1f, 0x84,
 	0xfe, 0xcd, 0x72, 0x46, 0xe9, 0xef, 0x24, 0xf6, 0x0c, 0x09, 0x3f, 0xca, 0xd3, 0x61, 0xbc, 0x62,
 	0x9c, 0x3b, 0x0b, 0x7c, 0x69, 0x21, 0x10, 0x67, 0x8f, 0x90, 0xf9, 0xe7, 0xf4, 0x77, 0x0d, 0xc9,
-	0x01, 0x6b, 0x43, 0x51, 0x11, 0x2e, 0xb2, 0x25, 0xf8, 0xb3, 0xbe, 0x21, 0xb0, 0x36, 0x55, 0xfc,
-	0x8d, 0x31, 0x6f, 0xdb, 0xc4, 0xff, 0xc5, 0xd3, 0x4f, 0x00, 0x00, 0x00, 0xff, 0xff, 0xe6, 0xb4,
-	0xb8, 0x13, 0x98, 0x01, 0x00, 0x00,
+	0x01, 0x73, 0x43, 0x51, 0x11, 0x2e, 0xb2, 0x25, 0xf8, 0xb3, 0xbe, 0x21, 0x30, 0x37, 0x55, 0xfc,
+	0x8d, 0x31, 0x6f, 0xdb, 0xc4, 0xff, 0xc5, 0xd3, 0x4f, 0x00, 0x00, 0x00, 0xff, 0xff, 0x30, 0xd8,
+	0x76, 0x5a, 0x98, 0x01, 0x00, 0x00,
 }
