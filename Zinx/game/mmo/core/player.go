@@ -4,7 +4,7 @@ import (
 	"github.com/golang/protobuf/proto"
 	"log"
 	"math/rand"
-	"sync"
+	"snowflake"
 	"zinx-game-example/mmo/pb"
 	"zinx/ziface"
 )
@@ -18,24 +18,13 @@ type Player struct {
 	V    float32 //旋转0-360
 }
 
-var GenPID int32 = 1 //ID生成
-var mutex sync.RWMutex
-
-func GeneratePID() int32 {
-	mutex.Lock()
-	defer mutex.Unlock()
-	t := GenPID
-	GenPID++
-	return t
-}
-
 func NewPlayer(conn ziface.ConnImp) *Player {
 	return &Player{
-		PID:  GeneratePID(),
+		PID:  int32(snowflake.Get() % 1000),
 		Conn: conn,
-		X:    float32(160 + rand.Intn(10)),
+		X:    float32(160 + rand.Intn(50)),
 		Y:    0,
-		Z:    float32(134 + rand.Intn(17)),
+		Z:    float32(134 + rand.Intn(50)),
 		V:    0,
 	}
 }
@@ -82,4 +71,34 @@ func (p *Player) Talk(content string) {
 	for _, player := range WorldMgr.GetPlayers() {
 		player.Send(200, msg)
 	}
+}
+
+func (p *Player) SyncRangePlayers() {
+	pids := WorldMgr.AoiMgr.GetPlayerIDS(p.X, p.Z)
+	players := make([]*Player, 0, len(pids))
+	for _, pid := range pids {
+		players = append(players, WorldMgr.GetPlayer(int32(pid)))
+	}
+
+	msg := &pb.BroadCast{
+		Pid: p.PID,
+		Tp:  2,
+		Data: &pb.BroadCast_P{
+			P: &pb.Position{
+				X: p.X, Y: p.Y, Z: p.Z, V: p.V}},
+	}
+
+	for _, player := range players {
+		player.Send(200, msg)
+	}
+
+	playersData := make([]*pb.Player, 0, len(players))
+	for _, player := range players {
+		data := &pb.Player{
+			Pid: player.PID,
+			P:   &pb.Position{X: player.X, Y: player.Y, Z: player.Z, V: player.V},
+		}
+		playersData = append(playersData, data)
+	}
+	p.Send(202, &pb.SyncPlayers{Ps: playersData})
 }

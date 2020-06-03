@@ -24,5 +24,6 @@ func OnConnStart(conn ziface.ConnImp) {
 	player.BroadCastStartPosition()
 	core.WorldMgr.AddPlayer(player)
 	conn.SetAttr("pid", player.PID)
+	player.SyncRangePlayers()
 	log.Println("==> player pid:", player.PID, " active.")
 }

@@ -5,7 +5,7 @@ import "sync"
 //世界管理模块
 
 type WorldManager struct {
-	aoiMgr  *AOIMgr
+	AoiMgr  *AOIMgr
 	players map[int32]*Player
 	sync.RWMutex
 }
@@ -14,7 +14,7 @@ var WorldMgr *WorldManager
 
 func init() {
 	WorldMgr = &WorldManager{
-		aoiMgr:  NewAOIMgr(AOI_MIN_X, AOI_MIN_Y, AOI_MAX_X, AOI_MAX_Y, AOI_CNT_X, AOI_CNT_Y),
+		AoiMgr:  NewAOIMgr(AOI_MIN_X, AOI_MIN_Y, AOI_MAX_X, AOI_MAX_Y, AOI_CNT_X, AOI_CNT_Y),
 		players: make(map[int32]*Player),
 	}
 }
@@ -23,7 +23,7 @@ func (m *WorldManager) AddPlayer(player *Player) {
 	m.Lock()
 	m.players[player.PID] = player
 	m.Unlock()
-	m.aoiMgr.AddFormGridByPos(int(player.PID), player.X, player.Y)
+	m.AoiMgr.AddFormGridByPos(int(player.PID), player.X, player.Z)
 }
 
 func (m *WorldManager) DelPlayer(pid int32) {

@@ -107,6 +107,7 @@ func (m *AOIMgr) GetGridID(x, y float32) int {
 func (m *AOIMgr) GetPlayerIDS(x, y float32) (playerIds []int) {
 	//获取gID
 	gID := m.GetGridID(x, y)
+	log.Println("cnt gid ==> ", gID)
 	//获取周围格子
 	grids := m.GetRangeGrids(gID)
 	for _, grid := range grids {

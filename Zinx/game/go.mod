@@ -4,8 +4,12 @@ go 1.14
 
 require (
 	github.com/golang/protobuf v1.4.2
-	google.golang.org/genproto v0.0.0-20200528191852-705c0b31589b
+	google.golang.org/genproto v0.0.0-20200528191852-705c0b31589b // indirect
 	zinx v0.0.0
+	snowflake v0.0.0
 )
 
-replace zinx => ./zinx
+replace (
+    zinx => ./zinx
+    snowflake => ./snowflake
+)

@@ -15,11 +15,12 @@ type Grid struct {
 
 func NewGrid(gid, minX, minY, maxX, maxY int) *Grid {
 	return &Grid{
-		GID:  gid,
-		MinX: minX,
-		MinY: minY,
-		MaxX: maxX,
-		MaxY: maxY,
+		GID:       gid,
+		MinX:      minX,
+		MinY:      minY,
+		MaxX:      maxX,
+		MaxY:      maxY,
+		playerIds: make(map[int]struct{}),
 	}
 }
 
