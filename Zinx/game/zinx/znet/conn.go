@@ -92,7 +92,12 @@ func (c *Conn) Send(msgID uint32, data []byte) error {
 			log.Println("package pack err:", err)
 			return err
 		} else {
-			c.msgChan <- msg
+			select {
+			case <-c.exitChan:
+				return errors.New("conn is closed")
+			default:
+				c.msgChan <- msg
+			}
 		}
 		return nil
 	}

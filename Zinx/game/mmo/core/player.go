@@ -20,11 +20,11 @@ type Player struct {
 
 func NewPlayer(conn ziface.ConnImp) *Player {
 	return &Player{
-		PID:  int32(snowflake.Get() % 1000),
+		PID:  int32(snowflake.Get() % 10000),
 		Conn: conn,
-		X:    float32(160 + rand.Intn(50)),
+		X:    float32(160 + rand.Intn(20)),
 		Y:    0,
-		Z:    float32(134 + rand.Intn(50)),
+		Z:    float32(134 + rand.Intn(20)),
 		V:    0,
 	}
 }
@@ -101,4 +101,39 @@ func (p *Player) SyncRangePlayers() {
 		playersData = append(playersData, data)
 	}
 	p.Send(202, &pb.SyncPlayers{Ps: playersData})
+}
+
+func (p *Player) UpdatePos(x, y, z, v float32) {
+	p.X, p.Y, p.Z, p.V = x, y, z, v
+
+	msg := &pb.BroadCast{
+		Pid: p.PID,
+		Tp:  4,
+		Data: &pb.BroadCast_P{
+			P: &pb.Position{X: p.X, Y: p.Y, Z: p.Z, V: p.V},
+		},
+	}
+	for _, player := range p.GetRandPlayers() {
+		player.Send(200, msg)
+	}
+}
+
+func (p *Player) GetRandPlayers() []*Player {
+	pids := WorldMgr.AoiMgr.GetPlayerIDS(p.X, p.Z)
+	log.Printf("area players => %v \n", pids)
+	players := make([]*Player, 0, len(pids))
+	for _, pid := range pids {
+		players = append(players, WorldMgr.GetPlayer(int32(pid)))
+	}
+	return players
+}
+
+func (p *Player) LostConn() {
+	players := p.GetRandPlayers()
+	msg := &pb.SyncPid{Pid: p.PID}
+	for _, player := range players {
+		player.Send(201, msg)
+	}
+	WorldMgr.AoiMgr.DelFormGridByPos(int(p.PID), p.X, p.Z)
+	WorldMgr.DelPlayer(p.PID)
 }
