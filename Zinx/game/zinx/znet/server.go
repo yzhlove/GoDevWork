@@ -5,6 +5,7 @@ import (
 	"log"
 	"net"
 	"zinx/config"
+	"zinx/discovery"
 	"zinx/ziface"
 )
 
@@ -74,6 +75,9 @@ func (s *TcpServer) Stop() {
 
 func (s *TcpServer) Run() {
 	s.Start()
+	if err := s.registerService(); err != nil {
+		log.Println("register service err:", err)
+	}
 	<-s.die
 }
 
@@ -107,4 +111,13 @@ func (s *TcpServer) CallbackConnStop(conn ziface.ConnImp) {
 	if s.onConnStop != nil {
 		s.onConnStop(conn)
 	}
+}
+
+func (s *TcpServer) registerService() error {
+	etcd, err := discovery.NewEtcd()
+	if err != nil {
+		return err
+	}
+	etcd.Register(s.Name, fmt.Sprintf("%s:%d", s.IP, s.Port))
+	return nil
 }
