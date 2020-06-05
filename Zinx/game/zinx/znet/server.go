@@ -68,6 +68,7 @@ func (s *TcpServer) Start() {
 
 func (s *TcpServer) Stop() {
 	log.Println("server stop .")
+	s.connMgr.Clear()
 	close(s.die)
 }
 
