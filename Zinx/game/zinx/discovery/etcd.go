@@ -59,6 +59,7 @@ func (etcd *Etcd) Register(key, value string) {
 					return
 				}
 			} else {
+				//lease.KeepAliveOnce()
 				keep, err := lease.KeepAlive(context.Background(), _leaseID)
 				if err != nil {
 					log.Println("register service: keep err:", err)
