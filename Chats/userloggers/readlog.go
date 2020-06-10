@@ -37,7 +37,7 @@ func showFileList() []string {
 		}
 		if !info.IsDir() {
 			//检查文件以及后缀名
-			if strings.Contains(s, "user_logger") && path.Ext(s) == ".log" {
+			if strings.Contains(s, "user_logger") && path.Ext(s) == ".zlog" {
 				fileNames = append(fileNames, s)
 			}
 		}

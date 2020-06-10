@@ -32,7 +32,7 @@ type FileLoggerWriter struct {
 func getNewLogFile() string {
 	_ = time.Now()
 	return ""
-	//return fmt.Sprintf("%suser_logger_%d_%d_%d.log", config.UserLoggerPath, tm.Year(), tm.Month(), tm.Day())
+	//return fmt.Sprintf("%suser_logger_%d_%d_%d.zlog", config.UserLoggerPath, tm.Year(), tm.Month(), tm.Day())
 }
 
 func getNewLoggerWrite() (fw *FileLoggerWriter, err error) {
@@ -52,7 +52,7 @@ func (fw *FileLoggerWriter) Write(msg *LogMessage) {
 			}
 		}
 		if f, err := getNewLoggerWrite(); err != nil {
-			fmt.Println("open user log err:", err)
+			fmt.Println("open user zlog err:", err)
 			return
 		} else {
 			fw.File = f.File

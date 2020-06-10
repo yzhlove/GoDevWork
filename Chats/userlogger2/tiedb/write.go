@@ -26,7 +26,7 @@ func getTable() string {
 func NewTieWriter() (*TieWriter, error) {
 	//创建目录
 	if err := os.MkdirAll(config.UserLoggerPath, 0755); err != nil {
-		return nil, fmt.Errorf("create user log path err:%v", err)
+		return nil, fmt.Errorf("create user zlog path err:%v", err)
 	}
 	if tw, err := db.OpenDB(getDataBase()); err != nil {
 		return nil, err

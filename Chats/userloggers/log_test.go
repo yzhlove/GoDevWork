@@ -12,7 +12,7 @@ import (
 
 func Test_AppendFile(t *testing.T) {
 
-	path := "test.log"
+	path := "test.zlog"
 	f, err := os.OpenFile(path, os.O_WRONLY|os.O_APPEND|os.O_CREATE, 0666)
 	if err != nil {
 		t.Error(err)
@@ -65,7 +65,7 @@ func Test_GetFileDir(t *testing.T) {
 
 func Test_GetFileExt(t *testing.T) {
 
-	log := "/user/loggers/user_logger_2019_11_25.log"
+	log := "/user/loggers/user_logger_2019_11_25.zlog"
 
 	t.Log(path.Base(log))
 	t.Log(path.Ext(log))
