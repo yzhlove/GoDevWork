@@ -4,8 +4,8 @@ import (
 	"encoding/json"
 	"flag"
 	"io/ioutil"
-	"log"
 	"zinx/ziface"
+	"zinx/zlog"
 )
 
 type Conf struct {
@@ -31,7 +31,7 @@ func init() {
 	flag.Parse()
 
 	if err := GlobalConfig.Reload(); err != nil {
-		log.Println("config reload err:", err)
+		zlog.Info("config reload err:", err)
 		GlobalConfig = DefaultConf()
 	}
 

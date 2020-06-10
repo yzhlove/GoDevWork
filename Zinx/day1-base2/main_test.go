@@ -21,10 +21,10 @@ func Test_Client(t *testing.T) {
 		for {
 			line, isPrefix, err := reader.ReadLine()
 			if err != nil {
-				log.Println(err)
+				zlog.Println(err)
 				return
 			}
-			log.Println("line =>", string(line), " isPrefix => ", isPrefix)
+			zlog.Println("line =>", string(line), " isPrefix => ", isPrefix)
 			time.Sleep(time.Second * 5)
 		}*/
 

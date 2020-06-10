@@ -2,11 +2,11 @@ package znet
 
 import (
 	"fmt"
-	"log"
 	"net"
 	"zinx/config"
 	"zinx/discovery"
 	"zinx/ziface"
+	"zinx/zlog"
 )
 
 type TcpServer struct {
@@ -34,30 +34,30 @@ func NewTcpServer() ziface.ServerImp {
 }
 
 func (s *TcpServer) Start() {
-	log.Printf("server start on listener at running %s:%d \n", s.IP, s.Port)
+	zlog.Infof("server start on listener at running %s:%d \n", s.IP, s.Port)
 	go func() {
 		defer s.Stop()
 		s.msgHandle.RunWorkerPool()
 		tcpAddr, err := net.ResolveTCPAddr(s.IPVersion, fmt.Sprintf("%s:%d", s.IP, s.Port))
 		if err != nil {
-			log.Println("resolve tcp addr err:", err)
+			zlog.Error("resolve tcp addr err:", err)
 			return
 		}
 		listen, err := net.ListenTCP(s.IPVersion, tcpAddr)
 		if err != nil {
-			log.Println("listen tcp addr err:", err)
+			zlog.Error("listen tcp addr err:", err)
 			return
 		}
-		log.Printf("start tcp server name:{%s}\n", s.Name)
+		zlog.Infof("start tcp server name:{%s}\n", s.Name)
 		var connID uint32
 		for {
 			conn, err := listen.AcceptTCP()
 			if err != nil {
-				log.Println("accept err:", err)
+				zlog.Error("accept err:", err)
 				continue
 			}
 			if s.connMgr.Size() >= config.GlobalConfig.MaxConnections {
-				log.Println("conn overflow limit")
+				zlog.Error("conn overflow limit")
 				conn.Close()
 			}
 			c := NewConn(conn, connID, s)
@@ -68,7 +68,7 @@ func (s *TcpServer) Start() {
 }
 
 func (s *TcpServer) Stop() {
-	log.Println("server stop .")
+	zlog.Info("server stop .")
 	s.connMgr.Clear()
 	close(s.die)
 }
@@ -76,7 +76,7 @@ func (s *TcpServer) Stop() {
 func (s *TcpServer) Run() {
 	s.Start()
 	if err := s.registerService(); err != nil {
-		log.Println("register service err:", err)
+		zlog.Error("register service err:", err)
 	}
 	<-s.die
 }

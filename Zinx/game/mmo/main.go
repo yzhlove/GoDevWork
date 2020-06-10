@@ -9,8 +9,6 @@ import (
 )
 
 func main() {
-	core.NewPlayer(nil)
-
 	server := znet.NewTcpServer()
 	server.ConnStartEvent(OnConnStart)
 	server.ConnStopEvent(OnConnStop)
@@ -21,13 +19,15 @@ func main() {
 }
 
 func OnConnStart(conn ziface.ConnImp) {
-	player := core.NewPlayer(conn)
-	player.SyncPid()
-	player.BroadCastStartPosition()
-	core.WorldMgr.AddPlayer(player)
-	conn.SetAttr("pid", player.PID)
-	player.SyncRangePlayers()
-	log.Println("==> player pid:", player.PID, " active.")
+	if conn != nil {
+		player := core.NewPlayer(conn)
+		player.SyncPid()
+		player.BroadCastStartPosition()
+		core.WorldMgr.AddPlayer(player)
+		conn.SetAttr("pid", player.PID)
+		player.SyncRangePlayers()
+		log.Println("==> player pid:", player.PID, " active.")
+	}
 }
 
 func OnConnStop(conn ziface.ConnImp) {

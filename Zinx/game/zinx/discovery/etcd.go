@@ -6,10 +6,10 @@ import (
 	"fmt"
 	"github.com/coreos/etcd/mvcc/mvccpb"
 	"go.etcd.io/etcd/clientv3"
-	"log"
 	"path/filepath"
 	"time"
 	"zinx/config"
+	"zinx/zlog"
 )
 
 type Etcd struct {
@@ -48,21 +48,21 @@ func (etcd *Etcd) Register(key, value string) {
 			if _leaseID == 0 {
 				grant, err := lease.Grant(context.Background(), 5)
 				if err != nil {
-					log.Println("register service: lease grant err:", err)
+					zlog.Info("register service: lease grant err:", err)
 					return
 				}
 				_leaseID = grant.ID
 				key = fmt.Sprintf("%s/%s/%d", config.Root, key, _leaseID)
-				log.Println("==> register key:", key, " value:", value)
+				zlog.Info("==> register key:", key, " value:", value)
 				if _, err := kv.Put(context.Background(), key, value, clientv3.WithLease(_leaseID)); err != nil {
-					log.Println("register service: put value err:", err)
+					zlog.Info("register service: put value err:", err)
 					return
 				}
 			} else {
 				//lease.KeepAliveOnce()
 				keep, err := lease.KeepAlive(context.Background(), _leaseID)
 				if err != nil {
-					log.Println("register service: keep err:", err)
+					zlog.Info("register service: keep err:", err)
 					return
 				}
 				for ch := range keep {
@@ -83,7 +83,7 @@ func (etcd *Etcd) Watcher() <-chan Event {
 		for {
 			result, err := kv.Get(context.Background(), config.Root, clientv3.WithPrefix())
 			if err != nil {
-				log.Println("watcher service: get root err:", err)
+				zlog.Info("watcher service: get root err:", err)
 				time.Sleep(time.Second * 5)
 				continue
 			}

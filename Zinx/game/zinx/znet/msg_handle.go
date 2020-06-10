@@ -2,10 +2,10 @@ package znet
 
 import (
 	"fmt"
-	"log"
 	"zinx/config"
 	"zinx/utils"
 	"zinx/ziface"
+	"zinx/zlog"
 )
 
 type MsgHandle struct {
@@ -23,11 +23,11 @@ func NewMsgHandle() *MsgHandle {
 }
 
 func (m *MsgHandle) worker(id int, reqQueue chan ziface.ReqImp) {
-	log.Println("[worker] id:", id, " is start.")
+	zlog.Info("[worker] id:", id, " is start.")
 	for req := range reqQueue {
 		m.Do(req)
 	}
-	log.Println("[worker] id:", id, " is stop.")
+	zlog.Info("[worker] id:", id, " is stop.")
 }
 
 func (m *MsgHandle) RunWorkerPool() {
@@ -41,7 +41,7 @@ func (m *MsgHandle) Do(req ziface.ReqImp) {
 	defer func() {
 		if err := recover(); err != nil {
 			errMsg := utils.Trace(fmt.Sprint(err))
-			log.Println(errMsg)
+			zlog.Error(errMsg)
 		}
 	}()
 	if router, ok := m.apis[req.GetMsgID()]; ok {
@@ -49,13 +49,13 @@ func (m *MsgHandle) Do(req ziface.ReqImp) {
 		router.Handle(req)
 		router.AfterDo(req)
 	} else {
-		log.Printf("apis msg id:%v not found", req.GetMsgID())
+		zlog.Infof("apis msg id:%v not found", req.GetMsgID())
 	}
 }
 
 func (m *MsgHandle) Register(msgID uint32, router ziface.RouterImp) {
 	if _, ok := m.apis[msgID]; ok {
-		log.Println("repeated register router id:", msgID)
+		zlog.Info("repeated register router id:", msgID)
 	} else {
 		m.apis[msgID] = router
 	}
@@ -63,6 +63,6 @@ func (m *MsgHandle) Register(msgID uint32, router ziface.RouterImp) {
 
 func (m *MsgHandle) AsyncTaskQueue(req ziface.ReqImp) {
 	workerId := req.GetConn().GetConnID() % m.workerPoolSize
-	log.Printf("[AsyncTask] conn id:{%d} woker id{%d} \n", req.GetConn().GetConnID(), workerId)
+	zlog.Infof("[AsyncTask] conn id:{%d} woker id{%d} \n", req.GetConn().GetConnID(), workerId)
 	m.taskQueue[workerId] <- req
 }

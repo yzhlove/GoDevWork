@@ -1,8 +1,8 @@
 package main
 
 import (
-	"fmt"
 	"zinx/ziface"
+	"zinx/zlog"
 	"zinx/znet"
 )
 
@@ -17,6 +17,6 @@ type panicRouter struct {
 }
 
 func (panicRouter) Handle(req ziface.ReqImp) {
-	fmt.Println("[ping] msg id:", req.GetMsgID(), " client say:", string(req.GetMsgData()))
+	zlog.Info("[ping] msg id:", req.GetMsgID(), " client say:", string(req.GetMsgData()))
 	panic("test panic err")
 }

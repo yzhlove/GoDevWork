@@ -7,6 +7,7 @@ import (
 	"snowflake"
 	"zinx-game-example/mmo/pb"
 	"zinx/ziface"
+	"zinx/zlog"
 )
 
 type Player struct {
@@ -30,19 +31,19 @@ func NewPlayer(conn ziface.ConnImp) *Player {
 }
 
 func (p *Player) Send(msgID uint32, data proto.Message) {
-	log.Printf("before player message %+v \n", data)
+	zlog.Infof("before player message %+v \n", data)
 	msg, err := proto.Marshal(data)
 	if err != nil {
-		log.Println("marshal data message err:", err)
+		zlog.Error("marshal data message err:", err)
 		return
 	}
-	log.Printf("after player message %+v \n", msg)
+	zlog.Infof("after player message %+v \n", msg)
 	if p.Conn == nil {
 		log.Println("connection in player is nil.")
 		return
 	}
 	if err := p.Conn.Send(msgID, msg); err != nil {
-		log.Println("player send message error:", err)
+		zlog.Info("player send message error:", err)
 		return
 	}
 }
