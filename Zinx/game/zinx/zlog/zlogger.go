@@ -36,8 +36,8 @@ const (
 
 var levels = []string{
 	"\033[32m [DEBUG] \033[0m",
-	"\033[36m [INFO] \033[0m",
-	"\033[33m [WARN] \033[0m",
+	"\033[36m [INFO ] \033[0m",
+	"\033[33m [WARN ] \033[0m",
 	"\033[31m [ERROR] \033[0m",
 	"\033[35m [PANIC] \033[0m",
 	"\033[35m [FATAL] \033[0m"}
@@ -60,7 +60,7 @@ func NewLogger(out io.Writer, prefix string, flag uint8) *Logger {
 }
 
 func cleanLogger(log *Logger) {
-
+	log.closeFile()
 }
 
 func (l *Logger) check(flag uint8) bool {

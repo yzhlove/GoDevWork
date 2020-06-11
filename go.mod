@@ -27,6 +27,7 @@ require (
 	github.com/hashicorp/memberlist v0.2.0
 	github.com/jonboulle/clockwork v0.1.0 // indirect
 	github.com/julienschmidt/httprouter v1.3.0
+	github.com/mattn/go-sqlite3 v1.13.0
 	github.com/mikespook/gorbac v2.1.0+incompatible
 	github.com/moby/moby v1.13.1
 	github.com/philhofer/fwd v1.0.0 // indirect
