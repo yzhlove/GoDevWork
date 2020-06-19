@@ -5,7 +5,7 @@ import "reflect"
 var _DialectMap = map[string]Dialect{}
 
 type Dialect interface {
-	TypeOf(typ reflect.Value) string
+	GetDataBaseType(typ reflect.Value) string
 	TableExistsSQL(tableName string) (string, []interface{})
 }
 

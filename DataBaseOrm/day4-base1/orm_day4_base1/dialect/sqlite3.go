@@ -9,10 +9,10 @@ import (
 type sqlite3 struct{}
 
 func init() {
-	RegisterDialect("sqlite3", &sqlite3{})
+	Register("sqlite3", &sqlite3{})
 }
 
-func (s *sqlite3) GetDataBaseType(structField reflect.Value) string {
+func (*sqlite3) GetDBType(structField reflect.Value) string {
 	switch structField.Kind() {
 	case reflect.Bool:
 		return "bool"
@@ -32,10 +32,11 @@ func (s *sqlite3) GetDataBaseType(structField reflect.Value) string {
 			return "datetime"
 		}
 	}
-	panic(fmt.Sprintf("sql type:%s kind:%s", structField.Type().Name(), structField.Type().Kind()))
+	panic(fmt.Sprintf("sql type:%s kind:%s",
+		structField.Type().Name(), structField.Type().Kind()))
 }
 
-func (s *sqlite3) TableExistsSQL(tableName string) (string, []interface{}) {
-	args := []interface{}{tableName}
-	return "SELECT name FROM sqlite_master WHERE type = 'table' and name = ?", args
+func (*sqlite3) Check(table string) (string, []interface{}) {
+	vars := []interface{}{table}
+	return "select name from sql_master where type = 'table' and name = ?", vars
 }
