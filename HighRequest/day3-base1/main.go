@@ -29,7 +29,7 @@ func init() {
 
 func processor() {
 	for pay := range JobQueue {
-		pay.Update()
+		go pay.Update()
 	}
 	log.Println("[JobQueue] exit .")
 }

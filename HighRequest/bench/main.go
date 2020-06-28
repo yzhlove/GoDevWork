@@ -27,7 +27,7 @@ func main() {
 	}
 
 	start := time.Now()
-	for i := 0; i < 100; i++ {
+	for i := 0; i < 10000; i++ {
 		wg.Add(1)
 		fmt.Println("current => ", i+1)
 		go httpRequest(string(req), &count, &succeed, &wg)
@@ -57,7 +57,7 @@ func httpRequest(req string, count, succeed *atomic.Uint32, wg *sync.WaitGroup) 
 		count.Add(1)
 		wg.Done()
 	}()
-	c := http.Client{Timeout: 10 * time.Second}
+	c := http.Client{Timeout: 5 * time.Second}
 	if resp, err := c.Post(url, contentType, strings.NewReader(req)); err != nil {
 		return
 	} else {
