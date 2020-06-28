@@ -107,7 +107,7 @@ func (p *Payload) String() string {
 }
 
 func (p *Payload) Update() {
-	time.Sleep(100 * time.Millisecond)
+	time.Sleep(10 * time.Millisecond)
 	log.Println(p)
 }
 
