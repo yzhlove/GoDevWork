@@ -34,7 +34,7 @@ func (c *CondHp) OnEnter(agent AgentInterface) {
 
 func (c *CondHp) Exec(dt float64, agent AgentInterface) {
 	hp := agent.GetCurHp()
-	fmt.Println("exec cond hp ", c.Idx, c.State, c.Info)
+	fmt.Println("exec cond hp ", c.Idx, c.State, hp, c.Info)
 	if c.Info.Min <= hp && c.Info.Max > hp {
 		c.State = NODE_STATE_SUCCESS
 	} else {
