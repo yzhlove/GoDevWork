@@ -24,7 +24,7 @@ func Run(wg *sync.WaitGroup) {
 	if err != nil {
 		panic(err)
 	}
-	t := time.NewTicker(time.Second)
+	t := time.NewTicker(5 * time.Second)
 	for {
 		select {
 		case <-t.C:
