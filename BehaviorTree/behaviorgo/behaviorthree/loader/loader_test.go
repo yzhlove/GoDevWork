@@ -54,6 +54,7 @@ func TestLoadTree(t *testing.T) {
 		board := core.NewBlackboard()
 		for i := 0; i < 5; i++ {
 			tree.Tick(i, board)
+			fmt.Println("++++++++++++++++++++++++++++++++++++++++++")
 		}
 	} else {
 		t.Error("Load Config err!!!")
