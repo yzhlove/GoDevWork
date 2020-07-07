@@ -87,7 +87,16 @@ func (this *BaseNode) GetTitle() string {
 }
 
 func (this *BaseNode) _execute(tick *Tick) b3.Status {
-
+	this._enter(tick)
+	if !tick.Blackboard.GetBool("isOpen", tick.tree.id, this.id) {
+		this._open(tick)
+	}
+	var status = this._tick(tick)
+	if status != b3.RUNNING {
+		this._close(tick)
+	}
+	this._exit(tick)
+	return status
 }
 
 func (this *BaseNode) Execute(tick *Tick) b3.Status {
@@ -95,5 +104,28 @@ func (this *BaseNode) Execute(tick *Tick) b3.Status {
 }
 
 func (this *BaseNode) _enter(tick *Tick) {
+	tick._enterNode(this)
+	this.OnEnter(tick)
+}
 
+func (this *BaseNode) _open(tick *Tick) {
+	tick._openNode(this)
+	tick.Blackboard.Set("isOpen", true, tick.tree.id, this.id)
+	this.OnOpen(tick)
+}
+
+func (this *BaseNode) _tick(tick *Tick) b3.Status {
+	tick._tickNode(this)
+	return this.OnTick(tick)
+}
+
+func (this *BaseNode) _close(tick *Tick) {
+	tick._closeNode(this)
+	tick.Blackboard.Set("isOpen", false, tick.tree.id, this.id)
+	this.OnClose(tick)
+}
+
+func (this *BaseNode) _exit(tick *Tick) {
+	tick._exitNode(this)
+	this.OnExit(tick)
 }

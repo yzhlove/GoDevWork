@@ -20,6 +20,4 @@ func (this *Action) Ctor() {
 
 func (this *Action) Init(params *config.BTNodeCfg) {
 	this.BaseNode.Init(params)
-	this.parameters = make(map[string]interface{})
-	this.properties = make(map[string]interface{})
 }

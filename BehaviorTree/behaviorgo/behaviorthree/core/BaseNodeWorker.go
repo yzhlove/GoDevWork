@@ -16,9 +16,11 @@ type IBaseWorker interface {
 type BaseWorker struct{}
 
 func (b BaseWorker) OnEnter(tick *Tick) {
+	fmt.Println("------------ BaseWorker OnEnter ------------")
 }
 
 func (b BaseWorker) OnOpen(tick *Tick) {
+	fmt.Println("------------ BaseWorker OnOpen ------------")
 }
 
 func (b BaseWorker) OnTick(tick *Tick) b3.Status {

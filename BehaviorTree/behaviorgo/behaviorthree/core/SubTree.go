@@ -14,8 +14,17 @@ func (this *SubTree) Init(setting *config.BTNodeCfg) {
 }
 
 func (this *SubTree) OnTick(tick *Tick) b3.Status {
-
-	return 0
+	stree := subTreeLoadFunc(this.GetName())
+	if stree == nil {
+		return b3.ERROR
+	}
+	if tick.GetTarget() == nil {
+		panic("sub stree tick get target nil")
+	}
+	tick.pushSubNode(this)
+	ret := stree.GetRoot().Execute(tick)
+	tick.popSubNode()
+	return ret
 }
 
 func (this *SubTree) String() string {

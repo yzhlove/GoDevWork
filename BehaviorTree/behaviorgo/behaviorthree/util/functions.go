@@ -24,6 +24,13 @@ func GetUID() string {
 	return GetMD5String(base64.URLEncoding.EncodeToString(b))
 }
 
+func MinInt(a, b int) int {
+	if a < b {
+		return a
+	}
+	return b
+}
+
 type RegisterStructMaps struct {
 	maps map[string]reflect.Type
 }
@@ -48,4 +55,11 @@ func (rsm *RegisterStructMaps) CheckElem(name string) bool {
 
 func (rsm *RegisterStructMaps) Register(name string, c interface{}) {
 	rsm.maps[name] = reflect.TypeOf(c).Elem()
+}
+
+func (rsm *RegisterStructMaps) IsNIL() bool {
+	if len(rsm.maps) > 0 {
+		return false
+	}
+	return true
 }

@@ -144,8 +144,46 @@ func (this *Blackboard) GetBool(key, treeScope, nodeScope string) bool {
 	return false
 }
 
-func (this *Blackboard) GetInt(key ,treeScope , nodeScope string) int {
+func (this *Blackboard) GetInt(key, treeScope, nodeScope string) int {
+	if v := this.Get(key, treeScope, nodeScope); v != nil {
+		return v.(int)
+	}
+	return 0
+}
 
+func (this *Blackboard) GetInt64(key, treeScope, nodeScope string) int64 {
+	if v := this.Get(key, treeScope, nodeScope); v != nil {
+		return v.(int64)
+	}
+	return 0
+}
+
+func (this *Blackboard) GetUInt64(key, treeScope, nodeScope string) uint64 {
+	if v := this.Get(key, treeScope, nodeScope); v != nil {
+		return v.(uint64)
+	}
+	return 0
+}
+
+func (this *Blackboard) GetInt64Safe(key, treeScope, nodeScope string) int64 {
+	if v := this.Get(key, treeScope, nodeScope); v != nil {
+		return ToInt64(v)
+	}
+	return 0
+}
+
+func (this *Blackboard) GetUInt64Safe(key, treeScope, nodeScope string) uint64 {
+	if v := this.Get(key, treeScope, nodeScope); v != nil {
+		return ToUint64(v)
+	}
+	return 0
+}
+
+func (this *Blackboard) GetInt32(key, treeScope, nodeScope string) int32 {
+	if v := this.Get(key, treeScope, nodeScope); v != nil {
+		return v.(int32)
+	}
+	return 0
 }
 
 func ToInt64(v interface{}) int64 {
