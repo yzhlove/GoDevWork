@@ -23,6 +23,7 @@ func createMaps() *util.RegisterStructMaps {
 	st.Register("MemSequence", &composites.MemSequence{})
 	st.Register("Priority", &composites.Priority{})
 	st.Register("Sequence", &composites.Sequence{})
+	st.Register("Parallel", &composites.Parallel{})
 
 	st.Register("Inverter", &decorators.Inverter{})
 	st.Register("Limiter", &decorators.Limiter{})

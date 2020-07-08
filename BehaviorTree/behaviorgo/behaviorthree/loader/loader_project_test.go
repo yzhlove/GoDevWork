@@ -30,8 +30,10 @@ func TestLoadProject(t *testing.T) {
 
 	board := core.NewBlackboard()
 	for i := 0; i < 5; i++ {
-		firstTree.Tick(1, board)
-		fmt.Println("========================")
+		if firstTree != nil {
+			firstTree.Tick(1, board)
+			fmt.Println("========================")
+		}
 	}
 
 }
