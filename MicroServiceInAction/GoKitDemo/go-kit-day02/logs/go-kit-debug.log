@@ -1,0 +1,91 @@
+{"level":"debug","ts":1594806208986,"caller":"transport/transport.go:49","msg":"<nil>","decoder":{"a":100,"b":20}}
+{"level":"debug","ts":1594806208986,"caller":"endpoint/middleware.go:14","msg":""}
+{"level":"debug","ts":1594806208986,"caller":"transport/transport.go:54","msg":"<nil>","request over":null}
+{"level":"debug","ts":1594806711746,"caller":"transport/transport.go:49","msg":"<nil>","decoder":{"a":100,"b":20}}
+{"level":"debug","ts":1594806711747,"caller":"endpoint/middleware.go:14","msg":""}
+{"level":"debug","ts":1594806711747,"caller":"transport/transport.go:54","msg":"<nil>","request over":null}
+{"level":"debug","ts":1594806719819,"caller":"transport/transport.go:49","msg":"<nil>","decoder":{"a":100,"b":20}}
+{"level":"debug","ts":1594806719819,"caller":"endpoint/middleware.go:14","msg":""}
+{"level":"debug","ts":1594806719819,"caller":"transport/transport.go:54","msg":"<nil>","request over":null}
+{"level":"debug","ts":1594806720514,"caller":"transport/transport.go:49","msg":"<nil>","decoder":{"a":100,"b":20}}
+{"level":"debug","ts":1594806720514,"caller":"endpoint/middleware.go:14","msg":""}
+{"level":"debug","ts":1594806720515,"caller":"transport/transport.go:54","msg":"<nil>","request over":null}
+{"level":"debug","ts":1594806720762,"caller":"transport/transport.go:49","msg":"<nil>","decoder":{"a":100,"b":20}}
+{"level":"debug","ts":1594806720762,"caller":"endpoint/middleware.go:14","msg":""}
+{"level":"debug","ts":1594806720762,"caller":"transport/transport.go:54","msg":"<nil>","request over":null}
+{"level":"debug","ts":1594806720986,"caller":"transport/transport.go:49","msg":"<nil>","decoder":{"a":100,"b":20}}
+{"level":"debug","ts":1594806720986,"caller":"endpoint/middleware.go:14","msg":""}
+{"level":"debug","ts":1594806720986,"caller":"transport/transport.go:54","msg":"<nil>","request over":null}
+{"level":"debug","ts":1594806721618,"caller":"transport/transport.go:49","msg":"<nil>","decoder":{"a":100,"b":20}}
+{"level":"debug","ts":1594806721618,"caller":"endpoint/middleware.go:14","msg":""}
+{"level":"debug","ts":1594806721618,"caller":"transport/transport.go:54","msg":"<nil>","request over":null}
+{"level":"debug","ts":1594806721778,"caller":"transport/transport.go:49","msg":"<nil>","decoder":{"a":100,"b":20}}
+{"level":"debug","ts":1594806721778,"caller":"endpoint/middleware.go:14","msg":""}
+{"level":"debug","ts":1594806721778,"caller":"transport/transport.go:54","msg":"<nil>","request over":null}
+{"level":"debug","ts":1594806721944,"caller":"transport/transport.go:49","msg":"<nil>","decoder":{"a":100,"b":20}}
+{"level":"debug","ts":1594806721944,"caller":"endpoint/middleware.go:14","msg":""}
+{"level":"debug","ts":1594806721944,"caller":"transport/transport.go:54","msg":"<nil>","request over":null}
+{"level":"debug","ts":1594806722129,"caller":"transport/transport.go:49","msg":"<nil>","decoder":{"a":100,"b":20}}
+{"level":"debug","ts":1594806722129,"caller":"endpoint/middleware.go:14","msg":""}
+{"level":"debug","ts":1594806722129,"caller":"transport/transport.go:54","msg":"<nil>","request over":null}
+{"level":"debug","ts":1594806722288,"caller":"transport/transport.go:49","msg":"<nil>","decoder":{"a":100,"b":20}}
+{"level":"debug","ts":1594806722288,"caller":"endpoint/middleware.go:14","msg":""}
+{"level":"debug","ts":1594806722288,"caller":"transport/transport.go:54","msg":"<nil>","request over":null}
+{"level":"debug","ts":1594806722450,"caller":"transport/transport.go:49","msg":"<nil>","decoder":{"a":100,"b":20}}
+{"level":"debug","ts":1594806722450,"caller":"endpoint/middleware.go:14","msg":""}
+{"level":"debug","ts":1594806722450,"caller":"transport/transport.go:54","msg":"<nil>","request over":null}
+{"level":"debug","ts":1594807885469,"caller":"transport/transport.go:49","msg":"<nil>","decoder":{"a":100,"b":20}}
+{"level":"debug","ts":1594807885469,"caller":"endpoint/middleware.go:14","msg":""}
+{"level":"debug","ts":1594807885469,"caller":"transport/transport.go:54","msg":"<nil>","[encoder Generic] (request) over":null}
+{"level":"debug","ts":1594808015194,"caller":"transport/transport.go:49","msg":"<nil>","decoder":{"a":100,"b":20}}
+{"level":"debug","ts":1594808015194,"caller":"endpoint/middleware.go:14","msg":""}
+{"level":"debug","ts":1594808015194,"caller":"transport/transport.go:54","msg":"<nil>","[encoder Generic] (request) over":null}
+{"level":"debug","ts":1594808361651,"caller":"transport/transport.go:49","msg":"<nil>","decoder":{"a":100,"b":20}}
+{"level":"debug","ts":1594808361652,"caller":"endpoint/endpoint.go:39","msg":"transform  err","error":"type err","response":null}
+{"level":"debug","ts":1594808361652,"caller":"endpoint/middleware.go:16","msg":"<nil>","loggerMiddleware":"succeed","timeout":0}
+{"level":"debug","ts":1594808778948,"caller":"transport/transport.go:49","msg":"<nil>","decoder":{"a":100,"b":20}}
+{"level":"debug","ts":1594808778949,"caller":"endpoint/endpoint.go:37","msg":"transform  err","error":"type err","response":null}
+{"level":"debug","ts":1594808778949,"caller":"endpoint/middleware.go:16","msg":"<nil>","loggerMiddleware":"succeed","timeout":0}
+{"level":"debug","ts":1594808781244,"caller":"transport/transport.go:49","msg":"<nil>","decoder":{"a":100,"b":20}}
+{"level":"debug","ts":1594808781244,"caller":"endpoint/endpoint.go:37","msg":"transform  err","error":"type err","response":null}
+{"level":"debug","ts":1594808781244,"caller":"endpoint/middleware.go:16","msg":"<nil>","loggerMiddleware":"succeed","timeout":0}
+{"level":"debug","ts":1594808781410,"caller":"transport/transport.go:49","msg":"<nil>","decoder":{"a":100,"b":20}}
+{"level":"debug","ts":1594808781410,"caller":"endpoint/endpoint.go:37","msg":"transform  err","error":"type err","response":null}
+{"level":"debug","ts":1594808781410,"caller":"endpoint/middleware.go:16","msg":"<nil>","loggerMiddleware":"succeed","timeout":0}
+{"level":"debug","ts":1594808781572,"caller":"transport/transport.go:49","msg":"<nil>","decoder":{"a":100,"b":20}}
+{"level":"debug","ts":1594808781572,"caller":"endpoint/endpoint.go:37","msg":"transform  err","error":"type err","response":null}
+{"level":"debug","ts":1594808781572,"caller":"endpoint/middleware.go:16","msg":"<nil>","loggerMiddleware":"succeed","timeout":0}
+{"level":"debug","ts":1594808781725,"caller":"transport/transport.go:49","msg":"<nil>","decoder":{"a":100,"b":20}}
+{"level":"debug","ts":1594808781725,"caller":"endpoint/endpoint.go:37","msg":"transform  err","error":"type err","response":null}
+{"level":"debug","ts":1594808781725,"caller":"endpoint/middleware.go:16","msg":"<nil>","loggerMiddleware":"succeed","timeout":0}
+{"level":"debug","ts":1594808781900,"caller":"transport/transport.go:49","msg":"<nil>","decoder":{"a":100,"b":20}}
+{"level":"debug","ts":1594808781900,"caller":"endpoint/endpoint.go:37","msg":"transform  err","error":"type err","response":null}
+{"level":"debug","ts":1594808781900,"caller":"endpoint/middleware.go:16","msg":"<nil>","loggerMiddleware":"succeed","timeout":0}
+{"level":"debug","ts":1594808782051,"caller":"transport/transport.go:49","msg":"<nil>","decoder":{"a":100,"b":20}}
+{"level":"debug","ts":1594808782051,"caller":"endpoint/endpoint.go:37","msg":"transform  err","error":"type err","response":null}
+{"level":"debug","ts":1594808782051,"caller":"endpoint/middleware.go:16","msg":"<nil>","loggerMiddleware":"succeed","timeout":0}
+{"level":"debug","ts":1594809284474,"caller":"transport/transport.go:49","msg":"<nil>","decoder":{"a":100,"b":20}}
+{"level":"debug","ts":1594809284474,"caller":"endpoint/endpoint.go:32","msg":"transform  err","error":"type err","response":null}
+{"level":"debug","ts":1594809284474,"caller":"endpoint/middleware.go:16","msg":"<nil>","loggerMiddleware":"succeed","timeout":0}
+{"level":"debug","ts":1594809745089,"caller":"transport/transport.go:49","msg":"<nil>","decoder":{"a":100,"b":20}}
+{"level":"debug","ts":1594809745090,"caller":"endpoint/endpoint.go:28","msg":"request type => ","requestType":"*zap.Logger"}
+{"level":"debug","ts":1594809745090,"caller":"endpoint/endpoint.go:34","msg":"transform  err","error":"type err","response":null}
+{"level":"debug","ts":1594809745090,"caller":"endpoint/middleware.go:16","msg":"<nil>","loggerMiddleware":"succeed","timeout":0}
+{"level":"debug","ts":1594809921265,"caller":"transport/transport.go:49","msg":"<nil>","decoder":{"a":100,"b":20}}
+{"level":"debug","ts":1594809921265,"caller":"endpoint/middleware.go:22","msg":"LoggerMiddleware","requestType":"service.Add"}
+{"level":"debug","ts":1594809921265,"caller":"endpoint/endpoint.go:28","msg":"request type => ","requestType":"*zap.Logger"}
+{"level":"debug","ts":1594809921265,"caller":"endpoint/endpoint.go:34","msg":"transform  err","error":"type err","response":null}
+{"level":"debug","ts":1594809921265,"caller":"endpoint/middleware.go:18","msg":"<nil>","loggerMiddleware":"succeed","timeout":0}
+{"level":"debug","ts":1594809931841,"caller":"transport/transport.go:49","msg":"<nil>","decoder":{"a":100,"b":20}}
+{"level":"debug","ts":1594809931841,"caller":"endpoint/middleware.go:22","msg":"LoggerMiddleware","requestType":"service.Add"}
+{"level":"debug","ts":1594809931841,"caller":"endpoint/endpoint.go:28","msg":"request type => ","requestType":"*zap.Logger"}
+{"level":"debug","ts":1594809931841,"caller":"endpoint/endpoint.go:34","msg":"transform  err","error":"type err","response":null}
+{"level":"debug","ts":1594809931841,"caller":"endpoint/middleware.go:18","msg":"<nil>","loggerMiddleware":"succeed","timeout":0}
+{"level":"debug","ts":1594809986409,"caller":"transport/transport.go:49","msg":"<nil>","decoder":{"a":100,"b":20}}
+{"level":"debug","ts":1594809986409,"caller":"endpoint/middleware.go:22","msg":"LoggerMiddleware","requestType":"service.Add"}
+{"level":"debug","ts":1594809986409,"caller":"endpoint/endpoint.go:28","msg":"request type => ","requestType":"service.Add"}
+{"level":"debug","ts":1594809986411,"caller":"service/service.go:27","msg":"<nil>","call request service":"test add"}
+{"level":"debug","ts":1594809986411,"caller":"service/service.go:29","msg":"<nil>","call response service":"test add","response function ":"res ack"}
+{"level":"debug","ts":1594809986411,"caller":"service/middleward.go:29","msg":"<nil>","call service":"middleware test add","call request":{"a":100,"b":20},"call response ":{"res":120}}
+{"level":"debug","ts":1594809986411,"caller":"endpoint/middleware.go:18","msg":"<nil>","loggerMiddleware":"succeed","timeout":2}
+{"level":"debug","ts":1594809986411,"caller":"transport/transport.go:54","msg":"<nil>","[encoder Generic] (request) over":{"res":120}}

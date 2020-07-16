@@ -1,0 +1,2 @@
+2020-07-14T13:42:23.670+0800	ERROR	chat03/main.go:38	Error fetching URL www.google.com : Error :Get "www.google.com": unsupported protocol scheme ""
+2020-07-14T13:42:23.813+0800	INFO	chat03/main.go:40	Succeed Code : 200 OK URL http://www.google.com 

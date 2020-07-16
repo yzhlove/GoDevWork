@@ -1,0 +1,21 @@
+{"level":"info","ts":1594806170639,"caller":"tool/logtool.go:81","msg":"[NewLogger] success"}
+{"level":"info","ts":1594806170639,"caller":"go-kit-day02/main.go:17","msg":"server run 0.0.0.0:1234"}
+{"level":"info","ts":1594806699624,"caller":"tool/logtool.go:81","msg":"[NewLogger] success"}
+{"level":"info","ts":1594806699624,"caller":"go-kit-day02/main.go:17","msg":"server run 0.0.0.0:1234"}
+{"level":"info","ts":1594807877568,"caller":"tool/logtool.go:81","msg":"[NewLogger] success"}
+{"level":"info","ts":1594807877568,"caller":"go-kit-day02/main.go:17","msg":"server run 0.0.0.0:1234"}
+{"level":"info","ts":1594808007082,"caller":"tool/logtool.go:81","msg":"[NewLogger] success"}
+{"level":"info","ts":1594808007082,"caller":"go-kit-day02/main.go:17","msg":"server run 0.0.0.0:1234"}
+{"level":"info","ts":1594808355038,"caller":"tool/logtool.go:81","msg":"[NewLogger] success"}
+{"level":"info","ts":1594808355039,"caller":"go-kit-day02/main.go:17","msg":"server run 0.0.0.0:1234"}
+{"level":"info","ts":1594808775747,"caller":"tool/logtool.go:81","msg":"[NewLogger] success"}
+{"level":"info","ts":1594808775747,"caller":"go-kit-day02/main.go:17","msg":"server run 0.0.0.0:1234"}
+{"level":"info","ts":1594809277848,"caller":"tool/logtool.go:81","msg":"[NewLogger] success"}
+{"level":"info","ts":1594809277848,"caller":"go-kit-day02/main.go:17","msg":"server run 0.0.0.0:1234"}
+{"level":"info","ts":1594809739703,"caller":"tool/logtool.go:81","msg":"[NewLogger] success"}
+{"level":"info","ts":1594809739703,"caller":"go-kit-day02/main.go:17","msg":"server run 0.0.0.0:1234"}
+{"level":"info","ts":1594809920626,"caller":"tool/logtool.go:81","msg":"[NewLogger] success"}
+{"level":"info","ts":1594809920626,"caller":"go-kit-day02/main.go:17","msg":"server run 0.0.0.0:1234"}
+{"level":"info","ts":1594809981394,"caller":"tool/logtool.go:81","msg":"[NewLogger] success"}
+{"level":"info","ts":1594809981394,"caller":"go-kit-day02/main.go:17","msg":"server run 0.0.0.0:1234"}
+{"level":"info","ts":1594809986409,"caller":"service/middleward.go:34","msg":"service middle ","in":{"a":100,"b":20}}
