@@ -1,0 +1,19 @@
+{"level":"info","ts":1594978476921,"caller":"tool/logtool.go:89","msg":"[NewLogger] succeed!"}
+{"level":"debug","ts":1594978495805,"caller":"transport/transport.go:25","msg":"GetUID","UID":"28fdb69748c65b3187a71a586fd0e649"}
+{"level":"debug","ts":1594978495805,"caller":"transport/transport.go:28","msg":"GetTokenString","X-Token":""}
+{"level":"debug","ts":1594978495805,"caller":"transport/transport.go:66","msg":"28fdb69748c65b3187a71a586fd0e649","decoder add":{"a":100,"b":20}}
+{"level":"debug","ts":1594978495806,"caller":"endpoint/middleware.go:37","msg":"28fdb69748c65b3187a71a586fd0e649","[AuthLogin]":"tokenStr is empty","error":"please wait login"}
+{"level":"warn","ts":1594978495806,"caller":"transport/transport.go:19","msg":"28fdb69748c65b3187a71a586fd0e649","error":"please wait login"}
+{"level":"debug","ts":1594978503685,"caller":"transport/transport.go:25","msg":"GetUID","UID":"d1026ae5d2eb00e4004c0021bbe159f9"}
+{"level":"debug","ts":1594978503685,"caller":"transport/transport.go:28","msg":"GetTokenString","X-Token":""}
+{"level":"debug","ts":1594978503686,"caller":"transport/transport.go:53","msg":"req_uuid","decoder login":{"account":"yzh","passwd":"123456789"}}
+{"level":"debug","ts":1594978503686,"caller":"service/service.go:41","msg":"d1026ae5d2eb00e4004c0021bbe159f9","func":"baseService->login","req":{"account":"yzh","passwd":"123456789"}}
+{"level":"debug","ts":1594978503686,"caller":"service/service.go:45","msg":"d1026ae5d2eb00e4004c0021bbe159f9","func":"baseService->login","resp":{"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJOYW1lIjoieXpoIiwiRGNJZCI6MSwiZXhwIjoxNTk0OTc4NTMzLCJpYXQiOjE1OTQ5Nzg1MDMsImlzcyI6ImdvLWtpdCIsIm5iZiI6MTU5NDk3ODUwMywic3ViIjoibG9naW4ifQ.RkMxsjJi8ecG-b_nuyd8EpwIfGVrO5bPqy4HYytb5co"}}
+{"level":"debug","ts":1594978503687,"caller":"service/middleware.go:40","msg":"req_uuid","func":"logService->login","req":{"account":"yzh","passwd":"123456789"},"resp":{"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJOYW1lIjoieXpoIiwiRGNJZCI6MSwiZXhwIjoxNTk0OTc4NTMzLCJpYXQiOjE1OTQ5Nzg1MDMsImlzcyI6ImdvLWtpdCIsIm5iZiI6MTU5NDk3ODUwMywic3ViIjoibG9naW4ifQ.RkMxsjJi8ecG-b_nuyd8EpwIfGVrO5bPqy4HYytb5co"}}
+{"level":"debug","ts":1594978503687,"caller":"endpoint/middleware.go:19","msg":"req_uuid","func":"loginDecorator","times":1}
+{"level":"debug","ts":1594978503687,"caller":"transport/transport.go:71","msg":"d1026ae5d2eb00e4004c0021bbe159f9","encoderHttpResponse":{"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJOYW1lIjoieXpoIiwiRGNJZCI6MSwiZXhwIjoxNTk0OTc4NTMzLCJpYXQiOjE1OTQ5Nzg1MDMsImlzcyI6ImdvLWtpdCIsIm5iZiI6MTU5NDk3ODUwMywic3ViIjoibG9naW4ifQ.RkMxsjJi8ecG-b_nuyd8EpwIfGVrO5bPqy4HYytb5co"}}
+{"level":"debug","ts":1594978509410,"caller":"transport/transport.go:25","msg":"GetUID","UID":"3d0a5f21552d237844b8687b6a3a234a"}
+{"level":"debug","ts":1594978509411,"caller":"transport/transport.go:28","msg":"GetTokenString","X-Token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJOYW1lIjoieXpoIiwiRGNJZCI6MSwiZXhwIjoxNTk0OTc3ODgwLCJpYXQiOjE1OTQ5Nzc4NTAsImlzcyI6ImdvLWtpdCIsIm5iZiI6MTU5NDk3Nzg1MCwic3ViIjoibG9naW4ifQ.icog1k9H_DrdSNMU9MyC4JcCUBrw0lvMCGIUS9yJ__s"}
+{"level":"debug","ts":1594978509411,"caller":"transport/transport.go:66","msg":"3d0a5f21552d237844b8687b6a3a234a","decoder add":{"a":100,"b":50}}
+{"level":"debug","ts":1594978509416,"caller":"endpoint/middleware.go:44","msg":"3d0a5f21552d237844b8687b6a3a234a","[AuthLogin]":"parse token err","error":"token is expired by 10m29s"}
+{"level":"warn","ts":1594978509416,"caller":"transport/transport.go:19","msg":"3d0a5f21552d237844b8687b6a3a234a","error":"token is expired by 10m29s"}

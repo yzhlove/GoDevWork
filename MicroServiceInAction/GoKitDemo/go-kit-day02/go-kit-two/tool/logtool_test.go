@@ -13,3 +13,9 @@ func TestPath(t *testing.T) {
 	}
 	t.Log(pth)
 }
+
+func TestPathFile(t *testing.T) {
+	t.Log(filepath.Join("."))
+	t.Log(filepath.Dir(filepath.Join(".")))
+	t.Log(filepath.Abs(filepath.Dir(filepath.Join("."))))
+}
