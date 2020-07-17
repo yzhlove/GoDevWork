@@ -52,7 +52,7 @@ require (
 	go.uber.org/atomic v1.5.0
 	go.uber.org/zap v1.14.0
 	golang.org/x/net v0.0.0-20191002035440-2ec189313ef0
-	golang.org/x/time v0.0.0-20191024005414-555d28b269f0 // indirect
+	golang.org/x/time v0.0.0-20191024005414-555d28b269f0
 	google.golang.org/grpc v1.26.0
 	gopkg.in/natefinch/lumberjack.v2 v2.0.0 // indirect
 	sigs.k8s.io/yaml v1.2.0 // indirect
