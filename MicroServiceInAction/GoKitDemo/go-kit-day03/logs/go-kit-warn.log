@@ -17,3 +17,4 @@
 {"level":"debug","ts":1594978509411,"caller":"transport/transport.go:66","msg":"3d0a5f21552d237844b8687b6a3a234a","decoder add":{"a":100,"b":50}}
 {"level":"debug","ts":1594978509416,"caller":"endpoint/middleware.go:44","msg":"3d0a5f21552d237844b8687b6a3a234a","[AuthLogin]":"parse token err","error":"token is expired by 10m29s"}
 {"level":"warn","ts":1594978509416,"caller":"transport/transport.go:19","msg":"3d0a5f21552d237844b8687b6a3a234a","error":"token is expired by 10m29s"}
+{"level":"info","ts":1595324373082,"caller":"tool/logtool.go:89","msg":"[NewLogger] succeed!"}
