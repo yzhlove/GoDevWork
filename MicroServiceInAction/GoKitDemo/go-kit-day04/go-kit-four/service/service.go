@@ -36,7 +36,7 @@ func (s baseService) TestAdd(ctx context.Context, in Add) AddAck {
 
 func (s baseService) Login(ctx context.Context, in Login) (LoginAck, error) {
 	s.logger.Debug(fmt.Sprint(ctx.Value(ContextUID)),
-		zap.Any("func-->", "baseService.Login"),
+		zap.Any("func-->", "baseService.LoginEndpoint"),
 		zap.Any("in", in))
 	if in.Account != "yzh" && in.Passwd != "12345678" {
 		return LoginAck{}, errors.New("login failed")
@@ -47,7 +47,7 @@ func (s baseService) Login(ctx context.Context, in Login) (LoginAck, error) {
 	}
 	ack := LoginAck{Token: token}
 	s.logger.Debug(fmt.Sprint(ctx.Value(ContextUID)),
-		zap.Any("func-->", "baseService.Login"),
+		zap.Any("func-->", "baseService.LoginEndpoint"),
 		zap.Any("ack", ack))
 	return ack, nil
 }

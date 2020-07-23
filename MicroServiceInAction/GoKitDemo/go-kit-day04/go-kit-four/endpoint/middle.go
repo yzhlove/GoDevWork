@@ -19,7 +19,7 @@ func LoginMiddle(log *zap.Logger) endpoint.Middleware {
 		return func(ctx context.Context, request interface{}) (response interface{}, err error) {
 			defer func(begin time.Time) {
 				log.Debug(fmt.Sprint(ctx.Value(service.ContextUID)),
-					zap.String("func-->", "endpoint.middle.Login"),
+					zap.String("func-->", "endpoint.middle.LoginEndpoint"),
 					zap.Any("times", time.Since(begin).Milliseconds()))
 			}(time.Now())
 			return e(ctx, request)

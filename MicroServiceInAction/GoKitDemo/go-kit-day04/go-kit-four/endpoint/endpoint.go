@@ -29,7 +29,8 @@ func NewEndpoint(s service.Service, log *zap.Logger, stdLimit *rate.Limiter, ube
 	{
 		login = MakeLoginEndpoint(s)
 		login = LoginMiddle(log)(login)
-		login = GolangRateAllowMiddle(stdLimit)(login)
+		//login = GolangRateAllowMiddle(stdLimit)(login)
+		login = GolangRateWaitMiddle(stdLimit)(login)
 	}
 
 	return Endpoint{Add: add, Login: login}

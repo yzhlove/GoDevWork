@@ -12,13 +12,13 @@ func main() {
 		panic(err)
 	}
 	var replay string
-	if err = cli.Call("HelloService.Login", "abc", &replay); err != nil {
+	if err = cli.Call("HelloService.LoginEndpoint", "abc", &replay); err != nil {
 		log.Println(err)
 	} else {
 		log.Println("login ok")
 	}
 
-	if err = cli.Call("HelloService.Login", "user:password", &replay); err != nil {
+	if err = cli.Call("HelloService.LoginEndpoint", "user:password", &replay); err != nil {
 		log.Println(err)
 	} else {
 		log.Println("login ok")

@@ -38,7 +38,7 @@ func (l logMiddle) TestAdd(ctx context.Context, in Add) (out AddAck) {
 func (l logMiddle) Login(ctx context.Context, in Login) (out LoginAck, err error) {
 	defer func() {
 		l.logger.Debug(fmt.Sprint(ctx.Value(ContextUID)),
-			zap.Any("func-->", "logMiddle.Login"),
+			zap.Any("func-->", "logMiddle.LoginEndpoint"),
 			zap.Any("req", in),
 			zap.Any("ack", out),
 			zap.Error(err),

@@ -1,0 +1,2 @@
+{"level":"info","ts":1595405921922,"caller":"tool/logtool.go:89","msg":"[NewLogger] succeed!"}
+{"level":"debug","ts":1595405921923,"caller":"client/client.go:21","msg":"set UID","UID":"d1a61f51748dfd0abcaee5b648dddfe6"}
