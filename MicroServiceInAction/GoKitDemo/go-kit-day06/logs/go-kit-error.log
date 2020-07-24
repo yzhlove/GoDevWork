@@ -1,0 +1,30 @@
+{"level":"info","ts":1595585906952,"caller":"tool/logtool.go:89","msg":"[NewLogger] succeed!"}
+{"level":"info","ts":1595585906953,"caller":"go-kit-day06/main.go:80","msg":"[Agent] run 127.0.0.1:1234"}
+{"level":"info","ts":1595586127728,"caller":"tool/logtool.go:89","msg":"[NewLogger] succeed!"}
+{"level":"info","ts":1595586127729,"caller":"go-kit-day06/main.go:80","msg":"[Agent] run 127.0.0.1:1234"}
+{"level":"warn","ts":1595586127729,"caller":"go-kit-day06/main.go:60","msg":"[Agent] listen ","error":"listen tcp 127.0.0.1:1234: bind: address already in use"}
+{"level":"info","ts":1595586174469,"caller":"tool/logtool.go:89","msg":"[NewLogger] succeed!"}
+{"level":"info","ts":1595586174470,"caller":"go-kit-day06/main.go:80","msg":"[Agent] run 127.0.0.1:1234"}
+{"level":"info","ts":1595586675265,"caller":"tool/logtool.go:89","msg":"[NewLogger] succeed!"}
+{"level":"info","ts":1595586675267,"caller":"go-kit-day06/main.go:80","msg":"[Agent] run :1234"}
+{"level":"info","ts":1595586823645,"caller":"tool/logtool.go:89","msg":"[NewLogger] succeed!"}
+{"level":"info","ts":1595586823646,"caller":"go-kit-day06/main.go:80","msg":"[Agent] run :1234"}
+{"level":"info","ts":1595586933780,"caller":"tool/logtool.go:89","msg":"[NewLogger] succeed!"}
+{"level":"info","ts":1595586933781,"caller":"go-kit-day06/main.go:80","msg":"[Agent] run :1234"}
+{"level":"error","ts":1595586933782,"caller":"go-kit-day06/main.go:83","msg":"[Agent] run error","stacktrace":"main.main\n\t/Users/yostar/workSpace/gowork/src/GoDevWork/MicroServiceInAction/GoKitDemo/go-kit-day06/main.go:83\nruntime.main\n\t/usr/local/go/src/runtime/proc.go:203"}
+{"level":"info","ts":1595587084872,"caller":"tool/logtool.go:89","msg":"[NewLogger] succeed!"}
+{"level":"info","ts":1595587084873,"caller":"go-kit-day06/main.go:80","msg":"[Agent] run 127.0.0.1:1234"}
+{"level":"error","ts":1595587084875,"caller":"go-kit-day06/main.go:83","msg":"[Agent] run error","stacktrace":"main.main\n\t/Users/yostar/workSpace/gowork/src/GoDevWork/MicroServiceInAction/GoKitDemo/go-kit-day06/main.go:83\nruntime.main\n\t/usr/local/go/src/runtime/proc.go:203"}
+{"level":"info","ts":1595587138062,"caller":"tool/logtool.go:89","msg":"[NewLogger] succeed!"}
+{"level":"info","ts":1595587138063,"caller":"go-kit-day06/main.go:80","msg":"[Agent] run 127.0.0.1:1234"}
+{"level":"error","ts":1595587138064,"caller":"go-kit-day06/main.go:83","msg":"[Agent] run error ... ","stacktrace":"main.main\n\t/Users/yostar/workSpace/gowork/src/GoDevWork/MicroServiceInAction/GoKitDemo/go-kit-day06/main.go:83\nruntime.main\n\t/usr/local/go/src/runtime/proc.go:203"}
+{"level":"info","ts":1595587349004,"caller":"tool/logtool.go:89","msg":"[NewLogger] succeed!"}
+{"level":"info","ts":1595587349005,"caller":"go-kit-day06/main.go:80","msg":"[Agent] run 127.0.0.1:1234"}
+{"level":"error","ts":1595587349006,"caller":"go-kit-day06/main.go:85","msg":"[Agent] run error ... ","stacktrace":"main.main\n\t/Users/yostar/workSpace/gowork/src/GoDevWork/MicroServiceInAction/GoKitDemo/go-kit-day06/main.go:85\nruntime.main\n\t/usr/local/go/src/runtime/proc.go:203"}
+{"level":"info","ts":1595587453100,"caller":"tool/logtool.go:89","msg":"[NewLogger] succeed!"}
+{"level":"info","ts":1595587453101,"caller":"go-kit-day06/main.go:80","msg":"[Agent] run 127.0.0.1:1234"}
+{"level":"error","ts":1595587453102,"caller":"go-kit-day06/main.go:85","msg":"[Agent] run error ... ","stacktrace":"main.main\n\t/Users/yostar/workSpace/gowork/src/GoDevWork/MicroServiceInAction/GoKitDemo/go-kit-day06/main.go:85\nruntime.main\n\t/usr/local/go/src/runtime/proc.go:203"}
+{"level":"info","ts":1595587507504,"caller":"tool/logtool.go:89","msg":"[NewLogger] succeed!"}
+{"level":"info","ts":1595587507505,"caller":"go-kit-day06/main.go:81","msg":"[Agent] run 127.0.0.1:1234"}
+{"level":"debug","ts":1595587528685,"caller":"src/service_middle.go:28","msg":"[6a6989bc183075edf2bcce5a4c80ffb8]","<func>":"service.middle.log","in":"Account:\"yzh\" Passwd:\"123456789\" ","out":"Token:\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJOYW1lIjoieXpoIiwiRGNJZCI6MSwiZXhwIjoxNTk1NTg3NTU4LCJpYXQiOjE1OTU1ODc1MjgsImlzcyI6ImdvLWtpdCIsIm5iZiI6MTU5NTU4NzUyOCwic3ViIjoibG9naW4ifQ.oF_3nrxVTiHhRO9KT9kxB9BHm11tSaFns8WaZ35PgMk\" ","time":0}
+{"level":"error","ts":1595587544858,"caller":"go-kit-day06/main.go:86","msg":"[Agent] run error ... ","stacktrace":"main.main\n\t/Users/yostar/workSpace/gowork/src/GoDevWork/MicroServiceInAction/GoKitDemo/go-kit-day06/main.go:86\nruntime.main\n\t/usr/local/go/src/runtime/proc.go:203"}
