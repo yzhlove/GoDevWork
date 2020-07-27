@@ -1,0 +1,12 @@
+global:
+  scrape_interval:     15s
+
+  external_labels:
+    monitor: 'codelab-monitor'
+
+scrape_configs:
+  - job_name: 'go-pro'
+    metrics_path: "/metrics"
+    scrape_interval: 5s
+    static_configs:
+      - targets: ['host.docker.internal:1234']
