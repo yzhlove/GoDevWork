@@ -1,0 +1,8 @@
+{"level":"info","ts":1595921296618,"caller":"tool/logtool.go:89","msg":"[NewLogger] succeed!"}
+{"level":"info","ts":1595923991704,"caller":"tool/logtool.go:89","msg":"[NewLogger] succeed!"}
+{"level":"info","ts":1595924136869,"caller":"tool/logtool.go:89","msg":"[NewLogger] succeed!"}
+{"level":"info","ts":1595924260907,"caller":"tool/logtool.go:89","msg":"[NewLogger] succeed!"}
+{"level":"info","ts":1595928574139,"caller":"tool/logtool.go:89","msg":"[NewLogger] succeed!"}
+{"level":"info","ts":1595928574140,"caller":"go-kit-day07/main.go:87","msg":"monitor metrics prometheus addr:","prometheus_addr":":1234"}
+{"level":"info","ts":1595928699568,"caller":"tool/logtool.go:89","msg":"[NewLogger] succeed!"}
+{"level":"info","ts":1595928699568,"caller":"go-kit-day07/main.go:87","msg":"monitor metrics prometheus addr:","prometheus_addr":":1234"}

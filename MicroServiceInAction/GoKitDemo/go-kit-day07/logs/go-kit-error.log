@@ -1,0 +1,3 @@
+{"level":"info","ts":1595921296618,"caller":"tool/logtool.go:89","msg":"[NewLogger] succeed!"}
+{"level":"info","ts":1595923991704,"caller":"tool/logtool.go:89","msg":"[NewLogger] succeed!"}
+{"level":"info","ts":1595924136869,"caller":"tool/logtool.go:89","msg":"[NewLogger] succeed!"}
