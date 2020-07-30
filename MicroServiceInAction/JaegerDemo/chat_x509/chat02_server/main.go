@@ -75,7 +75,11 @@ func hConn(conn net.Conn) {
 		err    error
 		count  int
 	)
-	for msg, err = reader.ReadString('\n'); err == nil; {
+	for {
+		msg, err = reader.ReadString('\n')
+		if err != nil {
+			panic(err)
+		}
 		count++
 		fmt.Println("msg => ", msg)
 		if _, err = conn.Write([]byte("send:" + strconv.Itoa(count) + "\n")); err != nil {
@@ -83,5 +87,4 @@ func hConn(conn net.Conn) {
 			return
 		}
 	}
-	fmt.Println("conn err:", err)
 }
