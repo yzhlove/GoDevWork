@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package pb;
+
+service Hello {
+  rpc SayHello(Req) returns (Resp) ;
+  rpc Take(stream Req) returns (stream Resp);
+}
+
+message Req {
+  string in = 1;
+}
+
+message Resp {
+  string out = 1;
+}
+

@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+package pb;
+
+import "user.proto";
+
+service User {
+  rpc RpcUserLogin(UserLogic.Login) returns (UserLogic.LoginAck) ;
+}
+

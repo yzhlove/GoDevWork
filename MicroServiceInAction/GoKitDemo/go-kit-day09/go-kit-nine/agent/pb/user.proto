@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package pb;
+
+message UserLogic {
+  message Login {
+    string Account = 1;
+    string Password = 2;
+  }
+  message LoginAck {
+    string Token = 1;
+  }
+}
+
+
+
+

@@ -7,6 +7,7 @@ replace github.com/coreos/go-systemd => github.com/coreos/go-systemd/v22 v22.0.0
 require (
 	bou.ke/monkey v1.0.2 // indirect
 	github.com/HouzuoGuo/tiedot v0.0.0-20191112163212-3246d2a872c5
+	github.com/afex/hystrix-go v0.0.0-20180502004556-fa1af6a1f4f5
 	github.com/casbin/casbin v1.9.1
 	github.com/casbin/casbin/v2 v2.2.1
 	github.com/codahale/hdrhistogram v0.0.0-20161010025455-3a0bb77429bd // indirect

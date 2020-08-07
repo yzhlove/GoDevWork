@@ -1,0 +1,9 @@
+{"level":"info","ts":1596609581705,"caller":"tool/logtool.go:89","msg":"[NewLogger] succeed!"}
+{"level":"info","ts":1596609639677,"caller":"tool/logtool.go:89","msg":"[NewLogger] succeed!"}
+{"level":"info","ts":1596610946219,"caller":"tool/logtool.go:89","msg":"[NewLogger] succeed!"}
+{"level":"info","ts":1596611765748,"caller":"tool/logtool.go:89","msg":"[NewLogger] succeed!"}
+{"level":"info","ts":1596612087241,"caller":"tool/logtool.go:89","msg":"[NewLogger] succeed!"}
+{"level":"info","ts":1596612129037,"caller":"tool/logtool.go:89","msg":"[NewLogger] succeed!"}
+{"level":"info","ts":1596612202010,"caller":"tool/logtool.go:89","msg":"[NewLogger] succeed!"}
+{"level":"info","ts":1596612277960,"caller":"tool/logtool.go:89","msg":"[NewLogger] succeed!"}
+{"level":"info","ts":1596614770597,"caller":"tool/logtool.go:89","msg":"[NewLogger] succeed!"}
