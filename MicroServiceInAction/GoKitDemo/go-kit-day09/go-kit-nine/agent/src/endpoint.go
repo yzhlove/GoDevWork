@@ -30,15 +30,15 @@ func (es EndpointService) Login(ctx context.Context, in *pb.UserLogic_Login) (*p
 	} else if out, ok := result.(*pb.UserLogic_LoginAck); ok {
 		return out, nil
 	} else {
-		return nil, errors.New("type err:" + reflect.TypeOf(result).String())
+		return nil, errors.New("endpoint.Login type err:" + reflect.TypeOf(result).String())
 	}
 }
 
 func MakeLoginEndpoint(service Service) endpoint.Endpoint {
 	return func(ctx context.Context, request interface{}) (response interface{}, err error) {
-		if out, ok := request.(*pb.UserLogic_Login); ok {
-			return out, nil
+		if in, ok := request.(*pb.UserLogic_Login); ok {
+			return service.Login(ctx, in)
 		}
-		return nil, errors.New("type err:" + reflect.TypeOf(request).String())
+		return nil, errors.New("endpoint.Make type err:" + reflect.TypeOf(request).String())
 	}
 }

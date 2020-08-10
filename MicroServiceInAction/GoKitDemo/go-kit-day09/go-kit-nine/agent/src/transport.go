@@ -34,19 +34,19 @@ func (s *Grpc) RpcUserLogin(ctx context.Context, req *pb.UserLogic_Login) (*pb.U
 	if out, ok := result.(*pb.UserLogic_LoginAck); ok {
 		return out, nil
 	}
-	return nil, errors.New("type err:" + reflect.TypeOf(result).String())
+	return nil, errors.New("transport.rpc type err:" + reflect.TypeOf(result).String())
 }
 
 func RequestLogin(ctx context.Context, req interface{}) (interface{}, error) {
 	if in, ok := req.(*pb.UserLogic_Login); ok {
 		return in, nil
 	}
-	return nil, errors.New("type err:" + reflect.TypeOf(req).String())
+	return nil, errors.New("transport.request type err:" + reflect.TypeOf(req).String())
 }
 
 func ResponseLogin(ctx context.Context, resp interface{}) (interface{}, error) {
 	if out, ok := resp.(*pb.UserLogic_LoginAck); ok {
 		return out, nil
 	}
-	return nil, errors.New("type err:" + reflect.TypeOf(resp).String())
+	return nil, errors.New("transport.response type err:" + reflect.TypeOf(resp).String())
 }

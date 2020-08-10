@@ -51,7 +51,6 @@ func TestNewAgentClient(t *testing.T) {
 		t.Log("hystrix status => ", cbs.IsOpen(), cbs.AllowRequest())
 		if err != nil {
 			t.Error(err)
-			return
 		}
 	}
 }
@@ -59,13 +58,7 @@ func TestNewAgentClient(t *testing.T) {
 func TestGrpc(t *testing.T) {
 
 	addr := "127.0.0.1:1234"
-	tracer, closer, err := utils.NewJaegerTracer("user_agent_client")
-	if err != nil {
-		t.Error(err)
-		return
-	}
-	defer closer.Close()
-	conn, err := grpc.Dial(addr, grpc.WithUnaryInterceptor(utils.JaegerClientInterceptor(tracer)))
+	conn, err := grpc.Dial(addr, grpc.WithInsecure())
 	if err != nil {
 		t.Error(err)
 		return

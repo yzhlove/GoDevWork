@@ -22,8 +22,14 @@ type Service interface {
 }
 
 func NewService(logger *zap.Logger, c metrics.Counter, h metrics.Histogram, tracer opentracing.Tracer) Service {
-	
-	return nil
+	var s Service
+	{
+		s = &server{logger: logger}
+		s = NewTracerMiddle(tracer)(s)
+		s = NewHystrixMiddle(c, h)(s)
+		s = NewLoggerMiddle(logger)(s)
+	}
+	return s
 }
 
 type server struct {
