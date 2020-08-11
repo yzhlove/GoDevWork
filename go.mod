@@ -14,14 +14,13 @@ require (
 	github.com/coreos/bbolt v1.3.3 // indirect
 	github.com/coreos/etcd v3.3.18+incompatible
 	github.com/coreos/go-semver v0.3.0 // indirect
-	github.com/coreos/go-systemd v0.0.0-00010101000000-000000000000 // indirect
 	github.com/coreos/pkg v0.0.0-20180928190104-399ea9e2e55f // indirect
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/garyburd/redigo v1.6.0
 	github.com/gin-gonic/gin v1.6.3
 	github.com/gogo/protobuf v1.3.1
 	github.com/golang/groupcache v0.0.0-20200121045136-8c9f03a8e57e // indirect
-	github.com/golang/protobuf v1.3.4
+	github.com/golang/protobuf v1.4.0
 	github.com/google/uuid v1.1.1 // indirect
 	github.com/gorilla/websocket v1.4.1 // indirect
 	github.com/grpc-ecosystem/go-grpc-middleware v1.2.0 // indirect
@@ -31,6 +30,7 @@ require (
 	github.com/jonboulle/clockwork v0.1.0 // indirect
 	github.com/julienschmidt/httprouter v1.3.0
 	github.com/klauspost/reedsolomon v1.9.9 // indirect
+	github.com/lucas-clemente/quic-go v0.17.3
 	github.com/mattn/go-sqlite3 v1.13.0
 	github.com/mikespook/gorbac v2.1.0+incompatible
 	github.com/mmcloughlin/avo v0.0.0-20200803215136-443f81d77104 // indirect
