@@ -2,13 +2,12 @@ package consistenthash
 
 import (
 	"fmt"
-	"geecachefive/consistenthash"
 	"strconv"
 	"testing"
 )
 
 func Test_Hash(t *testing.T) {
-	c := consistenthash.NewConsistentHash(3, func(data []byte) uint32 {
+	c := NewConsistentHash(3, func(data []byte) uint32 {
 		i, _ := strconv.Atoi(string(data))
 		return uint32(i)
 	})
