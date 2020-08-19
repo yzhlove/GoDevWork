@@ -16,7 +16,7 @@ const (
 
 const (
 	OPENED = iota
-	CLOSE
+	CLOSED
 )
 
 var (
@@ -33,9 +33,34 @@ var (
 		}
 		return 1
 	}
-	defaultLogger = Logger(log.New(os.Stderr, "ants", log.LstdFlags))
+	defaultLogger      = Logger(log.New(os.Stderr, "ants", log.LstdFlags))
+	defaultAntsPool, _ = NewPool(DefaultAntsPoolSize)
 )
 
 type Logger interface {
 	Printf(format string, args ...interface{})
+}
+
+func Submit(task func()) error {
+	return defaultAntsPool.Submit(task)
+}
+
+func Running() int {
+	return defaultAntsPool.Running()
+}
+
+func Cap() int {
+	return defaultAntsPool.Cap()
+}
+
+func Free() int {
+	return defaultAntsPool.Free()
+}
+
+func Release() {
+	defaultAntsPool.Release()
+}
+
+func Reboot() {
+	defaultAntsPool.Reboot()
 }

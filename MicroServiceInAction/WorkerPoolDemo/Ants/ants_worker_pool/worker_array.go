@@ -1,13 +1,21 @@
 package ants_worker_pool
 
-import "time"
+import (
+	"errors"
+	"time"
+)
+
+var (
+	errQueueIsFull     = errors.New("the queue is full")
+	errQueueIsReleased = errors.New("the queue length is zero")
+)
 
 type workerArray interface {
 	len() int
 	isEmpty() bool
-	insert(worker *goWorker) error
-	detach() *goWorker
-	retrieveExpire(duration time.Duration) []*goWorker
+	insert(worker *GoWorker) error
+	detach() *GoWorker
+	retrieveExpire(duration time.Duration) []*GoWorker
 	reset()
 }
 
@@ -19,6 +27,8 @@ const (
 )
 
 func newWorkerArray(typ arrayType, size int) workerArray {
-
-	return nil
+	if typ == loopQueueType {
+		return newWorkerLoopQueue(size)
+	}
+	return newWorkerStack(size)
 }
