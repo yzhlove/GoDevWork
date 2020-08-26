@@ -46,3 +46,33 @@ func TestLoopQueue(t *testing.T) {
 	queue.retrieveExpire(time.Second)
 	assert.EqualValuesf(t, 6, queue.len(), "Len error:%d", queue.len())
 }
+
+func TestLoopQueueExpire(t *testing.T) {
+	nt := time.Now()
+
+	queue := newWorkerLoopQueue(5)
+
+	queue.insert(&GoWorker{recycleTime: nt, _id: 1})
+	queue.insert(&GoWorker{recycleTime: nt.Add(time.Second), _id: 2})
+	queue.insert(&GoWorker{recycleTime: nt.Add(time.Second * 2), _id: 3})
+	queue.insert(&GoWorker{recycleTime: nt.Add(time.Second * 3), _id: 4})
+	queue.insert(&GoWorker{recycleTime: nt.Add(time.Second * 4), _id: 5})
+
+	go func() {
+		tick := time.NewTicker(time.Second)
+		defer tick.Stop()
+		time.Sleep(2 * time.Second)
+		for range tick.C {
+			if expireWorker := queue.retrieveExpire(0); expireWorker != nil {
+				for _, w := range expireWorker {
+					t.Log("time ", w.recycleTime, " _id ", w._id)
+				}
+			} else {
+				t.Log("expire nil")
+			}
+		}
+	}()
+
+	time.Sleep(time.Second * 10)
+
+}

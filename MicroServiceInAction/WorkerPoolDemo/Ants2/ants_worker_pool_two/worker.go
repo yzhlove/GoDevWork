@@ -8,6 +8,7 @@ import (
 )
 
 type GoWorker struct {
+	_id      int //测试专用
 	p        *Pool
 	taskChan chan func()
 	expire   time.Time

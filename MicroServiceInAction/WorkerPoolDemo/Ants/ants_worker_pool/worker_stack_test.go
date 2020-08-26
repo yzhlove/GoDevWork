@@ -75,3 +75,33 @@ func TestSearch(t *testing.T) {
 
 	assert.EqualValues(t, 7, queue.binarySearch(0, queue.len()-1, expire_3), "index should be 7")
 }
+
+func TestStackQueue(t *testing.T) {
+	nt := time.Now()
+
+	queue := newWorkerStack(5)
+
+	queue.insert(&GoWorker{recycleTime: nt, _id: 1})
+	queue.insert(&GoWorker{recycleTime: nt.Add(time.Second), _id: 2})
+	queue.insert(&GoWorker{recycleTime: nt.Add(time.Second * 2), _id: 3})
+	queue.insert(&GoWorker{recycleTime: nt.Add(time.Second * 3), _id: 4})
+	queue.insert(&GoWorker{recycleTime: nt.Add(time.Second * 4), _id: 5})
+
+	go func() {
+		tick := time.NewTicker(time.Second)
+		defer tick.Stop()
+		time.Sleep(2 * time.Second)
+		for range tick.C {
+			if expireWorker := queue.retrieveExpire(0); expireWorker != nil {
+				for _, w := range expireWorker {
+					t.Log("time ", w.recycleTime, " _id ", w._id)
+				}
+			} else {
+				t.Log("expire nil")
+			}
+		}
+	}()
+
+	time.Sleep(time.Second * 10)
+
+}

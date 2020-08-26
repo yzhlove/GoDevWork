@@ -6,6 +6,7 @@ import (
 )
 
 type GoWorker struct {
+	_id         int
 	pool        *Pool
 	task        chan func()
 	recycleTime time.Time
