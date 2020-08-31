@@ -22,8 +22,7 @@ import (
 //IDLE:
 //	这个状态标识由于缺少新的(new)或未决(pending)的RPC，channel 甚至没有尝试创建连接。新的 RPC 可能会在这个状态被创建。任何在 channel 上启动 RPC
 //	的尝试都会将通道从此状态推送到 CONNECTING 状态。
-//	如果 channel 上已经在指定的 IDLE_TIMEOUT 时间内没有 RPC 活动，即在此期间没有新的(new)或挂起(pending)的(或活跃的) RPC，则 READY 或
-//CONNECTING:
+//	如果 channel 上已经在指定的 IDLE_TIMEOUT 时间内没有 RPC 活动，即在此期间没有新的(new)或挂起(pending)的(或活跃的) RPC，则 READY 或 CONNECTING
 //	状态的 channel 将转换到 IDLE 状态。通常情况下，IDLE_TIMEOUT 的默认值是 300秒。
 //	此外，已经接收到 GOAWAY 的 channel 在没有活跃(active)或挂起(pending)的 RPCs 时，也应当转换到 IDLE 状态，以避免尝试断开连接的服务器上的连接过载。
 //SHUTDOWN:
@@ -97,7 +96,7 @@ func New(dial DialFunc, opts ...TrackerOption) *ConnectionTracker {
 	ctx, cancel := context.WithCancel(context.Background())
 	trace := &ConnectionTracker{
 		dial:              dial,
-		readyCheck:        nil, //wait
+		readyCheck:        defaultReadyCheck,
 		connections:       make(map[string]*trackedConn),
 		actives:           make(map[string]*trackedConn),
 		timeout:           defaultTimeout,
@@ -122,7 +121,7 @@ func (trace *ConnectionTracker) getconn(addr string, force bool) (*grpc.ClientCo
 	trace.Lock()
 	tc, ok := trace.connections[addr]
 	if !ok {
-		tc := &trackedConn{addr: addr, tracker: trace}
+		tc = &trackedConn{addr: addr, tracker: trace}
 		trace.connections[addr] = tc
 	}
 	trace.Unlock()

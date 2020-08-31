@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package pb;
+
+service Hello {
+  rpc SayHello(Request) returns (Replay) ;
+}
+
+message Request {
+  string name = 1;
+}
+
+message Replay {
+  string message = 1;
+}
