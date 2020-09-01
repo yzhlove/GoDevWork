@@ -16,7 +16,7 @@ func main() {
 	pool := New(defaultDialFunc, WithTimeout(time.Second*5),
 		WithCheckReadyTimeout(time.Second),
 		WithHeartbeatInterval(time.Second))
-	conn, err := pool.DialConn(":1234")
+	conn, err := pool.GetConn(":1234")
 	if err != nil {
 		panic(err)
 	}

@@ -144,7 +144,6 @@ func (t *ConnTracker) conn(addr string, force bool) (*grpc.ClientConn, error) {
 func (c *C) tryConn(ctx context.Context, force bool) error {
 	c.Lock()
 	defer c.Unlock()
-
 	//是否强制更新连接信息
 	if !force && c.conn != nil {
 		if c.state == status.Ready {
@@ -158,8 +157,7 @@ func (c *C) tryConn(ctx context.Context, force bool) error {
 	if c.conn != nil {
 		c.conn.Close()
 	}
-
-	if _conn, err := c.parent.DialConn(c.addr); err != nil {
+	if _conn, err := c.parent.dialFunc(c.addr); err != nil {
 		return err
 	} else {
 		c.conn = _conn
@@ -167,7 +165,6 @@ func (c *C) tryConn(ctx context.Context, force bool) error {
 
 	readyCtx, cancel := context.WithTimeout(ctx, c.parent.checkReadyTimeout)
 	defer cancel()
-
 	if s := c.parent.checkReadyFunc(readyCtx, c.conn); s != status.Ready {
 		return errNoReady
 	}
