@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package proto;
+
+service SfService{
+  rpc GetUID(Sf.Nil) returns (Sf.UID);
+}
+
+message Sf {
+  message Nil {}
+  message UID {
+    uint64  uid = 1;
+  }
+}
+
