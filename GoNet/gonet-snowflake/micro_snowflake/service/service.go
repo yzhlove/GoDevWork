@@ -62,8 +62,8 @@ func (s *Server) produce() {
 					ct = s.wait(lt)
 				}
 			}
-			ct = lt
-			ret <- pack(lt, s.machineId, sn)
+			lt = ct
+			ret <- pack(ct, s.machineId, sn)
 		} else {
 			panic("chan is closed")
 		}
@@ -80,6 +80,7 @@ func (s *Server) wait(lt int64) int64 {
 
 func pack(t int64, id, sn uint64) uint64 {
 	var uid uint64
+	log.Println(t, id, sn)
 	uid |= (uint64(t) & TsMask) << 22
 	return uid | id | sn
 }

@@ -10,4 +10,8 @@ require (
 	micro_snowflake v0.0.0
 )
 
-replace micro_snowflake => ./micro_snowflake
+replace (
+	micro_snowflake => ./micro_snowflake
+	google.golang.org/grpc => google.golang.org/grpc v1.26.0
+	github.com/coreos/go-systemd => github.com/coreos/go-systemd/v22 v22.0.0
+)
