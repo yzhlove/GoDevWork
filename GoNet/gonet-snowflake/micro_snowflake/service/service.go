@@ -3,14 +3,14 @@ package service
 import (
 	"context"
 	"errors"
-	"log"
+	log "github.com/sirupsen/logrus"
 	"micro_snowflake/config"
 	"micro_snowflake/proto"
 	"time"
 )
 
 const (
-	MaxQueue = 1024
+	MaxQueue = 256
 )
 
 const (
@@ -51,7 +51,7 @@ func (s *Server) produce() {
 		if ret, ok := <-s.queue; ok {
 			ct := ts()
 			if ct < lt {
-				log.Println("timestamp is failed")
+				log.Warn("timestamp is failed")
 				ct = s.wait(lt)
 			}
 			//毫秒级时间戳不一致，计数器归0
@@ -80,7 +80,6 @@ func (s *Server) wait(lt int64) int64 {
 
 func pack(t int64, id, sn uint64) uint64 {
 	var uid uint64
-	log.Println(t, id, sn)
 	uid |= (uint64(t) & TsMask) << 22
 	return uid | id | sn
 }

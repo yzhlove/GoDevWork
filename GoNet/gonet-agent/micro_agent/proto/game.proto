@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package proto;
+
+message Game {
+  enum FrameType {
+    Message = 0;
+    Kick = 1;
+    Ping = 2;
+  }
+  message Frame {
+    FrameType Type = 1;
+    bytes Message = 2;
+  }
+}
+

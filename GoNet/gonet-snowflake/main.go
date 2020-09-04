@@ -2,8 +2,8 @@ package main
 
 import (
 	"flag"
+	log "github.com/sirupsen/logrus"
 	"google.golang.org/grpc"
-	"log"
 	"micro_snowflake/config"
 	"micro_snowflake/etcdclient"
 	"micro_snowflake/proto"
@@ -38,7 +38,7 @@ func main() {
 
 	rpc := grpc.NewServer()
 	proto.RegisterSfServiceServer(rpc, s)
-	log.Println("start service by Host:", cfg.Host)
+	log.Info("start service by Host:", cfg.Host)
 	if err := rpc.Serve(l); err != nil {
 		panic(err)
 	}

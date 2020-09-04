@@ -3,8 +3,9 @@ package etcdclient
 import (
 	"context"
 	"fmt"
+	log "github.com/sirupsen/logrus"
 	"go.etcd.io/etcd/clientv3"
-	"log"
+
 	"micro_snowflake/config"
 	"time"
 )
