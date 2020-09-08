@@ -2,6 +2,10 @@ syntax = "proto3";
 
 package proto;
 
+service GameService {
+  rpc Stream(stream Game.Frame) returns (stream Game.Frame) ;
+}
+
 message Game {
   enum FrameType {
     Message = 0;

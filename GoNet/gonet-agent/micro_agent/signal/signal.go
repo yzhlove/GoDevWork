@@ -11,7 +11,7 @@ import (
 
 var (
 	WaitGroup sync.WaitGroup
-	ExitDie   = make(chan struct{})
+	Die       = make(chan struct{})
 )
 
 func sigHandler() {
@@ -21,7 +21,7 @@ func sigHandler() {
 	for {
 		if msg := <-ch; msg == syscall.SIGTERM {
 			//关闭Agent
-			close(ExitDie)
+			close(Die)
 			log.Info("sigterm received")
 			WaitGroup.Wait()
 			log.Info("agent shutdown")
