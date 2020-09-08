@@ -64,7 +64,7 @@ func (p *Packet) ReadBytes() (ret []byte, err error) {
 }
 
 func (p *Packet) ReadString() (ret string, err error) {
-	if p.pos+2 >
+	return
 }
 
 func (p *Packet) ReadU16() (ret uint16, err error) {

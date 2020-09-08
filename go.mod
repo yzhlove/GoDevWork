@@ -33,6 +33,7 @@ require (
 	github.com/lucas-clemente/quic-go v0.17.3
 	github.com/mattn/go-sqlite3 v1.13.0
 	github.com/mikespook/gorbac v2.1.0+incompatible
+	github.com/mind1949/googletrans v0.0.0-20200829143244-ff25e4f22331
 	github.com/mmcloughlin/avo v0.0.0-20200803215136-443f81d77104 // indirect
 	github.com/moby/moby v1.13.1
 	github.com/natefinch/lumberjack v2.0.0+incompatible
@@ -60,6 +61,7 @@ require (
 	go.uber.org/atomic v1.5.0
 	go.uber.org/zap v1.14.0
 	golang.org/x/net v0.0.0-20200226121028-0de0cce0169b
+	golang.org/x/text v0.3.2
 	golang.org/x/time v0.0.0-20191024005414-555d28b269f0
 	google.golang.org/grpc v1.26.0
 	gopkg.in/natefinch/lumberjack.v2 v2.0.0 // indirect

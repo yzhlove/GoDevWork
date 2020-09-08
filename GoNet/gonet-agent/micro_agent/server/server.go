@@ -45,6 +45,8 @@ func handleClient(conn net.Conn, cfg *config.Config) {
 		close(in)
 	}()
 
+	head = head
+
 	var s sess.Session
 	host, port, err := net.SplitHostPort(conn.RemoteAddr().String())
 	if err != nil {

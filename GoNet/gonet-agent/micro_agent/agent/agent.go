@@ -38,6 +38,8 @@ func Agent(s *sess.Session, in chan []byte, out *bf.Buffer) {
 			s.PacketTime = time.Now()
 			//handler
 
+			msg = msg
+
 			s.LastPacketTime = s.PacketTime
 		case frame := <-s.MQ:
 			switch frame.Type {
