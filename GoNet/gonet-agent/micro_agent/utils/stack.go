@@ -25,22 +25,21 @@ func TraceStack(extra ...interface{}) {
 	}
 }
 
-func Trace(extra ...interface{}) string {
+func Trace(extra ...interface{}) {
 	if x := recover(); x != nil {
 		log.Error(x)
 		var stack [32]uintptr
 		i := runtime.Callers(3, stack[:])
 		var sb strings.Builder
 		sb.WriteString("☢︎ traceback:")
-		for x := range extra {
-			sb.WriteString(fmt.Sprintf("↓ %v\n", x))
-		}
 		for _, pc := range stack[:i] {
 			funcName := runtime.FuncForPC(pc)
 			file, line := funcName.FileLine(pc)
 			sb.WriteString(fmt.Sprintf("\n  \033[32m↓\033[0m [\033[31m%s\033[0m] %s:%d", funcName.Name(), file, line))
 		}
-		return sb.String()
+		for k := range extra {
+			sb.WriteString(fmt.Sprintf("⌲ EXTRAS#%v DATA:%v \n", k, spew.Sdump(extra[k])))
+		}
+		log.Error(sb.String())
 	}
-	return ""
 }

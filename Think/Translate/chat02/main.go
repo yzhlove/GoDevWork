@@ -11,7 +11,7 @@ func main() {
 		Src:  "auto",
 		Dest: language.SimplifiedChinese.String(),
 		//Text: "Go is an open source programming language that makes it easy to build simple, reliable, and efficient software. ",
-		Text: "\"Hello golang\",\n\t\t\t\t\"Go is an open source programming language that makes it easy to build simple, reliable, and efficient software.\",\n\t\t\t\t\"The Go programming language is an open source project to make programmers more productive.\",\n",
+		Text: "1. IndexCountPerInstance: The number of indices that will be used in this draw call that defines one instance. This need not be every index in the index buffer; that is, you can draw a contiguous subset of indices.",
 	}
 	translated, err := googletrans.Translate(params)
 	if err != nil {

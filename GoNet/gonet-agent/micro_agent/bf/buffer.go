@@ -66,6 +66,6 @@ func NewBuffer(conn net.Conn, ctrl chan struct{}, max int) *Buffer {
 		conn:    conn,
 		ctrl:    ctrl,
 		pending: make(chan []byte, max),
-		cache:   make([]byte, packet.PACKET_LIMIT+2),
+		cache:   make([]byte, packet.Limit+2),
 	}
 }

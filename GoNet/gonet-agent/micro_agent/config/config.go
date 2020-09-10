@@ -13,6 +13,7 @@ type Config struct {
 	Rcvwnd                        int
 	MTU                           int
 	NoDelay, Interval, Resend, NC int
+	RPM                           int
 	Timeout                       time.Duration
 	EtcdHost                      []string
 	EtcdRoot                      string

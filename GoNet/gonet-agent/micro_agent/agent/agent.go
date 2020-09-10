@@ -3,6 +3,7 @@ package agent
 import (
 	"micro_agent/bf"
 	"micro_agent/proto"
+	"micro_agent/router"
 	"micro_agent/sess"
 	"micro_agent/signal"
 	"micro_agent/timer"
@@ -36,10 +37,9 @@ func Agent(s *sess.Session, in chan []byte, out *bf.Buffer) {
 			s.PacketCount++
 			s.PacketCount1Min++
 			s.PacketTime = time.Now()
-			//handler
-
-			msg = msg
-
+			if result := router.Router(s, msg); result != nil {
+				out.Send(s, result)
+			}
 			s.LastPacketTime = s.PacketTime
 		case frame := <-s.MQ:
 			switch frame.Type {

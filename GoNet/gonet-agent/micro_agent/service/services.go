@@ -188,7 +188,4 @@ func (p *pool) registerCallback(path string, callback chan string) {
 	log.Info("register callback on:", path)
 }
 
-var (
-	_pool pool
-	once  sync.Once
-)
+

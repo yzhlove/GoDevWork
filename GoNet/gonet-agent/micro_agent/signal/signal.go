@@ -14,7 +14,7 @@ var (
 	Die       = make(chan struct{})
 )
 
-func sigHandler() {
+func SigHandler() {
 	defer utils.Trace()
 	ch := make(chan os.Signal, 1)
 	signal.Notify(ch, syscall.SIGTERM)
