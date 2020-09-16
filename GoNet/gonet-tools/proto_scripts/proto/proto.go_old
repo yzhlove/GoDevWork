@@ -1,0 +1,310 @@
+package main
+
+import (
+	"bufio"
+	"bytes"
+	"encoding/json"
+	"errors"
+	"flag"
+	"html/template"
+	"io"
+	"io/ioutil"
+	"log"
+	"os"
+	"regexp"
+	"unicode"
+)
+
+var re = regexp.MustCompile("(?m:^#(.*)$)")
+
+type PacketType = int
+
+const (
+	PacketSymbol PacketType = iota
+	PacketStructBegin
+	PacketStructEnd
+	PacketDataType
+	PacketArray
+	PacketEOF
+)
+
+var (
+	datatypes map[string]map[string]struct {
+		T string `json:"t"` //type
+		R string `json:"r"` //read
+		W string `json:"w"` //write
+	} //type -> language -> t/r/w
+)
+
+var _tokenEOF = &token{typ: PacketEOF}
+
+type (
+	fieldInfo struct {
+		Name  string
+		Typ   string
+		Array bool
+	}
+	structInfo struct {
+		Name   string
+		Fields []fieldInfo
+	}
+)
+
+type token struct {
+	typ     PacketType
+	literal string
+	r       rune
+}
+
+func syntaxErr(p *Parse) {
+	log.Println("syntax error line:", p.lexer.lineno)
+	log.Println("\033[1;31m ❄︎  ", p.lexer.lines[p.lexer.lineno-1], "\033[0m")
+	os.Exit(-1)
+}
+
+type Lexer struct {
+	reader *bytes.Buffer
+	lines  []string
+	lineno int
+}
+
+func (lex *Lexer) init(r io.Reader) {
+	if bts, err := ioutil.ReadAll(r); err != nil {
+		log.Fatal(err)
+	} else {
+		for s := bufio.NewScanner(bytes.NewBuffer(bts)); s.Scan(); {
+			lex.lines = append(lex.lines, s.Text())
+		}
+		bts = re.ReplaceAllLiteral(bts, nil)
+		lex.reader = bytes.NewBuffer(bts)
+		lex.lineno = 1
+	}
+}
+
+func (lex *Lexer) next() (t *token) {
+	defer func() {
+		log.Println(t)
+	}()
+	var r rune
+	var err error
+	for {
+		if r, _, err = lex.reader.ReadRune(); err != nil {
+			if errors.Is(err, io.EOF) {
+				return _tokenEOF
+			}
+		} else if unicode.IsSpace(r) {
+			if r == '\n' {
+				lex.lineno++
+			}
+			continue
+		}
+		break
+	}
+
+	if r == '=' {
+		for k := 0; k < 2; k++ {
+			if r, _, err = lex.reader.ReadRune(); err != nil {
+				if errors.Is(err, io.EOF) {
+					return _tokenEOF
+				}
+			} else if r != '=' {
+				lex.reader.UnreadRune()
+				return &token{typ: PacketStructBegin}
+			}
+		}
+		return &token{typ: PacketStructEnd}
+	} else if unicode.IsLetter(r) {
+		var runes []rune
+		for {
+			runes = append(runes, r)
+			if r, _, err = lex.reader.ReadRune(); err != nil {
+				if errors.Is(err, io.EOF) {
+					break
+				}
+			} else if unicode.IsLetter(r) || unicode.IsNumber(r) || r == '_' {
+				continue
+			}
+			lex.reader.UnreadRune()
+			break
+		}
+
+		t := &token{}
+		t.literal = string(runes)
+
+		if _, ok := datatypes[t.literal]; ok {
+			t.typ = PacketDataType
+		} else if t.literal == "array" {
+			t.typ = PacketArray
+		} else {
+			t.typ = PacketSymbol
+		}
+
+		return t
+	} else {
+		log.Fatal("lex error line:", lex.lineno)
+	}
+	return nil
+}
+
+func (lex *Lexer) eof() bool {
+	for {
+		if r, _, err := lex.reader.ReadRune(); err != nil {
+			if errors.Is(err, io.EOF) {
+				return true
+			}
+		} else if unicode.IsSpace(r) {
+			if r == '\n' {
+				lex.lineno++
+			}
+			continue
+		}
+		lex.reader.UnreadRune()
+		return false
+	}
+}
+
+////////////////////////////////////////////////////////////////////////
+type Parse struct {
+	lexer   *Lexer
+	infos   []structInfo
+	symbols map[string]bool
+}
+
+func (p *Parse) init(lex *Lexer) {
+	p.lexer = lex
+	p.symbols = make(map[string]bool)
+}
+
+func (p *Parse) match(typ int) *token {
+	t := p.lexer.next()
+	if t.typ != typ {
+		syntaxErr(p)
+	}
+	return t
+}
+
+func (p *Parse) expr() bool {
+	if p.lexer.eof() {
+		return false
+	}
+	info := structInfo{}
+	t := p.match(PacketSymbol)
+	info.Name = t.literal
+	p.symbols[t.literal] = true
+	p.match(PacketStructBegin)
+	p.fields(&info)
+	p.infos = append(p.infos, info)
+	return true
+}
+
+func (p *Parse) fields(info *structInfo) {
+	for {
+		t := p.lexer.next()
+		if t.typ == PacketStructEnd {
+			return
+		}
+		if t.typ != PacketSymbol {
+			syntaxErr(p)
+		}
+
+		field := fieldInfo{Name: t.literal}
+		t = p.lexer.next()
+		if t.typ == PacketArray {
+			field.Array = true
+			t = p.lexer.next()
+		}
+		if t.typ == PacketDataType || t.typ == PacketSymbol {
+			field.Typ = t.literal
+		} else {
+			syntaxErr(p)
+		}
+		info.Fields = append(info.Fields, field)
+	}
+}
+
+func (p *Parse) check() {
+	for _, info := range p.infos {
+	_loop:
+		for _, field := range info.Fields {
+			if _, ok := datatypes[field.Typ]; !ok {
+				if p.symbols[field.Typ] {
+					continue _loop
+				}
+				log.Fatal("symbol not found:", field)
+			}
+		}
+	}
+}
+
+type protoConfig struct {
+	file string
+	bind string
+	tmpl string
+	pkg  string
+}
+
+var cfg *protoConfig
+
+func init() {
+	file := flag.String("file", "proto.txt", "input proto file")
+	bind := flag.String("bind", "go", "language type bind [go`cs]")
+	tmpl := flag.String("tmpl", "proto.tmpl", "template file")
+	pkg := flag.String("pkgname", "agent", "package name to prefix")
+	flag.Parse()
+	cfg = &protoConfig{file: *file, bind: *bind, tmpl: *tmpl, pkg: *pkg}
+}
+
+func main() {
+	f, err := os.Open("transform.json")
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer f.Close()
+	if err := json.NewDecoder(f).Decode(&datatypes); err != nil {
+		log.Fatal(err)
+	}
+
+	file, err := os.Open(cfg.file)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer file.Close()
+
+	lexer := &Lexer{}
+	lexer.init(file)
+	p := Parse{}
+	p.init(lexer)
+	for p.expr() {
+	}
+
+	p.check()
+
+	funcMap := template.FuncMap{
+		"Type": func(t string) string {
+			return datatypes[t][cfg.bind].T
+		},
+		"Read": func(t string) string {
+			return datatypes[t][cfg.bind].R
+		},
+		"Write": func(t string) string {
+			return datatypes[t][cfg.bind].W
+		},
+	}
+
+	tmpl, err := template.New("proto.tmpl").Funcs(funcMap).Parse(cfg.tmpl)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	args := struct {
+		PackageName string
+		Infos       []structInfo
+	}{
+		cfg.pkg,
+		p.infos,
+	}
+
+	if err := tmpl.Execute(os.Stdout, args); err != nil {
+		log.Fatal(err)
+	}
+}

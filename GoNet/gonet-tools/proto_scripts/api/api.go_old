@@ -1,0 +1,299 @@
+package main
+
+import (
+	"bufio"
+	"bytes"
+	"flag"
+	"github.com/pkg/errors"
+	"html/template"
+	"io"
+	"io/ioutil"
+	"log"
+	"os"
+	"regexp"
+	"strconv"
+	"strings"
+	"unicode"
+)
+
+////////////////////////////////////////////////////////
+// 生成API
+////////////////////////////////////////////////////////
+//清除注释
+var re = regexp.MustCompile("(?m:^#(.*)$)")
+
+type PacketType = int
+
+const (
+	PacketNon PacketType = iota
+	PacketName
+	PacketPayload
+	PacketColon
+	PacketString
+	PacketNumber
+	PacketEOF
+	PacketDesc
+)
+
+var keyWorlds = map[string]PacketType{
+	"packet_type": PacketNon,
+	"name":        PacketName,
+	"payload":     PacketPayload,
+	"desc":        PacketDesc,
+}
+
+var (
+	_tokenEof   = &token{typ: PacketEOF}
+	_tokenColon = &token{typ: PacketColon}
+)
+
+type apiExpr struct {
+	PacketType PacketType
+	Name       string
+	Payload    string
+	Desc       string
+}
+
+type token struct {
+	typ     PacketType
+	literal string
+	number  int
+}
+
+type Lexer struct {
+	reader *bytes.Buffer
+	lines  []string
+	lineno int
+}
+
+func syntaxErr(p *Parse) {
+	log.Println("syntax error line:", p.lexer.lineno)
+	log.Println("\033[1;31m ❄︎  ", p.lexer.lines[p.lexer.lineno-1], "\033[0m")
+	os.Exit(-1)
+}
+
+func (lex *Lexer) init(reader io.Reader) {
+	if bts, err := ioutil.ReadAll(reader); err != nil {
+		panic("lexer init err:" + err.Error())
+	} else {
+		for s := bufio.NewScanner(bytes.NewBuffer(bts)); s.Scan(); {
+			lex.lines = append(lex.lines, s.Text())
+		}
+		//清除注释
+		bts = re.ReplaceAllLiteral(bts, nil)
+		lex.reader = bytes.NewBuffer(bts)
+		lex.lineno = 1
+	}
+}
+
+func (lex *Lexer) read() string {
+	var runes []rune
+	for {
+		reader, _, err := lex.reader.ReadRune()
+		if err != nil || errors.Is(err, io.EOF) || reader == '\r' {
+			break
+		} else if reader == '\n' {
+			lex.lineno++
+			break
+		} else {
+			runes = append(runes, reader)
+		}
+	}
+	return string(runes)
+}
+
+func (lex *Lexer) eof() bool {
+	for {
+		if r, _, err := lex.reader.ReadRune(); err != nil {
+			if errors.Is(err, io.EOF) {
+				return true
+			}
+		} else if unicode.IsSpace(r) {
+			if r == '\n' {
+				lex.lineno++
+			}
+			continue
+		}
+		lex.reader.UnreadRune()
+		return false
+	}
+}
+
+func (lex *Lexer) next() (t *token) {
+	defer func() {
+		log.Println(t)
+	}()
+	var r rune
+	var err error
+	for {
+		if r, _, err = lex.reader.ReadRune(); err != nil {
+			if errors.Is(err, io.EOF) {
+				return _tokenEof
+			}
+		} else if unicode.IsSpace(r) {
+			if r == '\n' {
+				lex.lineno++
+			}
+			continue
+		}
+		break
+	}
+	var runes []rune
+	//判断r是否是一个字母字符，中文也算。
+	if unicode.IsLetter(r) {
+		for {
+			runes = append(runes, r)
+			if r, _, err = lex.reader.ReadRune(); err != nil {
+				if errors.Is(err, io.EOF) {
+					break
+				}
+			} else if unicode.IsLetter(r) || unicode.IsNumber(r) || r == '_' {
+				continue
+			}
+			lex.reader.UnreadRune()
+			break
+		}
+		t := &token{}
+		if tk, ok := keyWorlds[string(runes)]; ok {
+			t.typ = tk
+		} else {
+			t.typ = PacketString
+			t.literal = string(runes)
+		}
+		return t
+	} else if unicode.IsNumber(r) {
+		for {
+			runes = append(runes, r)
+			if r, _, err = lex.reader.ReadRune(); err != nil {
+				if errors.Is(err, io.EOF) {
+					break
+				}
+			} else if unicode.IsNumber(r) {
+				continue
+			}
+			lex.reader.UnreadRune()
+			break
+		}
+		t := &token{}
+		t.typ = PacketNumber
+		n, _ := strconv.Atoi(string(runes))
+		t.number = n
+		return t
+	} else if r == ':' {
+		return _tokenColon
+	} else {
+		log.Fatal("lex error :", lex.lineno)
+	}
+	return nil
+}
+
+///////////////////////////////////////////////////////////
+type Parse struct {
+	exprs []apiExpr
+	lexer *Lexer
+}
+
+func (p *Parse) init(lex *Lexer) {
+	p.lexer = lex
+}
+
+func (p *Parse) match(typ PacketType) *token {
+	t := p.lexer.next()
+	if t.typ != typ {
+		syntaxErr(p)
+	}
+	return t
+}
+
+func (p *Parse) expr() bool {
+	if p.lexer.eof() {
+		return false
+	}
+	api := apiExpr{}
+	p.match(PacketNon)
+	p.match(PacketColon)
+	t := p.match(PacketNumber)
+	api.PacketType = t.typ
+
+	p.match(PacketName)
+	p.match(PacketColon)
+	t = p.match(PacketString)
+	api.Name = t.literal
+
+	p.match(PacketPayload)
+	p.match(PacketColon)
+	t = p.match(PacketString)
+	api.Payload = t.literal
+
+	p.match(PacketDesc)
+	p.match(PacketColon)
+	api.Desc = p.lexer.read()
+
+	p.exprs = append(p.exprs, api)
+	return true
+}
+
+type apiConfig struct {
+	file string
+	min  int
+	max  int
+	tmpl string
+	pkg  string
+}
+
+var cfg *apiConfig
+
+var api_tmpl_path = "/Users/yostar/workSpace/gowork/src/GoDevWork/GoNet/gonet-tools/proto_scripts/templates/server/api.tmpl"
+var api_txt_path = "/Users/yostar/workSpace/gowork/src/GoDevWork/GoNet/gonet-tools/proto_scripts/api/api.txt"
+var package_name = "micro_agent"
+
+func init() {
+	file := flag.String("file", api_txt_path, "input api.txt file")
+	min := flag.Int("min", 0, "min proto number")
+	max := flag.Int("max", 1000, "max proto number")
+	tmp := flag.String("tmpl", api_tmpl_path, "input api template file")
+	pkg := flag.String("package", package_name, "package name tp prefix")
+	flag.Parse()
+	cfg = &apiConfig{*file, *min, *max, *tmp, *pkg}
+}
+
+func main() {
+
+	file, err := os.Open(cfg.file)
+	if err != nil {
+		panic("open api file error :" + err.Error())
+	}
+
+	lexer := Lexer{}
+	lexer.init(file)
+
+	p := Parse{}
+	p.init(&lexer)
+
+	for p.expr() {
+	}
+
+	funcMap := template.FuncMap{
+		"isReq": func(api apiExpr) bool {
+			if api.PacketType < cfg.min || api.PacketType > cfg.max {
+				return false
+			}
+			if strings.HasSuffix(api.Name, "_req") {
+				return true
+			}
+			return false
+		},
+	}
+
+	tmpl, err := template.New("server_api.tmpl").Funcs(funcMap).Parse(cfg.tmpl)
+	if err != nil {
+		log.Fatal(err)
+	}
+	args := struct {
+		PackageName string
+		Exprs       []apiExpr
+	}{cfg.pkg, p.exprs}
+	if err := tmpl.Execute(os.Stdout, args); err != nil {
+		log.Fatal(err)
+	}
+}

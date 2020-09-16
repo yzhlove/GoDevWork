@@ -17,20 +17,28 @@ import (
 
 func TcpServer(cfg *config.Config) {
 	tcpAddr, err := net.ResolveTCPAddr("tcp4", cfg.Listen)
-	utils.CheckError(err)
+	if err != nil {
+		log.Fatal("resolve tcp addr err:", err)
+	}
 
 	listener, err := net.ListenTCP("tcp", tcpAddr)
-	utils.CheckError(err)
+	if err != nil {
+		log.Fatal("listen to tcp err:", err)
+	}
 
-	log.Info("listening on:", listener.Addr())
+	log.Info("tcp listening on:", listener.Addr())
 
 	for {
 		if conn, err := listener.AcceptTCP(); err != nil {
 			log.Warning("accept failed:", err)
 			continue
 		} else {
-			utils.CheckError(conn.SetReadBuffer(cfg.SockBuf))
-			utils.CheckError(conn.SetWriteBuffer(cfg.SockBuf))
+			if err := conn.SetReadBuffer(cfg.SockBuf); err != nil {
+				log.Fatal("tcp set reader err:", err)
+			}
+			if err := conn.SetWriteBuffer(cfg.SockBuf); err != nil {
+				log.Fatal("tcp set write err:", err)
+			}
 			go handleClient(conn, cfg)
 		}
 	}
@@ -39,12 +47,22 @@ func TcpServer(cfg *config.Config) {
 
 func KcpServer(cfg *config.Config) {
 	listener, err := kcp.Listen(cfg.Listen)
-	utils.CheckError(err)
+	if err != nil {
+		log.Fatal("kcp listen err:", err)
+	}
 	log.Info("udp listening on:", listener.Addr())
 	lis := listener.(*kcp.Listener)
-	utils.CheckError(lis.SetReadBuffer(cfg.SockBuf))
-	utils.CheckError(lis.SetWriteBuffer(cfg.SockBuf))
-	utils.CheckError(lis.SetDSCP(cfg.Dscp))
+	if err := lis.SetReadBuffer(cfg.SockBuf); err != nil {
+		log.Fatal("udp set reader err:", err)
+	}
+	if err := lis.SetWriteBuffer(cfg.SockBuf); err != nil {
+		log.Fatal("udp set write err:", err)
+	}
+
+	// mac 系统不支持dscp设置
+	//if err := lis.SetDSCP(cfg.Dscp); err != nil {
+	//	log.Fatal("kcp  dscp set err:", err)
+	//}
 
 	for {
 		if conn, err := lis.AcceptKCP(); err != nil {

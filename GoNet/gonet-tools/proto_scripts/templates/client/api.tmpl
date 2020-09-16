@@ -1,0 +1,14 @@
+//Code generated script: gen_proto.sh
+using UnityEngine;
+using System;
+using System.Collections.Generic;
+
+namespace NetProto.Api
+{
+    public enum ENetMsgId
+    {
+        {{- range .Exprs}}
+        {{.Name}} = {{.PacketType}}, // {{.Desc}}
+        {{- end}}
+    }
+}

@@ -1,0 +1,31 @@
+//Code generated script: gen_proto.sh
+package handler
+
+import "{{.PkgName}}/misc/packet"
+import "{{.PkgName}}/sess"
+
+var Code = map[string]int16{
+    {{- range .Packets}}
+    "{{.Name}}":{{print "\t"}}{{.Code}},{{print "\t"}}//{{.Desc}}
+    {{- end}}
+}
+
+var RCode = map[int16]string{
+    {{- range .Packets}}
+    {{.Code}}: {{print "\t"}}"{{.Name}}",{{print "\t"}} //{{.Desc}}
+    {{- end}}
+}
+
+type HandleFunc func(s *sess.Session, reader *packet.Packet) []byte
+
+var Handlers map[int16]HandleFunc
+
+func init() {
+	Handlers = map[int16]HandleFunc{
+        {{- range .Packets}}
+        {{- if isReq .Name}}
+        {{print "\t"}}{{.Code}}:P_{{.Name}},
+        {{- end}}
+        {{- end}}
+	}
+}
