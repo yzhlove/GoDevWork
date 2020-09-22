@@ -16,6 +16,12 @@ var RCode = map[int16]string{
     {{- end}}
 }
 
+var Result = map[int16][2]int16{
+    {{- range $key , $value := .Acks}}
+    {{print "\t"}}{{$key}}: {{- print "{" -}} {{index $value 0}},{{index $value 1}} {{- print "}" -}},
+    {{- end}}
+}
+
 type HandleFunc func(s *sess.Session, reader *packet.Packet) []byte
 
 var Handlers map[int16]HandleFunc
@@ -24,7 +30,7 @@ func init() {
 	Handlers = map[int16]HandleFunc{
         {{- range .Packets}}
         {{- if isReq .Name}}
-        {{print "\t"}}{{.Code}}:P_{{.Name}},
+        {{print "\t"}}{{.Code}}:{{toUpper .Name}},
         {{- end}}
         {{- end}}
 	}

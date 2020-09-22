@@ -1,7 +1,7 @@
 //Code generated script: gen_proto.sh
-package handler
+package api
 
-import "micro_agent/misc/packet"
+import "WorkSpace/GoDevWork/GoNet/gonet-tools/simulate/src/misc/packet"
 
 // AutoId 公共结构，用于只传id或一个数字的结构
 type AutoId struct {

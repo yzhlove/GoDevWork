@@ -1,0 +1,30 @@
+//Code generated script: gen_proto.sh
+package handler
+
+import "{{.PkgName}}/misc/packet"
+
+{{range .Classes}}
+
+{{.Desc}}
+type {{.Name}} struct {
+    {{- range $t := .Members}}
+    {{print "\t"}}{{$t.Val}}{{print "\t"}}{{$t.Typ}}
+    {{- end}}
+}
+
+func (p {{.Name}}) Pack(w *packet.Packet) {
+    {{- range $t := .Members}}
+    {{print "\t"}}w.{{$t.WriterFunc}}(p.{{$t.Val}})
+    {{- end}}
+}
+
+func Packet{{.Name}}(reader *packet.Packet) (tbl {{.Name}},err error) {
+    {{- range $t := .Members}}
+    if tbl.{{$t.Val}} , err = reader.{{$t.ReaderFunc}}();err != nil {
+        panic(err)
+    }
+    {{- end}}
+    return
+}
+
+{{- end}}

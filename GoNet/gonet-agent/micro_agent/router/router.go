@@ -37,7 +37,6 @@ func Router(s *sess.Session, p []byte) []byte {
 		s.Flag |= sess.SESS_KICKED_OUT
 		return nil
 	}
-
 	//读取协议号
 	pid, err := reader.ReadS16()
 	if err != nil {
@@ -45,6 +44,8 @@ func Router(s *sess.Session, p []byte) []byte {
 		s.Flag |= sess.SESS_KICKED_OUT
 		return nil
 	}
+	//设置协议号
+	s.LastReqId = pid
 
 	//根据协议号段做服务划分
 	//协议号的划分采用分割协议区间，用户可自定义多个区间，用于转发到不同的后端服务

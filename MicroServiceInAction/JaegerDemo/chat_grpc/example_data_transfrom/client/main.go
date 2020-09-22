@@ -18,8 +18,9 @@ func main() {
 
 	client := pb.NewHelloClient(conn)
 
+	//client NewOutgoingContext -> server metadata.FromIncomingContext 可跨服传递数据
 	ctx := metadata.NewOutgoingContext(context.Background(), metadata.Pairs("love", "wyq"))
-	ctx = metadata.NewIncomingContext(ctx, metadata.Pairs("miss", "wyq"))
+	//ctx := metadata.NewIncomingContext(context.Background(), metadata.Pairs("miss", "wyq"))
 
 	if resp, err := client.SayHello(ctx, &pb.HelloReq{Name: "yzh"}); err != nil {
 		panic(err)

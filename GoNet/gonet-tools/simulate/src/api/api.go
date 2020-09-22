@@ -1,8 +1,5 @@
 //Code generated script: gen_proto.sh
-package handler
-
-import "micro_agent/misc/packet"
-import "micro_agent/sess"
+package api
 
 var Code = map[string]int16{
 	"heart_beat_req":         0,    //心跳包
@@ -37,17 +34,4 @@ var Result = map[int16][2]int16{
 	10:   {11, 12},
 	1001: {1002, 0},
 	30:   {31, 0},
-}
-
-type HandleFunc func(s *sess.Session, reader *packet.Packet) []byte
-
-var Handlers map[int16]HandleFunc
-
-func init() {
-	Handlers = map[int16]HandleFunc{
-		0:    HeartBeatReq,
-		10:   UserLoginReq,
-		30:   GetSeedReq,
-		1001: ProtoPingReq,
-	}
 }

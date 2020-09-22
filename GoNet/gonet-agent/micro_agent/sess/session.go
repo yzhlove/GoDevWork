@@ -19,7 +19,7 @@ type Session struct {
 	MQ              chan proto.Game_Frame          //返回给客户端的异步消息
 	Encoder         *rc4.Cipher                    //加密器
 	Decoder         *rc4.Cipher                    //解密器
-	UserID          uint64                         //玩家ID
+	UserID          int32                          //玩家ID
 	GSID            string                         //游戏服ID
 	Stream          proto.GameService_StreamClient //grpc流
 	Die             chan struct{}                  //会话关闭信号
@@ -29,5 +29,5 @@ type Session struct {
 	LastPacketTime  time.Time                      //前一个包的到达时间
 	PacketCount     uint32                         //对收到的包进行统计，避免恶意发包
 	PacketCount1Min int                            //每分钟的包统计，用于RPM判断
+	LastReqId       int16                          //最后一次通讯使用的协议号
 }
-

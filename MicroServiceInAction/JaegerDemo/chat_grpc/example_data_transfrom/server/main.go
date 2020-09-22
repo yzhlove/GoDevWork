@@ -18,9 +18,9 @@ func (base) SayHello(ctx context.Context, in *pb.HelloReq) (*pb.HelloResp, error
 	if meta, ok := metadata.FromOutgoingContext(ctx); ok {
 		showMeta("FromOutgoingContext", meta)
 	}
-	if meta, ok := metadata.FromIncomingContext(ctx); ok {
-		showMeta("FromIncomingContext", meta)
-	}
+	//if meta, ok := metadata.FromIncomingContext(ctx); ok {
+	//	showMeta("FromIncomingContext", meta)
+	//}
 	return &pb.HelloResp{Message: "succeed."}, nil
 }
 

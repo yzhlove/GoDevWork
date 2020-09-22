@@ -12,11 +12,12 @@ import (
 	"text/template"
 )
 
-var checkTypes = []string{"packet_type", "name", "payload", "desc"}
-var checkNames = []string{"_req", "_ack", "_notify"}
+var types = []string{"packet_type", "name", "payload", "desc"}
+var names = []string{"_req", "_ack", "_notify"}
+var checks = []string{"_req", "_succeed_ack", "_failed_ack"}
 
 //读取的格式
-type ReaderString struct {
+type Reader struct {
 	packetType string
 	name       string
 	payload    string
@@ -24,9 +25,10 @@ type ReaderString struct {
 }
 
 //写出的格式
-type WriterString struct {
+type Writer struct {
 	PkgName string
 	Packets []*packet
+	Acks    map[string][2]string
 }
 
 //template需要的数据
@@ -70,8 +72,8 @@ func main() {
 	defer f.Close()
 
 	sig := make(chan struct{})
-	writer := &WriterString{PkgName: _api.pkgName}
-	reader := make(chan *ReaderString, 128)
+	writer := &Writer{PkgName: _api.pkgName}
+	reader := make(chan *Reader, 128)
 	writerText(reader, writer, sig)
 	readerText(f, reader)
 	<-sig
@@ -82,6 +84,16 @@ func main() {
 				return true
 			}
 			return false
+		},
+		"toUpper": func(name string) string {
+			if res := strings.Split(name, "_"); len(res) > 0 {
+				var str string
+				for _, r := range res {
+					str += strings.Title(r)
+				}
+				return str
+			}
+			return strings.Title(name)
 		},
 	}
 	//*必须要与parseFile的名字一致，如果有多个文件，只需要与其中一个文件相同即可
@@ -95,8 +107,8 @@ func main() {
 }
 
 //读取
-func readerText(in io.Reader, reader chan *ReaderString) {
-
+func readerText(in io.Reader, reader chan *Reader) {
+	defer close(reader)
 	packetMap := make(map[string]string, 4)
 	var _succeed bool
 	index := 0
@@ -105,7 +117,7 @@ func readerText(in io.Reader, reader chan *ReaderString) {
 		line := strings.TrimSpace(scan.Text())
 		if len(line) == 0 || strings.HasPrefix(line, "#") {
 			if _succeed && index == 4 {
-				reader <- &ReaderString{
+				reader <- &Reader{
 					packetType: packetMap["packet_type"],
 					name:       packetMap["name"],
 					payload:    packetMap["payload"],
@@ -123,8 +135,8 @@ func readerText(in io.Reader, reader chan *ReaderString) {
 		}
 
 		pt := strings.TrimSpace(res[0])
-		if pt != checkTypes[index] {
-			syntax(errors.New(checkTypes[index]+" not found by packet_type:"+pt), no)
+		if pt != types[index] {
+			syntax(errors.New(types[index]+" not found by packet_type:"+pt), no)
 		}
 
 		switch pt {
@@ -136,7 +148,7 @@ func readerText(in io.Reader, reader chan *ReaderString) {
 			}
 		case "name":
 			var ok bool
-			for _, ck := range checkNames {
+			for _, ck := range names {
 				if strings.HasSuffix(res[1], ck) {
 					ok = true
 					break
@@ -153,27 +165,34 @@ func readerText(in io.Reader, reader chan *ReaderString) {
 			_succeed = true
 		}
 	}
-	close(reader)
 }
 
-func writerText(in chan *ReaderString, w *WriterString, sig chan struct{}) {
+func writerText(in chan *Reader, w *Writer, sig chan struct{}) {
 	go func() {
+		hashMap := make(map[string][]string)
 		for reader := range in {
 			w.Packets = append(w.Packets, &packet{Code: reader.packetType,
 				Name: reader.name, Desc: reader.desc})
+			for i, ck := range checks {
+				if !strings.HasSuffix(reader.name, ck) {
+					continue
+				}
+				t := reader.name[:strings.LastIndex(reader.name, ck)]
+				if _, ok := hashMap[t]; !ok {
+					hashMap[t] = make([]string, 3)
+				}
+				hashMap[t][i] = reader.packetType
+				break
+			}
+		}
+		w.Acks = make(map[string][2]string, len(hashMap))
+		for _, value := range hashMap {
+			w.Acks[value[0]] = [2]string{value[1], value[2]}
 		}
 		close(sig)
 	}()
 }
 
 func syntax(err error, no int) {
-	if err != nil {
-		var show string
-		if no == 0 {
-			show = fmt.Sprintf("\033[1;31m ♠︎ err:%s \033[0m", err)
-		} else {
-			show = fmt.Sprintf("\033[1;31m ♠︎ ︎no:%d err:%s \033[0m", no, err)
-		}
-		panic(show)
-	}
+	panic(fmt.Sprintf("\033[1;31m ♠︎ ︎no:%d err:%s \033[0m", no, err))
 }

@@ -9,9 +9,14 @@ payload:auto_id
 desc:心跳包
 
 packet_type:1
-name:heart_beat_ack
+name:heart_beat_succeed_ack
 payload:auto_id
 desc:心跳包回复
+
+packet_type:2
+name:heart_beat_failed_ack
+payload:null
+desc:心跳回复失败
 
 packet_type:10
 name:user_login_req
@@ -39,7 +44,7 @@ payload:seed_info
 desc:socket通信加密使用
 
 packet_type:31
-name:get_seed_ack
+name:get_seed_succeed_ack
 payload:seed_info
 desc:socket通信加密使用
 
@@ -52,7 +57,7 @@ payload:auto_id
 desc:ping
 
 packet_type:1002
-name:proto_ping_ack
+name:proto_ping_succeed_ack
 payload:auto_id
 desc:ping回复
 
