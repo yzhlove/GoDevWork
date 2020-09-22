@@ -16,10 +16,10 @@ import (
 var cfg *config.Config
 
 func init() {
-	listen := flag.String("listen", ":8686", "listen address:port")
+	listen := flag.String("listen", ":4399", "listen address:port")
 	etcdHost := flag.String("etcd-host", "http://localhost:2379", "etcd host")
 	etcdRoot := flag.String("etcd-root", "/backends", "etcd root path")
-	services := flag.String("services", "snowfalke-10000,game-10000", "auto-discover service")
+	services := flag.String("services", "snowflake-10000,game-10000", "auto-discover service")
 	readDeadline := flag.Int64("read-deadline", 15, "per connection read timeout")
 	txQueuelen := flag.Int("txqueuelen", 128, "per connection output message queue")
 	sockBuf := flag.Int("sockbuf", 32767, "per connection tcp socket buffer")

@@ -10,7 +10,7 @@ import (
 var (
 	randEngine  = rand.New(rand.NewSource(time.Now().UnixNano()))
 	DH1BASE     = big.NewInt(3)
-	DH1PRIME, _ = big.NewInt(0).SetString("0x7FFFFFc3", 0)
+	DH1PRIME, _ = big.NewInt(0).SetString("0x7FFFFFC3", 0)
 	MAXINT64    = big.NewInt(math.MaxInt64)
 )
 
