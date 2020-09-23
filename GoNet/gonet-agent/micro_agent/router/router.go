@@ -18,6 +18,9 @@ func Router(s *sess.Session, p []byte) []byte {
 	if s.Flag&sess.SESS_ENCRYPT != 0 {
 		s.Decoder.XORKeyStream(p, p)
 	}
+
+	log.Printf("[read bytes] => %v \n", p)
+
 	//封装reader
 	reader := packet.Reader(p)
 
@@ -37,6 +40,9 @@ func Router(s *sess.Session, p []byte) []byte {
 		s.Flag |= sess.SESS_KICKED_OUT
 		return nil
 	}
+
+	log.Info("read seqId => ", seqId)
+
 	//读取协议号
 	pid, err := reader.ReadS16()
 	if err != nil {
@@ -44,6 +50,9 @@ func Router(s *sess.Session, p []byte) []byte {
 		s.Flag |= sess.SESS_KICKED_OUT
 		return nil
 	}
+
+	log.Info("read pid => ", pid)
+
 	//设置协议号
 	s.LastReqId = pid
 

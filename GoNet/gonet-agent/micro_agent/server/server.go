@@ -2,6 +2,7 @@ package server
 
 import (
 	"encoding/binary"
+	"fmt"
 	log "github.com/sirupsen/logrus"
 	"github.com/xtaci/kcp-go"
 	"io"
@@ -110,7 +111,12 @@ func handleClient(conn net.Conn, cfg *config.Config) {
 			log.Warningf("read head failed:ip:%v reason:%v size:%v", s.IP, err, n)
 			return
 		} else {
-			payload_bytes := make([]byte, binary.BigEndian.Uint16(_head_bytes))
+
+			size := binary.BigEndian.Uint16(_head_bytes)
+			fmt.Printf("size ==> %v \n", size)
+
+			payload_bytes := make([]byte, size)
+			fmt.Printf("head_bytes => %v payload_bytes => %v \n", _head_bytes, payload_bytes)
 			if n, err = io.ReadFull(conn, payload_bytes); err != nil {
 				log.Warningf("read payload failed,ip:%v reason:%v size:%v", s.IP, err, n)
 				return

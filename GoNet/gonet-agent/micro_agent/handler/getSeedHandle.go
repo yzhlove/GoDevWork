@@ -22,6 +22,8 @@ func GetSeedReq(s *sess.Session, reader *packet.Packet) []byte {
 		return failed(s, errors.New("packet err:"+err.Error()))
 	}
 
+	fmt.Printf("read seed info => %v \n", tbl)
+
 	//KEY1
 	X1, E1 := dh.DHExchange()
 	KEY1 := dh.DHKey(X1, big.NewInt(int64(tbl.ClientSendSeed)))
@@ -29,6 +31,8 @@ func GetSeedReq(s *sess.Session, reader *packet.Packet) []byte {
 	//KEY2
 	X2, E2 := dh.DHExchange()
 	KEY2 := dh.DHKey(X2, big.NewInt(int64(tbl.ClientReceiveSeed)))
+
+	fmt.Printf(">>>>>> E1:%v E2:%v KEY1:%v KEY2:%v \n", E1.Int64(), E2.Int64(), KEY1.String(), KEY2.String())
 
 	ret := SeedInfo{ClientSendSeed: int32(E1.Int64()), ClientReceiveSeed: int32(E2.Int64())}
 	//服务器加密种子是客户端解密种子

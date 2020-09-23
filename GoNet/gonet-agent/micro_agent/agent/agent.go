@@ -1,6 +1,7 @@
 package agent
 
 import (
+	"fmt"
 	"micro_agent/bf"
 	"micro_agent/proto"
 	"micro_agent/router"
@@ -34,6 +35,7 @@ func Agent(s *sess.Session, in chan []byte, out *bf.Buffer) {
 			if !ok {
 				return
 			}
+			fmt.Printf("length message => %v \n ", len(msg))
 			s.PacketCount++
 			s.PacketCount1Min++
 			s.PacketTime = time.Now()

@@ -39,8 +39,8 @@ func (e *Etcd) submit(root, prefix, host string) {
 				} else {
 					cancel()
 					_id = t.ID
-					key := fmt.Sprintf("%s/%s/%d", root, prefix, _id)
-					log.Println("lease id =>", _id)
+					key := fmt.Sprintf("/%s/%s/%d", root, prefix, _id)
+					log.Println("lease id =>", key)
 					if _, err := kv.Put(context.Background(), key, host,
 						clientv3.WithLease(_id)); err != nil {
 						panic("register error:" + err.Error())

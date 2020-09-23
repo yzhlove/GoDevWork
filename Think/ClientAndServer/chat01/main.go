@@ -12,10 +12,10 @@ import (
 
 //服务端的底数和素数是共享的
 var (
-	E        = rand.New(rand.NewSource(time.Now().UnixNano()))
-	BASE     = big.NewInt(3)                            //底数
-	PRIME, _ = big.NewInt(0).SetString("0x7FFFFFC3", 0) //素数
-	MAXINT64 = big.NewInt(math.MaxInt64)
+	PRIME, _ = big.NewInt(0).SetString("0x7FFFFFC3", 0)        //素数
+	BASE     = big.NewInt(3)                                   //底数
+	E        = rand.New(rand.NewSource(time.Now().UnixNano())) //随机数
+	MAXINT64 = big.NewInt(math.MaxInt64)                       //随机数范围限定
 )
 
 var (
@@ -134,7 +134,7 @@ func mock() {
 
 }
 
-// change 返回私钥和公钥匙
+// change 返回私钥和公钥
 func change() (*big.Int, *big.Int) {
 	_secret := big.NewInt(0).Rand(E, MAXINT64)
 	_public := big.NewInt(0).Exp(BASE, _secret, PRIME)

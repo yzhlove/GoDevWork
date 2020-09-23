@@ -14,6 +14,15 @@ import (
 
 //玩家登陆过程
 func UserLoginReq(s *sess.Session, reader *packet.Packet) []byte {
+
+	user, err := PacketUserLoginInfo(reader)
+	if err != nil {
+		log.Error(err)
+		return failed(s, errors.New("user parse error"))
+	}
+
+	log.Info("user info => ", user)
+
 	//TODO:登陆鉴权
 	//简单的鉴权可以直接在agent直接完成，通常公司都存在一个用户中心服务器用于鉴权
 	s.UserID = 1
