@@ -38,6 +38,7 @@ require (
 	github.com/moby/moby v1.13.1
 	github.com/natefinch/lumberjack v2.0.0+incompatible
 	github.com/opentracing/opentracing-go v1.1.0
+	github.com/oschwald/geoip2-golang v1.4.0
 	github.com/philhofer/fwd v1.0.0 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/prometheus/client_golang v1.5.0
