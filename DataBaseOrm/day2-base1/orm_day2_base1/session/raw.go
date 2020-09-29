@@ -56,7 +56,7 @@ func (sess *Session) DropTable() error {
 	s := sess.Raw(fmt.Sprintf("DROP TABLE IF EXISTS %s", sess.RefTable().Name))
 	if s == nil {
 		log.ERROR("sess is nil...")
-		return errors.New("session is nil")
+		return errors.New("sess is nil")
 	}
 	_, err := s.Exec()
 	return err

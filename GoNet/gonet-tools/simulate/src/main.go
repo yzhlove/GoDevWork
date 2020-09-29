@@ -36,11 +36,11 @@ var (
 )
 
 const (
-	DEFAULT_AGENT_HOST = "127.0.0.1:4399"
+	DefaultAgentHost = "127.0.0.1:4399"
 )
 
 func main() {
-	addr, err := net.ResolveTCPAddr("tcp", DEFAULT_AGENT_HOST)
+	addr, err := net.ResolveTCPAddr("tcp", DefaultAgentHost)
 	if err != nil {
 		panic(err)
 	}
@@ -55,7 +55,7 @@ func main() {
 
 	seed := api.SeedInfo{ClientSendSeed: int32(M1.Int64()),
 		ClientReceiveSeed: int32(M2.Int64())}
-	rst := send_proto(conn, api.Code["get_seed_req"], seed)
+	rst := send(conn, api.Code["get_seed_req"], seed)
 	tbl, err := api.PacketSeedInfo(rst)
 	if err != nil {
 		panic(err)
@@ -97,16 +97,16 @@ func main() {
 	*/
 
 	autoId := api.AutoId{Id: rand.Int31()}
-	send_proto(conn, api.Code["heart_beat_req"], autoId)
+	send(conn, api.Code["heart_beat_req"], autoId)
 
 	autoId = api.AutoId{Id: rand.Int31()}
-	send_proto(conn, api.Code["heart_beat_req"], autoId)
+	send(conn, api.Code["heart_beat_req"], autoId)
 
 	//send_proto(conn, api.Code["user_login_req"], user)
 
 }
 
-func send_proto(conn net.Conn, p int16, info interface{}) (reader *packet.Packet) {
+func send(conn net.Conn, p int16, info interface{}) (reader *packet.Packet) {
 	seq++
 	payload := packet.Pack(p, info, nil)
 	writer := packet.Writer()
@@ -142,8 +142,8 @@ func send_proto(conn net.Conn, p int16, info interface{}) (reader *packet.Packet
 	//-------------------------------------------------------------------------
 	// 读取封装的包
 
-	_new_reader := packet.Reader(writer.Data())
-	_size, err := _new_reader.ReadU16()
+	newReader := packet.Reader(writer.Data())
+	_size, err := newReader.ReadU16()
 	if err != nil {
 		panic(err)
 	}

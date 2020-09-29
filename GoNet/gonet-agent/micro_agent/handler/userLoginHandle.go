@@ -42,19 +42,19 @@ func UserLoginReq(s *sess.Session, reader *packet.Packet) []byte {
 
 	//开启到游戏服的流
 	ctx := metadata.NewOutgoingContext(context.Background(), metadata.New(map[string]string{
-		"userid": fmt.Sprint(s.UserID),
+		"user_id": fmt.Sprint(s.UserID),
 	}))
 
 	if s.Stream, err = cli.Stream(ctx); err != nil {
 		log.Error(err)
 		return failed(s, errors.New("stream err:"+err.Error()))
 	}
-	go read_task(s)
+	go streamEvent(s)
 	return succeed(s, UserSnapshot{Uid: s.UserID})
 }
 
 //读取Game返回的消息
-func read_task(s *sess.Session) {
+func streamEvent(s *sess.Session) {
 	for {
 		if in, err := s.Stream.Recv(); err != nil {
 			log.Error(err)

@@ -189,12 +189,12 @@ func (p *pool) registerCallback(path string, callback chan string) {
 }
 
 var (
-	localPool pool
-	once      sync.Once
+	_pool pool
+	once  sync.Once
 )
 
 func Init(cfg *config.Config) {
 	once.Do(func() {
-		localPool.init(cfg)
+		_pool.init(cfg)
 	})
 }

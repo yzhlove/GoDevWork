@@ -7,7 +7,7 @@ import (
 
 func OpenDB(t *testing.T) *Engine {
 	t.Helper()
-	engine, err := NewEngine("sqlite3", "./session/gee.db")
+	engine, err := NewEngine("sqlite3", "./sess/gee.db")
 	if err != nil {
 		t.Error(err)
 		return nil
