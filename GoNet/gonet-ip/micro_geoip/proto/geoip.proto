@@ -3,16 +3,16 @@ syntax = "proto3";
 package proto;
 
 service GeoIp {
-  rpc QueryCountry(Geo.IP) returns (Geo.Res); //中国
-  rpc QueryProvince(Geo.IP) returns (Geo.Res);//浙江省
-  rpc QueryCity(Geo.IP) returns (Geo.Res);    //杭州市
+  rpc Query(Geo.IP) returns (String) ;
 }
 
 message Geo {
-  message IP {
+  message IP{
     string ip = 1;
   }
-  message Res {
-    string result = 1;
-  }
+}
+
+message String {
+  string msg = 1;
+
 }
