@@ -80,29 +80,29 @@ func main() {
 
 	KeyExchange = true
 
-	/*
-		user := api.UserLoginInfo{
-			LoginWay:          0,
-			OpenUid:           "uuid",
-			ClientCertificate: "qwertyuiopasdfgh",
-			ClientVersion:     1,
-			UserLang:          "en",
-			AppId:             "com.yzh.love",
-			OsVersion:         "android 4.4",
-			DeviceName:        "simulate",
-			DeviceId:          "device_id",
-			DeviceIdType:      1,
-			LoginIp:           "127.0.0.1",
-		}
-	*/
+	///*
+	user := api.UserLoginInfo{
+		LoginWay:          0,
+		OpenUid:           "uuid",
+		ClientCertificate: "qwertyuiopasdfgh",
+		ClientVersion:     1,
+		UserLang:          "en",
+		AppId:             "com.yzh.love",
+		OsVersion:         "android 4.4",
+		DeviceName:        "simulate",
+		DeviceId:          "device_id",
+		DeviceIdType:      1,
+		LoginIp:           "127.0.0.1",
+	}
+	//*/
 
 	autoId := api.AutoId{Id: rand.Int31()}
 	send(conn, api.Code["heart_beat_req"], autoId)
+	
+	//autoId = api.AutoId{Id: rand.Int31()}
+	//send(conn, api.Code["heart_beat_req"], autoId)
 
-	autoId = api.AutoId{Id: rand.Int31()}
-	send(conn, api.Code["heart_beat_req"], autoId)
-
-	//send_proto(conn, api.Code["user_login_req"], user)
+	send(conn, api.Code["user_login_req"], user)
 
 }
 

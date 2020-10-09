@@ -5,7 +5,6 @@ import (
 	log "github.com/sirupsen/logrus"
 	"google.golang.org/grpc"
 	"micro_game/config"
-	"micro_game/numbers"
 	"micro_game/proto"
 	"micro_game/service"
 	"net"
@@ -46,8 +45,9 @@ func main() {
 	proto.RegisterGameServiceServer(server, _service)
 	//初始化其他服务
 	service.Init(cfg)
-	numbers.Init(cfg.PathNumbers)
+	//numbers.Init(cfg.PathNumbers)
 	//启动服务
+	log.Info("service running to:", cfg.Listen)
 	if err := server.Serve(l); err != nil {
 		log.Fatal(err)
 	}

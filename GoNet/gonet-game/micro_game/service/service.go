@@ -76,7 +76,7 @@ func (s *GameService) Stream(stream proto.GameService_StreamServer) error {
 
 	session.UserId = int32(userId)
 	registry.Register(session.UserId, ipc)
-	log.Debug("user_id", session.UserId, "logged in")
+	log.Info("user_id:", session.UserId, " logged in")
 
 	for {
 		select {

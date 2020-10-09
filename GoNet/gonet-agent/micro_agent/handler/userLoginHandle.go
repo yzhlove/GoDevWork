@@ -32,7 +32,7 @@ func UserLoginReq(s *sess.Session, reader *packet.Packet) []byte {
 	s.GSID = DefaultGSID
 
 	//连接到以选定的服务器
-	conn, err := grpc.Dial(":4399", grpc.WithInsecure())
+	conn, err := grpc.Dial(":12138", grpc.WithInsecure())
 	if err != nil {
 		log.Error(err)
 		return failed(s, errors.New("grpc dail err:"+err.Error()))

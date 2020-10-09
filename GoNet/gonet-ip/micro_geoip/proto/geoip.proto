@@ -14,5 +14,4 @@ message Geo {
 
 message String {
   string msg = 1;
-
 }
