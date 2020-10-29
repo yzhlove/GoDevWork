@@ -23,7 +23,10 @@ func main() {
 		for _, row := range sheet.Rows {
 			//遍历列
 			for _, cell := range row.Cells {
-				text := cell.String()
+				text, err := cell.FormattedValue()
+				if err != nil {
+					fmt.Printf("Err: %s\n", err)
+				}
 				fmt.Printf("%20s", text)
 			}
 			fmt.Println()
