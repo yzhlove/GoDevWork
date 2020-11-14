@@ -8,6 +8,8 @@ import (
 
 func main() {
 
+	Test()
+
 	l, err := net.Listen("tcp", ":1234")
 	if err != nil {
 		panic(err)
