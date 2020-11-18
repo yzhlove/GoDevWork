@@ -4,7 +4,8 @@ import "fmt"
 
 func main() {
 
-	a := AList{}
+	a := AList{A{Id: 10, Lv: 100}}
+	fmt.Println(a)
 	a.Update()
 	fmt.Println(a)
 
@@ -22,5 +23,6 @@ type Manager struct {
 }
 
 func (a *AList) Update() {
-	*a = []A{{Id: 1, Lv: 1}, {Id: 2, Lv: 2}}
+	c := []A{{Id: 1, Lv: 1}, {Id: 2, Lv: 2}}
+	*a = c
 }
