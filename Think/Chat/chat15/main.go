@@ -8,5 +8,5 @@ import (
 func main() {
 
 	t := time.Now().Add(time.Millisecond * 86400)
-	fmt.Println(t.Sub(time.Now()).)
+	fmt.Println(t.Sub(time.Now()))
 }
