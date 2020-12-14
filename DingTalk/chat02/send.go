@@ -10,39 +10,43 @@ import (
 	"net/http"
 	"net/url"
 	"strconv"
+	"time"
 )
 
 type DecoderCoder struct {
-	Timestamp  int64
-	Address    string
-	Secret     []byte
-	DecoderStr string
-}
-
-func (d *DecoderCoder) Parse(ts int64) {
-	d.Timestamp = ts / 1e6
-	data := strconv.FormatInt(d.Timestamp, 10) + "\n" + string(d.Secret)
-	mac := hmac.New(sha256.New, d.Secret)
-	mac.Write([]byte(data))
-	d.DecoderStr = url.QueryEscape(base64.StdEncoding.EncodeToString(mac.Sum(nil)))
+	Address string
+	Secret  []byte
 }
 
 func (d *DecoderCoder) Format() string {
-	return fmt.Sprintf("%s&timestamp=%d&sign=%s", d.Address, d.Timestamp, d.DecoderStr)
+	ts := time.Now().UnixNano() / 1e6
+	data := strconv.FormatInt(ts, 10) + "\n" + string(d.Secret)
+	mac := hmac.New(sha256.New, d.Secret)
+	mac.Write([]byte(data))
+	secret := url.QueryEscape(base64.StdEncoding.EncodeToString(mac.Sum(nil)))
+	return fmt.Sprintf("%s&timestamp=%d&sign=%s", d.Address, ts, secret)
 }
 
-func dingTalk(d *DecoderCoder, s Sender) (string, error) {
-	resp, err := http.Post(d.Format(),
+type DingTask struct {
+	data *DecoderCoder
+	send Sender
+}
+
+func (d *DingTask) task() error {
+	resp, err := http.Post(d.data.Format(),
 		"application/json;charset=UTF-8",
-		bytes.NewBuffer(s.Send()))
+		bytes.NewBuffer(d.send.Send()))
 	if err != nil {
-		return "", err
+		return err
 	}
+
 	defer resp.Body.Close()
 
 	data, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		return "", err
+		return err
 	}
-	return string(data), nil
+	fmt.Print("ding task result:")
+	fmt.Println("↓ ", string(data))
+	return nil
 }
