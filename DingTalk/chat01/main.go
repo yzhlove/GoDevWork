@@ -14,9 +14,9 @@ import (
 	"time"
 )
 
-const address = "aaa"
+const address = "https://oapi.dingtalk.com/robot/send?access_token=c5180d84fa90f7d852d69a9734e5718b8818c9fe7ba2d2a13ca0b3067994b2bf"
 
-var secret = []byte("bbb")
+var secret = []byte("SEC5a4160fc8a3fbfa0986ed2ac8d88bffa39f514df9fc9c68b0079b2faaf73f260")
 
 func main() {
 

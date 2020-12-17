@@ -16,5 +16,5 @@ func main() {
 	tQueue.run()
 }
 
-var picture = "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1607952372355&di=1bda1c9514c751090bb2ea2c8e77be8b&imgtype=0&src=http%3A%2F%2Fpic.rmb.bdstatic.com%2F62302488585a816a8938b328951d4982.jpeg"
+var picture = "https://cdn.hk01.com/di/media/images/3764026/org/087c4ba059bc16fe7d25ce3c0cc62e2b.jpg/_qom99EsDMiOMWiJBquJKS2rEfxmkBXDCR5WsgkeVrI?v=w1920"
 var msg = "#### 这里是上海  \n> 换个视角看降雪 祖国山河美成了一副水墨画\n> ![screenshot](" + picture + ")\n> ###### [天气](https://www.dingtalk.com) \n"
