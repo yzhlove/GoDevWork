@@ -31,7 +31,7 @@ func main() {
 		panic(err)
 	}
 	jsonsdata, _ := json.Marshal(s)
-	fmt.Println("sdata size -> ", len(sdata), "json data -> ", len(jsonsdata), " sdata => ", string(sdata), sdata)
+	fmt.Println("sdata size -> ", len(sdata), "json size -> ", len(jsonsdata), " sdata => ", string(sdata), sdata)
 
 	t := Teacher{}
 	tdata, err := t.MarshalMsg(nil)
@@ -39,5 +39,5 @@ func main() {
 		panic(err)
 	}
 	jsontdata, _ := json.Marshal(t)
-	fmt.Println("tdata size -> ", len(tdata), " json data -> ", len(jsontdata), " tdata => ", string(tdata), tdata)
+	fmt.Println("tdata size -> ", len(tdata), " json size -> ", len(jsontdata), " tdata => ", string(tdata), tdata)
 }

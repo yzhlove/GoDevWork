@@ -39,7 +39,6 @@ require (
 	github.com/natefinch/lumberjack v2.0.0+incompatible
 	github.com/opentracing/opentracing-go v1.1.0
 	github.com/oschwald/geoip2-golang v1.4.0
-	github.com/philhofer/fwd v1.0.0 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/prometheus/client_golang v1.5.0
 	github.com/prometheus/common v0.9.1
@@ -50,7 +49,7 @@ require (
 	github.com/tealeg/xlsx v1.0.5
 	github.com/templexxx/cpufeat v0.0.0-20180724012125-cef66df7f161 // indirect
 	github.com/templexxx/xor v0.0.0-20191217153810-f85b25db303b // indirect
-	github.com/tinylib/msgp v1.1.2
+	github.com/tinylib/msgp v1.1.6-0.20201201185240-82be0922cb89
 	github.com/tjfoc/gmsm v1.3.2 // indirect
 	github.com/tmc/grpc-websocket-proxy v0.0.0-20200122045848-3419fae592fc // indirect
 	github.com/uber/jaeger-client-go v2.25.0+incompatible
@@ -62,8 +61,8 @@ require (
 	go.etcd.io/etcd v3.3.18+incompatible
 	go.uber.org/atomic v1.5.0
 	go.uber.org/zap v1.14.0
-	golang.org/x/net v0.0.0-20200226121028-0de0cce0169b
-	golang.org/x/text v0.3.2
+	golang.org/x/net v0.0.0-20201021035429-f5854403a974
+	golang.org/x/text v0.3.3
 	golang.org/x/time v0.0.0-20191024005414-555d28b269f0
 	google.golang.org/grpc v1.26.0
 	gopkg.in/natefinch/lumberjack.v2 v2.0.0 // indirect

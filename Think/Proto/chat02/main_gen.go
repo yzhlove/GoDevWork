@@ -35,43 +35,51 @@ func (z *Student) UnmarshalMsg(bts []byte) (o []byte, err error) {
 	var zb0001 uint32
 	zb0001, bts, err = msgp.ReadMapHeaderBytes(bts)
 	if err != nil {
+		err = msgp.WrapError(err)
 		return
 	}
 	for zb0001 > 0 {
 		zb0001--
 		field, bts, err = msgp.ReadMapKeyZC(bts)
 		if err != nil {
+			err = msgp.WrapError(err)
 			return
 		}
 		switch msgp.UnsafeString(field) {
 		case "ID":
 			z.ID, bts, err = msgp.ReadUint32Bytes(bts)
 			if err != nil {
+				err = msgp.WrapError(err, "ID")
 				return
 			}
 		case "Name":
 			z.Name, bts, err = msgp.ReadStringBytes(bts)
 			if err != nil {
+				err = msgp.WrapError(err, "Name")
 				return
 			}
 		case "Work":
 			z.Work, bts, err = msgp.ReadStringBytes(bts)
 			if err != nil {
+				err = msgp.WrapError(err, "Work")
 				return
 			}
 		case "Age":
 			z.Age, bts, err = msgp.ReadUint16Bytes(bts)
 			if err != nil {
+				err = msgp.WrapError(err, "Age")
 				return
 			}
 		case "Birthday":
 			z.Birthday, bts, err = msgp.ReadStringBytes(bts)
 			if err != nil {
+				err = msgp.WrapError(err, "Birthday")
 				return
 			}
 		default:
 			bts, err = msgp.Skip(bts)
 			if err != nil {
+				err = msgp.WrapError(err)
 				return
 			}
 		}
@@ -115,43 +123,51 @@ func (z *Teacher) UnmarshalMsg(bts []byte) (o []byte, err error) {
 	var zb0001 uint32
 	zb0001, bts, err = msgp.ReadMapHeaderBytes(bts)
 	if err != nil {
+		err = msgp.WrapError(err)
 		return
 	}
 	for zb0001 > 0 {
 		zb0001--
 		field, bts, err = msgp.ReadMapKeyZC(bts)
 		if err != nil {
+			err = msgp.WrapError(err)
 			return
 		}
 		switch msgp.UnsafeString(field) {
 		case "id":
 			z.ID, bts, err = msgp.ReadUint32Bytes(bts)
 			if err != nil {
+				err = msgp.WrapError(err, "ID")
 				return
 			}
 		case "name":
 			z.Name, bts, err = msgp.ReadStringBytes(bts)
 			if err != nil {
+				err = msgp.WrapError(err, "Name")
 				return
 			}
 		case "work":
 			z.Work, bts, err = msgp.ReadStringBytes(bts)
 			if err != nil {
+				err = msgp.WrapError(err, "Work")
 				return
 			}
 		case "age":
 			z.Age, bts, err = msgp.ReadUint16Bytes(bts)
 			if err != nil {
+				err = msgp.WrapError(err, "Age")
 				return
 			}
 		case "birthday":
 			z.Birthday, bts, err = msgp.ReadStringBytes(bts)
 			if err != nil {
+				err = msgp.WrapError(err, "Birthday")
 				return
 			}
 		default:
 			bts, err = msgp.Skip(bts)
 			if err != nil {
+				err = msgp.WrapError(err)
 				return
 			}
 		}
