@@ -62,8 +62,8 @@ func (c *DemoCollector) Destroy() error {
 func Test_Agent(t *testing.T) {
 
 	agt := NewAgent(10)
-	c1 := NewCollect("c1", "love wyq")
-	c2 := NewCollect("c2", "love xyj")
+	c1 := NewCollect("c1", "hello hello hello hello hello ")
+	c2 := NewCollect("c2", "world world world world world ")
 	c1.Init(agt)
 	c2.Init(agt)
 	agt.RegisterCollector("c1", c1)
