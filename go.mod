@@ -30,6 +30,7 @@ require (
 	github.com/jonboulle/clockwork v0.1.0 // indirect
 	github.com/julienschmidt/httprouter v1.3.0
 	github.com/klauspost/reedsolomon v1.9.9 // indirect
+	github.com/ljfuyuan/aliasrand v1.0.0 // indirect
 	github.com/lucas-clemente/quic-go v0.17.3
 	github.com/mattn/go-sqlite3 v1.13.0
 	github.com/mikespook/gorbac v2.1.0+incompatible
