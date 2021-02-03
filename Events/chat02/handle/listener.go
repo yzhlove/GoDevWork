@@ -46,7 +46,6 @@ func (e *EventContext) Awake(ctx *context.Context) error {
 							return err
 						}
 					}
-					conds.Remove(ele)
 					ele = next
 				}
 			}
