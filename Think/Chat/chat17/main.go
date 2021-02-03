@@ -21,5 +21,4 @@ func main() {
 
 	fmt.Println(f&s == s)
 	fmt.Println(ff&s == s)
-
 }
