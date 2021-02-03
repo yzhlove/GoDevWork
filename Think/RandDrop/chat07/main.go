@@ -66,38 +66,29 @@ func setup(probabilities []float64) ([]ele, error) {
 		}
 	}
 
-	fmt.Println("l = ", l, " m = ", m)
-
 	for _, v := range workList {
 		fmt.Println("workList real => ", probabilities[v])
 	}
 
-	fmt.Println("prob list ==> ", workList)
+
 
 	eles := make([]ele, n)
 	prob := make([]float64, n)
 	copy(prob, probabilities)
-	fmt.Println("====================\n")
+
 	for l != 0 && m != n-1 {
 		less, more := workList[l-1], workList[m+1]
 		eles[less] = ele{prob: prob[less] * float64(n), idx: more}
-		fmt.Println("ele => ", eles[less])
-		fmt.Println("more ", more, " prob[more] ", prob[more], " less ", less, " prob[less]", prob[less])
 		prob[more] = prob[more] + prob[less] - avg
-		fmt.Println("after more => ", prob[more])
 		l--
 
 		if prob[more] < avg {
-			fmt.Println("====> workList[l] = ", more, " l = ", l, " l++", l+1, " m++", m+1)
+
 			workList[l] = more
 			l++
 			m++
 		}
 	}
-
-	fmt.Println("workList => ", workList)
-	fmt.Println("prob => ", prob)
-	fmt.Println("prolist => ", probabilities)
 
 	for ; l != 0; l-- {
 		eles[workList[l-1]] = ele{prob: 1}
