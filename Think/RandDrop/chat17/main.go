@@ -12,14 +12,14 @@ func init() {
 
 func main() {
 
-	a := &Alias{eles: setup([]int{5, 10, 10, 15})}
-	//a := &Alias{eles: setup2([]int{5, 10, 10, 15})}
+	//a := &Alias{eles: setup([]int{5, 10, 10, 15})}
+	a := &Alias{eles: setup2([]int{5, 10, 10, 15})}
 
 	n := 1000000
 	aMap := make(map[int]int, 4)
 
 	for i := 0; i < n; i++ {
-		aMap[a.pick2()]++
+		aMap[a.pick3()]++
 	}
 
 	tShow(aMap, n)
@@ -54,6 +54,15 @@ func (a *Alias) pick2() int {
 		return idx
 	}
 	return a.eles[idx].x
+}
+
+func (a *Alias) pick3() int {
+	i := int(rand.Float64() * 4)
+	w := int(rand.Float64() * 10)
+	if w < a.eles[i].w {
+		return i
+	}
+	return a.eles[i].x
 }
 
 func tShow(mp map[int]int, count int) {
