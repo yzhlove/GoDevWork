@@ -35,8 +35,12 @@ func setup(probabilities []int) {
 	prob := make([]int, n)
 	copy(prob, probabilities)
 
+	fmt.Println("prob=>", prob)
+	fmt.Println("work=>", workList)
+
 	for l != 0 && m != n-1 {
 		less, more := workList[l-1], workList[m+1]
+		fmt.Println("l=", l-1, " m=", m+1, "prob[less]=", prob[less], " prob[more]=", prob[more])
 		prob[more] = prob[more] + prob[less] - avg
 		l--
 		if prob[more] < avg {
