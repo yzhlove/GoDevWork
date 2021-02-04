@@ -3,11 +3,16 @@ package main
 import (
 	"fmt"
 	"github.com/ljfuyuan/aliasrand"
+	"math/rand"
+	"time"
 )
 
+func init() {
+	rand.Seed(time.Now().UnixNano())
+}
+
 var (
-	weights int32 = 10000
-	rands         = []uint64{2500, 2500, 2500, 2500}
+	rands = []uint64{5, 10, 10, 15}
 )
 
 func main() {
