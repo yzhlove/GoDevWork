@@ -28,5 +28,5 @@ var NewCodecFuncMap map[Type]NewCodecFunc
 
 func init() {
 	NewCodecFuncMap = make(map[Type]NewCodecFunc, 4)
-	// TODO
+	NewCodecFuncMap[GobType] = NewGobCodec
 }
