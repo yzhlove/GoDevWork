@@ -7,55 +7,48 @@ import (
 	"log"
 )
 
-type GobCodec struct {
+type GOBCodec struct {
 	conn    io.ReadWriteCloser
 	buf     *bufio.Writer
-	encoder *gob.Encoder
 	decoder *gob.Decoder
+	encoder *gob.Encoder
 }
 
-func init() {
-	registry(GobType, ConstructGobCodec)
-}
-
-func ConstructGobCodec(conn io.ReadWriteCloser) Codec {
-	buf := bufio.NewWriter(conn)
-	return &GobCodec{
-		conn:    conn,
-		buf:     buf,
-		encoder: gob.NewEncoder(buf),
-		decoder: gob.NewDecoder(conn),
-	}
-}
-
-func (c *GobCodec) Close() error {
+func (c *GOBCodec) Close() error {
 	return c.conn.Close()
 }
 
-func (c *GobCodec) ReadHeader(header *Header) error {
+func (c *GOBCodec) ReadHeader(header *Header) error {
 	return c.decoder.Decode(header)
 }
 
-func (c *GobCodec) ReadBody(body interface{}) error {
+func (c *GOBCodec) ReadBody(body interface{}) error {
 	return c.decoder.Decode(body)
 }
 
-func (c *GobCodec) Write(header *Header, body interface{}) (err error) {
+func (c *GOBCodec) Writer(header *Header, body interface{}) (err error) {
 
 	defer func() {
 		c.buf.Flush()
 		if err != nil {
-			_ = c.Close()
+			c.Close()
 		}
 	}()
 
 	if err = c.encoder.Encode(header); err != nil {
-		log.Println("rpc server: encoder header error: ", err)
+		log.Println("rpc:encoder header error->", err)
 		return
 	}
+
 	if err = c.encoder.Encode(body); err != nil {
-		log.Println("rpc server: encoder body error: ", err)
+		log.Println("rpc:encoder body error->", err)
 		return
 	}
+
 	return
+}
+
+func NewGOBCodec(conn io.ReadWriteCloser) Codec {
+	buf := bufio.NewWriter(conn)
+	return &GOBCodec{conn: conn, buf: buf, encoder: gob.NewEncoder(buf), decoder: gob.NewDecoder(conn)}
 }

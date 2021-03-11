@@ -1,40 +1,32 @@
 package codec
 
-import (
-	"io"
-	"log"
-)
+import "io"
 
 type Header struct {
-	Method string
-	Seq    uint64
-	Error  string
+	SvcMethod string
+	Seq       uint64
+	Err       string
 }
 
 type Codec interface {
-	io.Closer
+	Close() error
 	ReadHeader(header *Header) error
 	ReadBody(body interface{}) error
-	Write(header *Header, body interface{}) error
+	Writer(header *Header, body interface{}) error
 }
+
+type Func func(conn io.ReadWriteCloser) Codec
 
 type Type string
 
 const (
-	GobType  Type = "application/gob"
-	JsonType Type = "application/json"
+	GOB  Type = "application/gob"
+	JSON Type = "application/json"
 )
 
-var funcMaps map[Type]func(closer io.ReadWriteCloser) Codec
+var CodecsMap map[Type]Func
 
 func init() {
-	funcMaps = make(map[Type]func(closer io.ReadWriteCloser) Codec)
-}
-
-func registry(t Type, fn func(closer io.ReadWriteCloser) Codec) {
-	if funcMaps != nil {
-		funcMaps[t] = fn
-	} else {
-		log.Println("registry error: funcMaps no init")
-	}
+	CodecsMap = make(map[Type]Func)
+	CodecsMap[GOB] = NewGOBCodec
 }
