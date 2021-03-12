@@ -19,8 +19,7 @@ func startServer(addr chan string) {
 	day2_base1.Accept(l)
 }
 
-func main() {
-
+func client() {
 	addr := make(chan string)
 	go startServer(addr)
 
