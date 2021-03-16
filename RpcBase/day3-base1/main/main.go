@@ -47,11 +47,11 @@ func startClient(address string) {
 	defer client.Close()
 
 	var wg sync.WaitGroup
-	for i := 0; i < 5; i++ {
+	for i := 0; i < 10; i++ {
 		wg.Add(1)
 		go func(i int) {
 			defer wg.Done()
-			args := Args{Num2: 1000, Num1: 2000 * i}
+			args := Args{Num2: 1000, Num1: 2000 * (i + 1)}
 			var reply int
 			if err := client.Call("Foo.Sum", args, &reply); err != nil {
 				log.Fatal("call function error:", err)

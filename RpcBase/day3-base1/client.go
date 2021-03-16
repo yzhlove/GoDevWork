@@ -87,8 +87,8 @@ func (c *Client) terminated(err error) {
 func (c *Client) receive() {
 	header := &codec.Header{}
 	var err error
-	for errors.Is(err, nil) {
-		if err = c.cc.ReadHeader(header); errors.Is(err, nil) {
+	for err == nil {
+		if err = c.cc.ReadHeader(header); err == nil {
 			if res := c.remove(header.Seq); res != nil {
 				if len(header.Err) > 0 {
 					res.Error = fmt.Errorf(header.Err)
@@ -104,6 +104,7 @@ func (c *Client) receive() {
 			}
 		}
 	}
+	fmt.Println("err is --> ", err)
 	c.terminated(err)
 }
 
@@ -141,7 +142,6 @@ func (c *Client) toSend(ca *Call) {
 		c.header.Method = ca.SvcMethod
 		c.header.Seq = ca.Seq
 		c.header.Err = ""
-
 		if err := c.cc.Send(&c.header, ca.Args); err != nil {
 			if ca := c.remove(seq); ca != nil {
 				ca.Error = err

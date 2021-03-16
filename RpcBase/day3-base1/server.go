@@ -93,8 +93,9 @@ func (s *server) findService(svcMethod string) (svc *service, mtyp *methodType, 
 				err = errors.New("rpc server:not found method:" + method)
 			}
 		}
+	} else {
+		err = errors.New("rpc server:service method struct invalid:" + svcMethod)
 	}
-	err = errors.New("rpc server:service method struct invalid:" + svcMethod)
 	return
 }
 
@@ -143,7 +144,6 @@ func (s *server) readReq(cc codec.Coder) (*request, error) {
 	}
 	req.argv = req.mtyp.newArg()
 	req.replay = req.mtyp.newReply()
-
 	//取指针
 	argvi := req.argv.Interface()
 	if req.argv.Type().Kind() != reflect.Ptr {
