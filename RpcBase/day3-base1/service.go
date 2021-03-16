@@ -42,14 +42,14 @@ func (m *methodType) newReply() reflect.Value {
 type service struct {
 	name   string
 	rtyp   reflect.Type
-	rvar   reflect.Value
+	this   reflect.Value
 	method map[string]*methodType
 }
 
 func newService(st interface{}) *service {
 	s := &service{}
-	s.rvar = reflect.ValueOf(st)
-	s.name = reflect.Indirect(s.rvar).Type().Name()
+	s.this = reflect.ValueOf(st)
+	s.name = reflect.Indirect(s.this).Type().Name()
 	s.rtyp = reflect.TypeOf(st)
 	if !ast.IsExported(s.name) {
 		log.Fatalf("rpc server: %s is not a valid service name ", s.name)
@@ -85,7 +85,7 @@ func (s *service) registerMethods() {
 func (s *service) call(m *methodType, argv, reply reflect.Value) error {
 	atomic.AddUint64(&m.numCalls, 1)
 	fn := m.method.Func
-	res := fn.Call([]reflect.Value{s.rvar, argv, reply})
+	res := fn.Call([]reflect.Value{s.this, argv, reply})
 	if err := res[0].Interface(); err != nil {
 		return err.(error)
 	}
