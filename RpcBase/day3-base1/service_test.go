@@ -49,3 +49,34 @@ func TestMethodType_Call(t *testing.T) {
 	t.Log(mtyp.NumCalls())
 
 }
+
+type View int
+
+type Reqs struct {
+	S1, S2, S3 string
+}
+
+type Resps struct {
+	SS []string
+}
+
+func (v *View) Set(st Reqs, reply *Resps) error {
+	reply = &Resps{}
+	reply.SS = append(reply.SS, []string{st.S1, st.S2, st.S3}...)
+	return nil
+}
+
+func TestSetSlice(t *testing.T) {
+
+	var v View
+	s := newService(&v)
+	mt := s.method["Set"]
+
+	argv := mt.newArg()
+	reply := mt.newReply()
+	argv.Set(reflect.ValueOf(Reqs{"a", "b", "c"}))
+	if err := s.call(mt, argv, reply); err != nil {
+		panic(err)
+	}
+	t.Log(*(reply.Interface().(*Resps)))
+}

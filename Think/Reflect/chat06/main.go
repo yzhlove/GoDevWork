@@ -25,4 +25,13 @@ func main() {
 	rtss := reflect.New(reflect.TypeOf(&a).Elem())
 	fmt.Println(rtss.Type(), rtss.Elem())
 
+	//Output:
+	//*int 0
+	//**int <nil>
+	//=====================================
+	//	int
+	//int
+	//*int 0
+	//*int 0
+
 }

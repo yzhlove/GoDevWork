@@ -38,4 +38,88 @@ func main() {
 	})
 	fmt.Println(resultList[0].Int())
 
+	//TestCall()
+	//
+	//TestCall2()
+
+	TestCall3()
+}
+
+func TestCall() {
+
+	s := Stu{}
+	rtyp := reflect.New(reflect.Indirect(reflect.ValueOf(&s)).Type())
+
+	res := rtyp.Method(0).Call([]reflect.Value{reflect.ValueOf(100), reflect.ValueOf(200)})
+	fmt.Println("res[0] = ", res[0])
+
+	res = rtyp.Method(1).Call([]reflect.Value{reflect.ValueOf(100), reflect.ValueOf(200)})
+	fmt.Println("res[0] = ", res[0])
+
+	fmt.Println(reflect.TypeOf(s).Name())
+	fmt.Println(reflect.TypeOf(s).Method(0).Name)
+
+}
+
+func TestCall2() {
+
+	s := Stu{}
+
+	rtyp := reflect.TypeOf(&s)
+
+	fmt.Println("=================================")
+
+	for i := 0; i < rtyp.NumMethod(); i++ {
+		mtd := rtyp.Method(i)
+		fmt.Println(mtd.Name)
+		for m := 0; m < mtd.Type.NumIn(); m++ {
+			fmt.Print("\t", mtd.Type.In(m))
+		}
+		fmt.Println()
+		for n := 0; n < mtd.Type.NumOut(); n++ {
+			fmt.Print("\t", mtd.Type.Out(n))
+		}
+		fmt.Println()
+		fmt.Println("--------------------")
+	}
+
+	res := rtyp.Method(0).Func.Call(
+		[]reflect.Value{
+			reflect.New(reflect.Indirect(reflect.ValueOf(s)).Type()),
+			reflect.ValueOf(1000),
+			reflect.ValueOf(2000),
+		})
+	fmt.Println("res => ", res[0])
+
+}
+
+func TestCall3() {
+
+	s := Stu{}
+	rtyp := reflect.ValueOf(&s)
+	fmt.Println("==================================")
+
+	for i := 0; i < rtyp.NumMethod(); i++ {
+		mtd := rtyp.Method(i)
+		mtp := rtyp.Type().Method(i)
+		fmt.Println("mtp -> ", mtp.Name)
+		fmt.Println("mtd -> ", mtd.Type().Name())
+
+		for m := 0; m < mtd.Type().NumIn(); m++ {
+			fmt.Print("\t", mtd.Type().In(m))
+		}
+		fmt.Println()
+		for n := 0; n < mtd.Type().NumOut(); n++ {
+			fmt.Print("\t", mtd.Type().Out(n))
+		}
+		fmt.Println()
+		fmt.Print("--------------------------------")
+
+		res := mtd.Call([]reflect.Value{
+			reflect.ValueOf(2000),
+			reflect.ValueOf(1000),
+		})
+		fmt.Println("res[0] = ", res[0])
+	}
+
 }
