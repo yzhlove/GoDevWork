@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"go/ast"
 	"reflect"
-	"strings"
 )
 
 //反射调用函数
@@ -94,8 +93,8 @@ type Args struct {
 
 type A struct{}
 
-func (a *A) Append(args Args, replay *string) error {
-	*replay = strings.Join([]string{args.N, args.S, args.T}, "-")
+func (a *A) Append(args Args, replay *[]string) error {
+	*replay = []string{args.N, args.T, args.S}
 	return nil
 }
 
