@@ -1,5 +1,0 @@
-2020-07-14T14:16:17.449+0800	INFO	chat04/main.go:66	Succeed Code:429 Too Many Requests URL:http://www.google.com
-112
-2020-07-14T14:16:17.449+0800	INFO	chat04/main.go:66	Succeed Code:429 Too Many Requests URL:http://www.google.com
-112
-2020-07-14T14:16:17.451+0800	INFO	ch
