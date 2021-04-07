@@ -1,0 +1,8 @@
+syntax = "proto3";
+
+package pb;
+
+message User {
+  uint32 Id = 1;
+  uint32 UID = 2;
+}
