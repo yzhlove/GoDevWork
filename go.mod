@@ -36,7 +36,7 @@ require (
 	github.com/mikespook/gorbac v2.1.0+incompatible
 	github.com/mind1949/googletrans v0.0.0-20200829143244-ff25e4f22331
 	github.com/mmcloughlin/avo v0.0.0-20200803215136-443f81d77104 // indirect
-	github.com/moby/moby v1.13.1
+	github.com/moby/moby v20.10.20+incompatible
 	github.com/natefinch/lumberjack v2.0.0+incompatible
 	github.com/opentracing/opentracing-go v1.1.0
 	github.com/oschwald/geoip2-golang v1.4.0
